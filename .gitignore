@@ -1,0 +1,5 @@
+backend/code/backend/__pycache__/
+frontend/code/frontend/node_modules
+frontend/code/frontend/build
+frontend/code/frontend/ios
+frontend/code/frontend/android
