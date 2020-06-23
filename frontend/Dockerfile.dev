@@ -1,9 +1,9 @@
 ARG version
 FROM node:${version}
+RUN mkdir /app
+COPY ./code/frontend /app
 WORKDIR /app
-ENV PATH /app/node_modules/.bin:$PATH
-COPY ./code/frontend/package.json ./
-COPY ./code/frontend/package-lock.json ./
-RUN npm ci --silent
-RUN npm install -g --unsafe-perm=true --allow-root @ionic/cli native-run cordova-res @ionic/react @ionic/react-router @ionic/react-hooks @ionic/pwa-elements --silent
-RUN npm install
+RUN rm -R /app/node_modules && \
+    npm install @ionic/cli native-run cordova-res && \
+    npm install @ionic/react @ionic/react-router @ionic/react-hooks @ionic/pwa-elements
+CMD ["/app/node_modules/@ionic/cli/bin/ionic", "serve"]

@@ -30,8 +30,13 @@ services:
     ports:
       - "${FRONTEND_PORT}:${FRONTEND_DEFAULT_PORT}"
     volumes:
-      - ./frontend/code/frontend:/app
-    command: >
-      sh -c "ionic serve"
+      - ./frontend/code/frontend/src:/app/src
+      - ./frontend/code/frontend/public:/app/public
+      - ./frontend/code/frontend/.gitignore:/app/.gitignore
+      - ./frontend/code/frontend/capacitor.config.json:/app/capacitor.config.json
+      - ./frontend/code/frontend/ionic.config.json:/app/ionic.config.json
+      - ./frontend/code/frontend/package.json:/app/package.json
+      - ./frontend/code/frontend/package-lock.json:/app/package-lock.json
+      - ./frontend/code/frontend/tsconfig.json:/app/tsconfig.json
     depends_on:
       - backend
