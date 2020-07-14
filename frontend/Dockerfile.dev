@@ -5,5 +5,6 @@ COPY ./code/frontend /app
 WORKDIR /app
 RUN rm -rf /app/node_modules && \
     npm install @ionic/cli native-run cordova-res && \
-    npm install @ionic/react @ionic/react-router @ionic/react-hooks @ionic/pwa-elements
+    npm install @ionic/react @ionic/react-router @ionic/react-hooks @ionic/pwa-elements && \
+    npm install node-sass
 CMD ["/app/node_modules/@ionic/cli/bin/ionic", "serve"]
