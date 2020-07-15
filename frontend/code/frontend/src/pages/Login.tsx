@@ -17,10 +17,10 @@ const Login: React.FC = () => {
   const [showLoading, setShowLoading] = useState(false);
 
   const submit = () => {
-    setShowLoading(true);
+    //setShowLoading(true);
     new Utils()
       .postCall(
-        "http://localhost:8000/auth-user",
+        new Utils().getApiEndpoint() + "auth-user",
         JSON.stringify({
           username: email,
           password: password,

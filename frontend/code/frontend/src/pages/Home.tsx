@@ -13,7 +13,7 @@ const Home: React.FC = () => {
     if (token != undefined) {
       new Utils()
         .postCall(
-          "http://localhost:8000/hello",
+          new Utils().getApiEndpoint() + "hello",
           JSON.stringify({ token: token }),
           "Token " + token
         )

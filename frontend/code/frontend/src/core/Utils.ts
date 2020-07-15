@@ -1,5 +1,11 @@
+import config from "../env.config.json";
+
 export class Utils {
   constructor() {}
+
+  getApiEndpoint() {
+    return config.API_ENDPOINT;
+  }
 
   async postCall(url: string, data: string, token: string) {
     const response = await fetch(url, {
