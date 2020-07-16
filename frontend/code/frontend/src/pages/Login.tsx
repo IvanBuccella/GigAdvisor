@@ -1,41 +1,37 @@
 import React, { useState } from "react";
 import {
   IonInput,
-  IonList,
+  IonItemDivider,
   IonItem,
   IonButton,
   IonLoading,
   IonToast,
+  IonTitle,
+  IonLabel,
 } from "@ionic/react";
 
 import { Utils } from "../core/Utils";
+const utilities = new Utils();
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginAlert, setLoginAlert] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
 
   const submit = () => {
-    //setShowLoading(true);
-    new Utils()
-      .postCall(
-        new Utils().getApiEndpoint() + "auth-user",
-        JSON.stringify({
-          username: email,
-          password: password,
-        }),
-        ""
-      )
-      .then((data: { token: string | any[] | undefined } | undefined) => {
+    setShowLoading(true);
+    let url = utilities.getApiEndpoint() + "auth-user";
+    let data = JSON.stringify({
+      username: username,
+      password: password,
+    });
+    utilities
+      .postCall(url, data)
+      .then((data: { token: string | undefined }) => {
         setShowLoading(false);
-        if (
-          data != undefined &&
-          data.token != undefined &&
-          data.token.length > 0
-        ) {
-          const token = JSON.stringify({ token: data.token });
-          localStorage.setItem("ga-auth", token);
+        if (data.token != undefined) {
+          utilities.setUserToken(data.token);
           window.location.href = "/home";
         } else {
           setLoginAlert(true);
@@ -44,30 +40,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <IonList>
-      <IonItem>
-        <IonInput
-          value={email}
-          onIonChange={(e) => setEmail(e.detail.value!)}
-          type="email"
-          placeholder="Email"
-          required
-        ></IonInput>
-      </IonItem>
-      <IonItem>
-        <IonInput
-          value={password}
-          onIonChange={(e) => setPassword(e.detail.value!)}
-          type="password"
-          placeholder="Password"
-          required
-        ></IonInput>
-      </IonItem>
-      <IonItem>
-        <IonButton expand="full" type="submit" onClick={(e) => submit()}>
-          Login
-        </IonButton>
-      </IonItem>
+    <div className="page-container login">
       <IonLoading
         cssClass="login-loader"
         isOpen={showLoading}
@@ -82,7 +55,53 @@ const Login: React.FC = () => {
         duration={5000}
         color="danger"
       />
-    </IonList>
+      <form
+        className="login-form"
+        onSubmit={(e) => {
+          e.preventDefault();
+          submit();
+        }}
+      >
+        <IonTitle size="large" className="form-title mt1 mb1">
+          Login
+        </IonTitle>
+        <IonItem lines="none" className="mt1">
+          <IonInput
+            className="input-field"
+            name="username"
+            value={username}
+            onIonChange={(e) => setUsername(e.detail.value!)}
+            type="text"
+            placeholder="Username"
+            required
+          ></IonInput>
+        </IonItem>
+        <IonItem lines="none" className="mt1">
+          <IonInput
+            className="input-field"
+            name="password"
+            value={password}
+            onIonChange={(e) => setPassword(e.detail.value!)}
+            type="password"
+            placeholder="Password"
+            required
+          ></IonInput>
+        </IonItem>
+
+        <IonItem lines="none" className="mt1">
+          <IonButton type="submit" className="login-button">
+            Log In
+          </IonButton>
+        </IonItem>
+      </form>
+      <IonItemDivider></IonItemDivider>
+      <div className="signup-section mt1">
+        <IonLabel>Don’t have an account yet?</IonLabel>
+        <IonButton className="signup-button mt1" expand="block" href="/signup">
+          Sign Up
+        </IonButton>
+      </div>
+    </div>
   );
 };
 

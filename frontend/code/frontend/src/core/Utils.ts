@@ -7,6 +7,11 @@ export class Utils {
     return config.API_ENDPOINT;
   }
 
+  setUserToken(token: any) {
+    const data = JSON.stringify({ token: token });
+    localStorage.setItem("ga-auth", data);
+  }
+
   getUserToken() {
     let auth: any;
     auth = localStorage.getItem("ga-auth");

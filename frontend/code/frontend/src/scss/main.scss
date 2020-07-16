@@ -2,3 +2,11 @@
 
 @import "components/Header";
 @import "components/Footer";
+@import "pages/Login";
+
+.page-container {
+  max-width: 75%;
+  float: none;
+  margin: 0 auto;
+  padding: 1em;
+}

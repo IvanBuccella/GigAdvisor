@@ -1,0 +1,41 @@
+.page-container.login {
+  float: none;
+  margin: 0 auto;
+  padding: 1em;
+  max-width: 500px;
+
+  .login-form {
+    .form-title {
+      text-align: center;
+    }
+    .input-field {
+      --background: none;
+      --padding-start: inherit;
+      --min-height: var(--input-height);
+      height: var(--input-height);
+      border: 1px solid #ced4da;
+      border-radius: 0.25rem;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      background-clip: padding-box;
+      box-sizing: border-box;
+      font-size: var(--font-size);
+    }
+    .login-button {
+      --min-height: var(--input-height);
+      --background: var(--color-blue);
+      height: var(--input-height);
+      font-size: var(--font-size);
+      width: 100%;
+    }
+  }
+  .signup-section {
+    text-align: center;
+    .signup-button {
+      --min-height: var(--input-height);
+      --background: var(--color-blue);
+      height: var(--input-height);
+      font-size: var(--font-size);
+      width: 100%;
+    }
+  }
+}
