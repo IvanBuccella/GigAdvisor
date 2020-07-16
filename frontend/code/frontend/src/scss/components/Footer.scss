@@ -1,0 +1,9 @@
+.footer {
+  .footer-toolbar {
+    --background: var(--color-black);
+    .footer-text {
+      --color: var(--color-white);
+      color: var(--color-white);
+    }
+  }
+}

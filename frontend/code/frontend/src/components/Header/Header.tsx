@@ -2,34 +2,29 @@ import React from "react";
 import {
   IonHeader,
   IonCol,
-  IonTitle,
   IonToolbar,
-  IonRouterLink,
   IonGrid,
   IonRow,
+  IonMenuButton,
 } from "@ionic/react";
-import "./Header.scss";
 
 const Header: React.FC = () => {
   return (
-    <IonHeader>
-      <IonToolbar>
-        <IonGrid>
-          <IonRow>
-            <IonCol>
-              <IonTitle>
-                <IonRouterLink href="/home">Home</IonRouterLink>
-              </IonTitle>
+    <IonHeader className="header">
+      <IonToolbar className="header-toolbar">
+        <IonGrid className="header-container">
+          <IonRow className="header-row">
+            <IonCol className="header-col col-toggle" size="1">
+              <IonMenuButton
+                autoHide={false}
+                menu="header-menu"
+                className="header-button"
+              ></IonMenuButton>
             </IonCol>
-            <IonCol>
-              <IonTitle>
-                <IonRouterLink href="/login">Login</IonRouterLink>
-              </IonTitle>
-            </IonCol>
-            <IonCol>
-              <IonTitle>
-                <IonRouterLink href="/logout">Logout</IonRouterLink>
-              </IonTitle>
+            <IonCol className="header-col">
+              <a href="/">
+                <img alt="logo" src="/assets/logo.png" className="logo" />
+              </a>
             </IonCol>
           </IonRow>
         </IonGrid>

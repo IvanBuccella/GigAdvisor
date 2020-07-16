@@ -7,7 +7,7 @@ import {
   IonLoading,
   IonToast,
 } from "@ionic/react";
-import "./Login.scss";
+
 import { Utils } from "../core/Utils";
 
 const Login: React.FC = () => {

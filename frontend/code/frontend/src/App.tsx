@@ -21,8 +21,10 @@ import "@ionic/react/css/display.css";
 
 /* Theme variables */
 import "./theme/variables.css";
+import "./scss/main.scss";
 import { IonContent, IonPage } from "@ionic/react";
 
+import { Menus } from "./components/Header/Menus";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Home from "./pages/Home";
@@ -32,6 +34,7 @@ import Logout from "./pages/Logout";
 const App: React.FC = () => (
   <IonApp>
     <IonPage>
+      <Menus />
       <Header />
       <IonContent>
         <IonReactRouter>

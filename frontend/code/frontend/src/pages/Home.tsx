@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import ExploreContainer from "../components/ExploreContainer";
 import { Utils } from "../core/Utils";
-import "./Home.css";
 
 const Home: React.FC = () => {
   const [message, setMessage] = useState("");
