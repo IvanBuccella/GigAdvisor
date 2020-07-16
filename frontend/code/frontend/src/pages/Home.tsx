@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import ExploreContainer from "../components/ExploreContainer";
 import { Utils } from "../core/Utils";
+import { IonContent } from "@ionic/react";
 
 const Home: React.FC = () => {
   const [message, setMessage] = useState("");
@@ -30,7 +30,7 @@ const Home: React.FC = () => {
     }
   }
 
-  return <ExploreContainer />;
+  return <IonContent>Standard home page. For not logged in users.</IonContent>;
 };
 
 export default Home;
