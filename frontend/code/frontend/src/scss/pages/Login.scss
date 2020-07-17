@@ -5,6 +5,9 @@
   max-width: 500px;
 
   .login-form {
+    .form-item {
+      --background-focused: transparent;
+    }
     .form-title {
       text-align: center;
     }

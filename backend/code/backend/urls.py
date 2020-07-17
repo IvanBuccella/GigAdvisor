@@ -20,5 +20,6 @@ from backend import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("hello", views.HelloView.as_view(), name="hello"),
-    path("auth-user", views.AuthUser.as_view(), name="auth-user"),
+    path("user-auth", views.UserAuth.as_view(), name="user-auth"),
+    path("user-create", views.UserCreate.as_view(), name="user-create"),
 ]

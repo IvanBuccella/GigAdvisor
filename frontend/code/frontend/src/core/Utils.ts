@@ -45,7 +45,7 @@ export class Utils {
         "Content-Type": "application/json",
       };
     }
-    const response = await fetch(url, {
+    const response = await fetch(this.getApiEndpoint() + url, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -55,6 +55,9 @@ export class Utils {
       referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
       body: data, // body data type must match "Content-Type" header
     });
-    return response.json(); // parses JSON response into native JavaScript objects
+    return {
+      status: response.status == 400 ? false : true,
+      data: await response.json(),
+    }; // parses JSON response into native JavaScript objects
   }
 }

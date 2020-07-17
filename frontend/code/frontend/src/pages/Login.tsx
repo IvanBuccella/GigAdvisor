@@ -21,22 +21,24 @@ const Login: React.FC = () => {
 
   const submit = () => {
     setShowLoading(true);
-    let url = utilities.getApiEndpoint() + "auth-user";
     let data = JSON.stringify({
       username: username,
       password: password,
     });
-    utilities
-      .postCall(url, data)
-      .then((data: { token: string | undefined }) => {
+    utilities.postCall("user-auth", data).then((res) => {
+      if (res.status) {
         setShowLoading(false);
-        if (data.token != undefined) {
-          utilities.setUserToken(data.token);
+        if (res.data.token != undefined) {
+          utilities.setUserToken(res.data.token);
           window.location.href = "/home";
         } else {
           setLoginAlert(true);
         }
-      });
+      } else {
+        setShowLoading(false);
+        setLoginAlert(true);
+      }
+    });
   };
 
   return (
@@ -51,7 +53,7 @@ const Login: React.FC = () => {
       <IonToast
         isOpen={loginAlert}
         onDidDismiss={() => setLoginAlert(false)}
-        message="Impossibile accedere. Verificare le credenziali immesse."
+        message="Cannot Log in. Check inserted data."
         duration={5000}
         color="danger"
       />
@@ -63,9 +65,9 @@ const Login: React.FC = () => {
         }}
       >
         <IonTitle size="large" className="form-title mt1 mb1">
-          Login
+          Log in
         </IonTitle>
-        <IonItem lines="none" className="mt1">
+        <IonItem lines="none" className="form-item mt1">
           <IonInput
             className="input-field"
             name="username"
@@ -76,7 +78,7 @@ const Login: React.FC = () => {
             required
           ></IonInput>
         </IonItem>
-        <IonItem lines="none" className="mt1">
+        <IonItem lines="none" className="form-item mt1">
           <IonInput
             className="input-field"
             name="password"
@@ -88,7 +90,7 @@ const Login: React.FC = () => {
           ></IonInput>
         </IonItem>
 
-        <IonItem lines="none" className="mt1">
+        <IonItem lines="none" className="form-item mt1">
           <IonButton type="submit" className="login-button">
             Log In
           </IonButton>

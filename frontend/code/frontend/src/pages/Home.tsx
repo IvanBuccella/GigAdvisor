@@ -1,21 +1,26 @@
 import React, { useState } from "react";
 import { Utils } from "../core/Utils";
+import Loader from "../components/Loader";
+const utilities = new Utils();
 
 const Home: React.FC = () => {
+  const [showLoader, setShowLoader] = useState(false);
   const [message, setMessage] = useState("");
 
   if (new Utils().isAuthenticatedUser()) {
-    let url = new Utils().getApiEndpoint() + "hello";
     let data = JSON.stringify({
       token: new Utils().getUserToken(),
     });
-
-    new Utils().postCall(url, data).then((data: { message: string }) => {
-      setMessage(data.message);
+    utilities.postCall("hello", data).then((res) => {
+      if (res.status) {
+        setShowLoader(false);
+        setMessage(res.data.message);
+      }
     });
 
     return (
       <div className="page-container">
+        <Loader showLoader={showLoader} />
         <p>
           You're a logged in user. <br />
           {message}
@@ -26,6 +31,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="page-container">
+      <Loader showLoader={showLoader} />
       <p>Standard home page. For not logged in users.</p>
     </div>
   );

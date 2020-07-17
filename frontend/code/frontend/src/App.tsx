@@ -30,6 +30,7 @@ import Footer from "./components/Footer/Footer";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
+import Signup from "./pages/Signup";
 
 const App: React.FC = () => (
   <IonApp>
@@ -43,6 +44,7 @@ const App: React.FC = () => (
             <Route path="/home" component={Home} exact={true} />
             <Route path="/login" component={Login} exact={true} />
             <Route path="/logout" component={Logout} exact={true} />
+            <Route path="/signup" component={Signup} exact={true} />
           </IonRouterOutlet>
         </IonReactRouter>
       </IonContent>
