@@ -9,7 +9,7 @@ import {
   IonTitle,
   IonLabel,
 } from "@ionic/react";
-
+import Loader from "../components/Loader";
 import { Utils } from "../core/Utils";
 const utilities = new Utils();
 
@@ -43,13 +43,7 @@ const Login: React.FC = () => {
 
   return (
     <div className="page-container login">
-      <IonLoading
-        cssClass="login-loader"
-        isOpen={showLoading}
-        onDidDismiss={() => setShowLoading(false)}
-        message={"Please wait..."}
-        duration={0}
-      />
+      <Loader showLoader={showLoading} />
       <IonToast
         isOpen={loginAlert}
         onDidDismiss={() => setLoginAlert(false)}
