@@ -1,8 +1,9 @@
 import React from "react";
+import { Utils } from "../core/Utils";
+const utilities = new Utils();
 
 const Logout: React.FC = () => {
-  let auth = localStorage.getItem("ga-auth");
-  if (auth != undefined) {
+  if (utilities.getUserToken() != null) {
     localStorage.removeItem("ga-auth");
   }
   window.location.href = "/home";
