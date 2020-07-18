@@ -48,9 +48,14 @@ export const Menus: React.FC = () => {
               </IonItem>
             )}
             {isAuthenticatedUser && (
-              <IonItem className="header-menu-item">
-                <a href="/logout">Logout</a>
-              </IonItem>
+              <>
+                <IonItem className="header-menu-item">
+                  <a href="/profile">Profile</a>
+                </IonItem>
+                <IonItem className="header-menu-item">
+                  <a href="/logout">Logout</a>
+                </IonItem>
+              </>
             )}
           </IonList>
         </IonContent>

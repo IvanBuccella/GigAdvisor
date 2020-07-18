@@ -1,0 +1,27 @@
+.page-container.signup {
+  @include container-centered(30rem, 1em);
+  .signup-form {
+    .form-title {
+      text-align: center;
+    }
+
+    .form-item {
+      --background-focused: transparent;
+      .input-field {
+        @include input-field;
+      }
+    }
+
+    .signup-button {
+      @include blue-button;
+      width: 100%;
+    }
+  }
+  .login-section {
+    text-align: center;
+    .login-button {
+      @include blue-button;
+      width: 100%;
+    }
+  }
+}

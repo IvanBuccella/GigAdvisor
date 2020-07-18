@@ -1,8 +1,11 @@
 @import "variables";
+@import "mixins";
 
 @import "components/Header";
 @import "components/Footer";
 @import "pages/Login";
+@import "pages/Signup";
+@import "pages/Profile";
 
 .page-container {
   max-width: 75%;

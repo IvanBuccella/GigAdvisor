@@ -40,7 +40,7 @@ const Signup: React.FC = () => {
         if (res.status) {
           setSignupOk(true);
           setTimeout(function () {
-            window.location.href = "/login";
+            utilities.pageRedirect("login");
           }, 5000);
         } else {
           setSignupError(true);
@@ -53,7 +53,7 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div className="page-container login">
+    <div className="page-container signup">
       <Loader showLoader={showLoader} />
       <IonToast
         isOpen={passwordError}
@@ -75,7 +75,7 @@ const Signup: React.FC = () => {
       />
 
       <form
-        className="login-form"
+        className="signup-form"
         onSubmit={(e) => {
           e.preventDefault();
           submit();
@@ -152,16 +152,16 @@ const Signup: React.FC = () => {
         </IonItem>
 
         <IonItem lines="none" className="form-item mt1">
-          <IonButton type="submit" className="login-button">
+          <IonButton type="submit" className="signup-button">
             Sign Up
           </IonButton>
         </IonItem>
       </form>
 
       <IonItemDivider></IonItemDivider>
-      <div className="signup-section mt1">
+      <div className="login-section mt1">
         <IonLabel>Do you have an account yet?</IonLabel>
-        <IonButton className="signup-button mt1" expand="block" href="/login">
+        <IonButton className="login-button mt1" expand="block" href="/login">
           Log In
         </IonButton>
       </div>

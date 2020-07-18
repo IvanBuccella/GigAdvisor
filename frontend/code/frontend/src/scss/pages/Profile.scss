@@ -1,0 +1,47 @@
+.page-container.profile {
+  @include container-centered(100%, 1em);
+  .page-title {
+    text-align: center;
+  }
+
+  .profile-form {
+    .form-item {
+      --background-focused: transparent;
+      &.form-item-image {
+        .avatar {
+          border-radius: 100%;
+          width: 10rem;
+          height: 10rem;
+          object-fit: cover;
+          margin-left: auto;
+          margin-right: auto;
+          display: block;
+        }
+      }
+
+      .input-field {
+        @include input-field;
+        &.sex {
+          width: 100%;
+          ion-item {
+            display: inline-block;
+            float: left;
+            width: 50%;
+            --border-color: transparent;
+          }
+        }
+      }
+    }
+    .profile-button {
+      @include blue-button;
+      width: 100%;
+    }
+  }
+  .signup-section {
+    text-align: center;
+    .signup-button {
+      @include blue-button;
+      width: 100%;
+    }
+  }
+}

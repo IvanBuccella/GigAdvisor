@@ -30,7 +30,7 @@ const Login: React.FC = () => {
         setShowLoading(false);
         if (res.data.token != undefined) {
           utilities.setUserToken(res.data.token);
-          window.location.href = "/home";
+          utilities.pageRedirect("profile");
         } else {
           setLoginAlert(true);
         }

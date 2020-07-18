@@ -12,12 +12,22 @@ export class Utils {
     localStorage.setItem("ga-auth", data);
   }
 
+  pageProtected() {
+    if (!this.isAuthenticatedUser()) {
+      this.pageRedirect("login");
+    }
+  }
+
+  pageRedirect(to: string) {
+    window.location.href = "/" + to;
+  }
+
   getUserToken() {
     let auth: any;
     auth = localStorage.getItem("ga-auth");
-    if (auth != undefined) {
+    if (auth != undefined && auth.length > 0) {
       let token = JSON.parse(auth).token;
-      if (token != undefined) {
+      if (token != undefined && token.length > 0) {
         return token;
       }
     }
@@ -47,6 +57,35 @@ export class Utils {
     }
     const response = await fetch(this.getApiEndpoint() + url, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin", // include, *same-origin, omit
+      headers: headers,
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: data, // body data type must match "Content-Type" header
+    });
+    return {
+      status: response.status == 400 ? false : true,
+      data: await response.json(),
+    }; // parses JSON response into native JavaScript objects
+  }
+
+  async patchCall(url: string, data: string) {
+    let token = this.getUserToken();
+    let headers = {};
+    if (token != null) {
+      headers = {
+        "Content-Type": "application/json",
+        Authorization: "Token " + token,
+      };
+    } else {
+      headers = {
+        "Content-Type": "application/json",
+      };
+    }
+    const response = await fetch(this.getApiEndpoint() + url, {
+      method: "PATCH", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
       credentials: "same-origin", // include, *same-origin, omit

@@ -31,6 +31,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
 import Signup from "./pages/Signup";
+import Profile from "./pages/Profile";
 
 const App: React.FC = () => (
   <IonApp>
@@ -45,6 +46,7 @@ const App: React.FC = () => (
             <Route path="/login" component={Login} exact={true} />
             <Route path="/logout" component={Logout} exact={true} />
             <Route path="/signup" component={Signup} exact={true} />
+            <Route path="/profile" component={Profile} exact={true} />
           </IonRouterOutlet>
         </IonReactRouter>
       </IonContent>

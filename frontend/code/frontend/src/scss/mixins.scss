@@ -1,0 +1,26 @@
+@mixin container-centered($width, $padding) {
+  float: none;
+  margin: 0 auto;
+  padding: $padding;
+  max-width: $width;
+}
+
+@mixin input-field {
+  --background: none;
+  --padding-start: inherit;
+  --min-height: var(--input-height);
+  height: var(--input-height);
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  background-clip: padding-box;
+  box-sizing: border-box;
+  font-size: var(--font-size);
+}
+
+@mixin blue-button {
+  --min-height: var(--input-height);
+  --background: var(--color-blue);
+  height: var(--input-height);
+  font-size: var(--font-size);
+}

@@ -22,4 +22,6 @@ urlpatterns = [
     path("hello", views.HelloView.as_view(), name="hello"),
     path("user-auth", views.UserAuth.as_view(), name="user-auth"),
     path("user-create", views.UserCreate.as_view(), name="user-create"),
+    path("user-profile", views.UserProfile.as_view(), name="user-profile"),
+    path("user-profile-update", views.UserUpdate.as_view(), name="user-profile-update"),
 ]

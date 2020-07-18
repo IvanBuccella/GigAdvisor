@@ -6,7 +6,7 @@ const Logout: React.FC = () => {
   if (utilities.getUserToken() != null) {
     localStorage.removeItem("ga-auth");
   }
-  window.location.href = "/home";
+  utilities.pageRedirect("home");
 
   return (
     <div className="container logout">
