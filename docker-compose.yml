@@ -19,7 +19,7 @@ services:
     volumes:
       - ./backend/code:/app
     command: >
-      sh -c "python manage.py migrate && python manage.py runserver 0:${BACKEND_DEFAULT_PORT}"
+      sh -c "python manage.py makemigrations backend && python manage.py migrate && python manage.py runserver 0:${BACKEND_DEFAULT_PORT}"
   frontend:
     build:
       context: ./frontend

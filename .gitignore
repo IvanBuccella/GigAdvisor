@@ -1,4 +1,5 @@
 backend/code/backend/__pycache__/
+backend/code/backend/migrations
 frontend/code/frontend/node_modules
 frontend/code/frontend/build
 frontend/code/frontend/ios
