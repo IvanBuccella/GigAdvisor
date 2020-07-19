@@ -7,6 +7,8 @@ import {
   IonTitle,
   IonItemDivider,
   IonLabel,
+  IonSlide,
+  IonContent,
 } from "@ionic/react";
 import { Utils } from "../core/Utils";
 import Loader from "../components/Loader";
@@ -53,119 +55,121 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div className="page-container signup">
-      <Loader showLoader={showLoader} />
-      <IonToast
-        isOpen={passwordError}
-        message="Passwords don't match or don't respect 8 characters minimum."
-        color="danger"
-        duration={5000}
-      />
-      <IonToast
-        isOpen={signupError}
-        message="Signup Error"
-        color="danger"
-        duration={5000}
-      />
-      <IonToast
-        isOpen={signupOk}
-        message="User created succesfully"
-        color="success"
-        duration={5000}
-      />
+    <IonSlide>
+      <IonContent className="page-container signup">
+        <Loader showLoader={showLoader} />
+        <IonToast
+          isOpen={passwordError}
+          message="Passwords don't match or don't respect 8 characters minimum."
+          color="danger"
+          duration={5000}
+        />
+        <IonToast
+          isOpen={signupError}
+          message="Signup Error"
+          color="danger"
+          duration={5000}
+        />
+        <IonToast
+          isOpen={signupOk}
+          message="User created succesfully"
+          color="success"
+          duration={5000}
+        />
 
-      <form
-        className="signup-form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          submit();
-        }}
-      >
-        <IonTitle size="large" className="form-title mt1 mb1">
-          Sign Up for free
-        </IonTitle>
-        <IonItem lines="none" className="form-item mt1">
-          <IonInput
-            className="input-field"
-            name="first_name"
-            value={firstName}
-            onIonChange={(e) => setFirstName(e.detail.value!)}
-            type="text"
-            placeholder="First Name"
-            required
-          ></IonInput>
-        </IonItem>
-        <IonItem lines="none" className="form-item mt1">
-          <IonInput
-            className="input-field"
-            name="last_name"
-            value={lastName}
-            onIonChange={(e) => setLastName(e.detail.value!)}
-            type="text"
-            placeholder="Last Name"
-            required
-          ></IonInput>
-        </IonItem>
-        <IonItem lines="none" className="form-item mt1">
-          <IonInput
-            className="input-field"
-            name="email"
-            value={email}
-            onIonChange={(e) => setEmail(e.detail.value!)}
-            type="email"
-            placeholder="Email"
-            required
-          ></IonInput>
-        </IonItem>
-        <IonItem lines="none" className="form-item mt1">
-          <IonInput
-            className="input-field"
-            name="username"
-            value={username}
-            onIonChange={(e) => setUsername(e.detail.value!)}
-            type="text"
-            placeholder="Username"
-            required
-          ></IonInput>
-        </IonItem>
-        <IonItem lines="none" className="form-item mt1">
-          <IonInput
-            className="input-field"
-            name="password"
-            value={password}
-            onIonChange={(e) => setPassword(e.detail.value!)}
-            type="password"
-            placeholder="Password"
-            required
-          ></IonInput>
-        </IonItem>
-        <IonItem lines="none" className="form-item mt1">
-          <IonInput
-            className="input-field"
-            name="confirm-password"
-            value={confirmPassword}
-            onIonChange={(e) => setConfirmPassword(e.detail.value!)}
-            type="password"
-            placeholder="Confirm Password"
-            required
-          ></IonInput>
-        </IonItem>
+        <form
+          className="signup-form"
+          onSubmit={(e) => {
+            e.preventDefault();
+            submit();
+          }}
+        >
+          <IonTitle size="large" className="form-title mt1 mb1">
+            Sign Up for free
+          </IonTitle>
+          <IonItem lines="none" className="form-item mt1">
+            <IonInput
+              className="input-field"
+              name="first_name"
+              value={firstName}
+              onIonChange={(e) => setFirstName(e.detail.value!)}
+              type="text"
+              placeholder="First Name"
+              required
+            ></IonInput>
+          </IonItem>
+          <IonItem lines="none" className="form-item mt1">
+            <IonInput
+              className="input-field"
+              name="last_name"
+              value={lastName}
+              onIonChange={(e) => setLastName(e.detail.value!)}
+              type="text"
+              placeholder="Last Name"
+              required
+            ></IonInput>
+          </IonItem>
+          <IonItem lines="none" className="form-item mt1">
+            <IonInput
+              className="input-field"
+              name="email"
+              value={email}
+              onIonChange={(e) => setEmail(e.detail.value!)}
+              type="email"
+              placeholder="Email"
+              required
+            ></IonInput>
+          </IonItem>
+          <IonItem lines="none" className="form-item mt1">
+            <IonInput
+              className="input-field"
+              name="username"
+              value={username}
+              onIonChange={(e) => setUsername(e.detail.value!)}
+              type="text"
+              placeholder="Username"
+              required
+            ></IonInput>
+          </IonItem>
+          <IonItem lines="none" className="form-item mt1">
+            <IonInput
+              className="input-field"
+              name="password"
+              value={password}
+              onIonChange={(e) => setPassword(e.detail.value!)}
+              type="password"
+              placeholder="Password"
+              required
+            ></IonInput>
+          </IonItem>
+          <IonItem lines="none" className="form-item mt1">
+            <IonInput
+              className="input-field"
+              name="confirm-password"
+              value={confirmPassword}
+              onIonChange={(e) => setConfirmPassword(e.detail.value!)}
+              type="password"
+              placeholder="Confirm Password"
+              required
+            ></IonInput>
+          </IonItem>
 
-        <IonItem lines="none" className="form-item mt1">
-          <IonButton type="submit" className="signup-button">
-            Sign Up
+          <IonItem lines="none" className="form-item mt1">
+            <IonButton type="submit" className="signup-button">
+              Sign Up
+            </IonButton>
+          </IonItem>
+        </form>
+
+        <IonItemDivider></IonItemDivider>
+        <div className="login-section mt1">
+          <IonLabel>Do you have an account yet?</IonLabel>
+          <IonButton className="login-button mt1" expand="block" href="/login">
+            Log In
           </IonButton>
-        </IonItem>
-      </form>
-
-      <IonItemDivider></IonItemDivider>
-      <div className="login-section mt1">
-        <IonLabel>Do you have an account yet?</IonLabel>
-        <IonButton className="login-button mt1" expand="block" href="/login">
-          Log In
-        </IonButton>
-      </div>
-    </div>
+        </div>
+      </IonContent>
+    </IonSlide>
   );
 };
 

@@ -1,9 +1,5 @@
 .page-container.profile {
-  @include container-centered(100%, 1em);
-  .page-title {
-    text-align: center;
-  }
-
+  @include container-centered(100%);
   .profile-form {
     .form-item {
       --background-focused: transparent;

@@ -1,5 +1,5 @@
 .page-container.signup {
-  @include container-centered(30rem, 1em);
+  @include container-centered(30rem);
   .signup-form {
     .form-title {
       text-align: center;

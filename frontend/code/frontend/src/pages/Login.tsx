@@ -8,6 +8,8 @@ import {
   IonToast,
   IonTitle,
   IonLabel,
+  IonContent,
+  IonSlide,
 } from "@ionic/react";
 import Loader from "../components/Loader";
 import { Utils } from "../core/Utils";
@@ -42,7 +44,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="page-container login">
+    <>
       <Loader showLoader={showLoading} />
       <IonToast
         isOpen={loginAlert}
@@ -51,53 +53,62 @@ const Login: React.FC = () => {
         duration={5000}
         color="danger"
       />
-      <form
-        className="login-form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          submit();
-        }}
-      >
-        <IonTitle size="large" className="form-title mt1 mb1">
-          Log in
-        </IonTitle>
-        <IonItem lines="none" className="form-item mt1">
-          <IonInput
-            className="input-field"
-            name="username"
-            value={username}
-            onIonChange={(e) => setUsername(e.detail.value!)}
-            type="text"
-            placeholder="Username"
-            required
-          ></IonInput>
-        </IonItem>
-        <IonItem lines="none" className="form-item mt1">
-          <IonInput
-            className="input-field"
-            name="password"
-            value={password}
-            onIonChange={(e) => setPassword(e.detail.value!)}
-            type="password"
-            placeholder="Password"
-            required
-          ></IonInput>
-        </IonItem>
-
-        <IonItem lines="none" className="form-item mt1">
-          <IonButton type="submit" className="login-button">
+      <IonSlide>
+        <IonContent className="page-container login">
+          <IonTitle size="large" className="form-title mt1 mb1">
             Log In
-          </IonButton>
-        </IonItem>
-      </form>
-      <IonItemDivider></IonItemDivider>
-      <div className="signup-section mt1">
-        <IonLabel>Don’t have an account yet?</IonLabel>
-        <IonButton className="signup-button mt1" expand="block" href="/signup">
-          Sign Up
-        </IonButton>
-      </div>
-    </div>
+          </IonTitle>
+
+          <form
+            className="login-form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              submit();
+            }}
+          >
+            <IonItem lines="none" className="form-item mt1">
+              <IonInput
+                className="input-field"
+                name="username"
+                value={username}
+                onIonChange={(e) => setUsername(e.detail.value!)}
+                type="text"
+                placeholder="Username"
+                required
+              ></IonInput>
+            </IonItem>
+            <IonItem lines="none" className="form-item mt1">
+              <IonInput
+                className="input-field"
+                name="password"
+                value={password}
+                onIonChange={(e) => setPassword(e.detail.value!)}
+                type="password"
+                placeholder="Password"
+                required
+              ></IonInput>
+            </IonItem>
+
+            <IonItem lines="none" className="form-item mt1">
+              <IonButton type="submit" className="login-button">
+                Log In
+              </IonButton>
+            </IonItem>
+          </form>
+          <IonItemDivider></IonItemDivider>
+          <div className="signup-section mt1">
+            <IonLabel>Don’t have an account yet?</IonLabel>
+            <IonButton
+              className="signup-button mt1"
+              expand="block"
+              href="/signup"
+            >
+              Sign Up
+            </IonButton>
+          </div>
+        </IonContent>
+      </IonSlide>
+    </>
   );
 };
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { Utils } from "../core/Utils";
+import { IonSlide, IonContent } from "@ionic/react";
 const utilities = new Utils();
 
 const Logout: React.FC = () => {
@@ -9,11 +10,13 @@ const Logout: React.FC = () => {
   utilities.pageRedirect("home");
 
   return (
-    <div className="container logout">
-      <strong>
-        <p>Logging out</p>
-      </strong>
-    </div>
+    <IonSlide>
+      <IonContent className="container logout">
+        <strong>
+          <p>Logging out</p>
+        </strong>
+      </IonContent>
+    </IonSlide>
   );
 };
 

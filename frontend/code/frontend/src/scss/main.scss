@@ -11,5 +11,12 @@
   max-width: 75%;
   float: none;
   margin: 0 auto;
-  padding: 1em;
+  --padding-start: 1rem;
+  --padding-end: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.page-title {
+  text-align: center;
 }

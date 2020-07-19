@@ -1,7 +1,4 @@
-@mixin container-centered($width, $padding) {
-  float: none;
-  margin: 0 auto;
-  padding: $padding;
+@mixin container-centered($width) {
   max-width: $width;
 }
 
