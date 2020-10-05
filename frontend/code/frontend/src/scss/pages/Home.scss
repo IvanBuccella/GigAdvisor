@@ -1,0 +1,22 @@
+.important-notice-modal {
+  --max-width: 350px;
+  --max-height: 350px;
+
+  .modal-wrapper {
+    .ion-page {
+      padding: 1em;
+      .title {
+        max-height: 50px;
+        text-align: center;
+        position: relative;
+      }
+      .text {
+        text-align: center;
+        position: relative;
+      }
+      .button {
+        --background: var(--color-black);
+      }
+    }
+  }
+}

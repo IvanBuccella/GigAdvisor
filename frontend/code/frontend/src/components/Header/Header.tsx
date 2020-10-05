@@ -6,6 +6,7 @@ import {
   IonGrid,
   IonRow,
   IonMenuButton,
+  IonLabel,
 } from "@ionic/react";
 
 const Header: React.FC = () => {
@@ -14,14 +15,7 @@ const Header: React.FC = () => {
       <IonToolbar className="header-toolbar">
         <IonGrid className="header-container">
           <IonRow className="header-row">
-            <IonCol className="header-col col-toggle" size="1">
-              <IonMenuButton
-                autoHide={false}
-                menu="header-menu"
-                className="header-button"
-              ></IonMenuButton>
-            </IonCol>
-            <IonCol className="header-col">
+            <IonCol className="header-col" size="12">
               <a href="/">
                 <img alt="logo" src="/assets/logo.png" className="logo" />
               </a>

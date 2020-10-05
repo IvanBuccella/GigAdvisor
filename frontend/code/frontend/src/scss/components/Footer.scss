@@ -1,9 +1,20 @@
 .footer {
   .footer-toolbar {
     --background: var(--color-black);
-    .footer-text {
-      --color: var(--color-white);
-      color: var(--color-white);
+    .footer-container {
+      .footer-row {
+        .footer-menu-container {
+          --background: transparent;
+          --border-color: transparent;
+          .footer-buttons {
+            justify-content: center;
+            width: 100%;
+            .footer-button {
+              flex-grow: 1;
+            }
+          }
+        }
+      }
     }
   }
 }
