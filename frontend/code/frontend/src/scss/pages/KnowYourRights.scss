@@ -1,0 +1,14 @@
+.know-your-rights {
+  .right {
+    .right-header {
+      display: flex;
+      flex-flow: row;
+
+      .title {
+      }
+      .image {
+        max-height: 50px;
+      }
+    }
+  }
+}

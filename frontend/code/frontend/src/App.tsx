@@ -24,7 +24,6 @@ import "./theme/variables.css";
 import "./scss/main.scss";
 import { IonContent, IonPage } from "@ionic/react";
 
-import { Menus } from "./components/Header/Menus";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Home from "./pages/Home";
@@ -32,11 +31,15 @@ import Login from "./pages/Login";
 import Logout from "./pages/Logout";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
+import Modules from "./pages/Modules";
+import KnowYourRights from "./pages/KnowYourRights";
+import About from "./pages/About";
+import Team from "./pages/Team";
+import Pubblications from "./pages/Pubblications";
 
 const App: React.FC = () => (
   <IonApp>
     <IonPage>
-      <Menus />
       <Header />
       <IonContent>
         <IonReactRouter>
@@ -47,6 +50,20 @@ const App: React.FC = () => (
             <Route path="/logout" component={Logout} exact={true} />
             <Route path="/signup" component={Signup} exact={true} />
             <Route path="/profile" component={Profile} exact={true} />
+            <Route path="/modules" component={Modules} exact={true} />
+            <Route path="/about" component={About} exact={true} />
+            <Route path="/team" component={Team} exact={true} />
+            <Route
+              path="/pubblications"
+              component={Pubblications}
+              exact={true}
+            />
+
+            <Route
+              path="/know-your-rights"
+              component={KnowYourRights}
+              exact={true}
+            />
           </IonRouterOutlet>
         </IonReactRouter>
       </IonContent>

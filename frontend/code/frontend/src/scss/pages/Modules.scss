@@ -1,0 +1,12 @@
+.modules {
+  .module {
+    font-weight: bold;
+
+    .icon {
+      display: block;
+      &:host(.icon-large) {
+        font-size: 100px !important;
+      }
+    }
+  }
+}

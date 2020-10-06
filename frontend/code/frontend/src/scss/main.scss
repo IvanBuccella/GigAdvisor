@@ -7,9 +7,18 @@
 @import "pages/Signup";
 @import "pages/Profile";
 @import "pages/Home";
+@import "pages/Modules";
+@import "pages/KnowYourRights";
+@import "pages/About";
+@import "pages/Team";
+@import "pages/Pubblications";
 
 .page-container {
-  max-width: 75%;
+  --ion-default-font: "Lato", "Roboto", "Helvetica Neue", sans-serif;
+  font-family: "Lato", "Roboto", "Helvetica Neue", sans-serif;
+  @media only screen and (min-width: 767px) {
+    max-width: 75%;
+  }
   float: none;
   margin: 0 auto;
   --padding-start: 1rem;
@@ -20,4 +29,24 @@
 
 .page-title {
   text-align: center;
+}
+
+.modal {
+  .modal-wrapper {
+    .ion-page {
+      padding: 1em;
+      .title {
+        max-height: 50px;
+        text-align: center;
+        position: relative;
+      }
+      .text {
+        text-align: center;
+        position: relative;
+      }
+      .button {
+        --background: var(--color-black);
+      }
+    }
+  }
 }

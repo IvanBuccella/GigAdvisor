@@ -1,6 +1,59 @@
+$color-blue: #0070c0;
+
+$color-orange: #ff7402;
+$color-purple: #951d95;
+$color-red: #c00000;
+$color-green: #76b325;
+
+.mt0 {
+  margin-top: 0;
+}
+.mb0 {
+  margin-top: 0;
+}
+.ml0 {
+  margin-top: 0;
+}
+.mr0 {
+  margin-top: 0;
+}
+
 .mt1 {
   margin-top: 1em;
 }
 .mb1 {
   margin-bottom: 1em;
+}
+
+.pt0 {
+  padding-top: 0;
+}
+.pb0 {
+  padding-top: 0;
+}
+.pr0 {
+  padding-left: 0;
+}
+.pl0 {
+  padding-left: 0;
+}
+
+.blue {
+  color: $color-blue;
+}
+.orange {
+  color: $color-orange;
+}
+.purple {
+  color: $color-purple;
+}
+.red {
+  color: $color-red;
+}
+.green {
+  color: $color-green;
+}
+
+.text-left {
+  text-align: left;
 }

@@ -7,6 +7,7 @@ import {
   IonRow,
   IonMenuButton,
   IonLabel,
+  IonRouterLink,
 } from "@ionic/react";
 
 const Header: React.FC = () => {
@@ -16,9 +17,9 @@ const Header: React.FC = () => {
         <IonGrid className="header-container">
           <IonRow className="header-row">
             <IonCol className="header-col" size="12">
-              <a href="/">
+              <IonRouterLink href="/">
                 <img alt="logo" src="/assets/logo.png" className="logo" />
-              </a>
+              </IonRouterLink>
             </IonCol>
           </IonRow>
         </IonGrid>
