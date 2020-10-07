@@ -1,5 +1,8 @@
 backend/code/backend/__pycache__/
 backend/code/backend/migrations
+backend/code/backend/media
+backend/code/backend/site_static
+backend/code/backend/static
 frontend/code/frontend/node_modules
 frontend/code/frontend/build
 frontend/code/frontend/ios
