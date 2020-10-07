@@ -7,23 +7,13 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from django.http import JsonResponse
 from rest_framework.parsers import JSONParser
-from backend.serializers import UserSerializer, ProfileSerializer
+from backend.serializers import (
+    UserSerializer,
+    ProfileSerializer,
+)
 from backend.models import Profile
 from rest_framework import generics
-
-
-class HelloView(APIView):
-    """
-    API endpoint that return received Token only for authenticated users.
-    """
-
-    authentication_classes = [authentication.TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request, *args, **kwargs):
-        token = request.data["token"]
-        content = {"message": "Your token is: " + token}
-        return JsonResponse(content, status=201)
+from .utils import transform_base64_into_avatar
 
 
 class UserAuth(ObtainAuthToken):
@@ -42,6 +32,10 @@ class UserAuth(ObtainAuthToken):
 
 
 class UserCreate(APIView):
+    """
+    API endpoint that create a new Profile.
+    """
+
     def post(self, request, *args, **kwargs):
         data = JSONParser().parse(request)
         serializer = UserSerializer(data=data)
@@ -52,12 +46,15 @@ class UserCreate(APIView):
 
 
 class UserProfile(APIView):
+    """
+    API endpoint that return a Profile.
+    """
+
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
-        token = request.data["token"]
-        user = Token.objects.get(key=token).user
+        user = request.user
         profile = Profile.objects.get(user=user)
         profileSerializer = ProfileSerializer(profile)
 
@@ -66,6 +63,7 @@ class UserProfile(APIView):
         retDict.update({"last_name": user.last_name})
         retDict.update({"email": user.email})
         retDict.update({"username": user.username})
+        retDict.update({"avatar": profileSerializer.data["avatar"]})
         retDict.update({"birth_date": profileSerializer.data["birth_date"]})
         retDict.update({"position": profileSerializer.data["position"]})
         retDict.update({"sex": profileSerializer.data["sex"]})
@@ -74,18 +72,20 @@ class UserProfile(APIView):
         return JsonResponse(retDict, status=201)
 
 
-class UserUpdate(APIView):
+class UserProfileUpdate(APIView):
+    """
+    API endpoint that update a Profile.
+    """
+
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def patch(self, request, *args, **kwargs):
-        token = request.data["token"]
-        user = Token.objects.get(key=token).user
+        user = request.user
         dataToUpdate = {
             "first_name": request.data["firstName"],
             "last_name": request.data["lastName"],
             "email": request.data["email"],
-            "password": request.data["password"],
         }
         userSerializer = UserSerializer(user, data=dataToUpdate, partial=True)
         if userSerializer.is_valid():
@@ -101,19 +101,49 @@ class UserUpdate(APIView):
             )
             if profileSerializer.is_valid():
                 profileSerializer.save()
-                return JsonResponse({"message": "ok"}, status=201)
+                return JsonResponse(profileSerializer.data, status=201)
             return JsonResponse(profileSerializer.errors, status=400)
         return JsonResponse(userSerializer.errors, status=400)
 
-        """
-        retDict = {}
-        retDict.update({"first_name": user.first_name})
-        retDict.update({"last_name": user.last_name})
-        retDict.update({"email": user.email})
-        retDict.update({"username": user.username})
-        retDict.update({"birth_date": profileSerializer.data["birth_date"]})
-        retDict.update({"position": profileSerializer.data["position"]})
-        retDict.update({"sex": profileSerializer.data["sex"]})
-        retDict.update({"qualification": profileSerializer.data["qualification"]})
-        """
 
+class UserPasswordUpdate(APIView):
+    """
+    API endpoint that update a Profile Password.
+    """
+
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, *args, **kwargs):
+        user = request.user
+        dataToUpdate = {
+            "password": request.data["password"],
+        }
+        userSerializer = UserSerializer(user, data=dataToUpdate, partial=True)
+        if userSerializer.is_valid():
+            userSerializer.save()
+            return JsonResponse(userSerializer.data, status=201)
+        return JsonResponse(userSerializer.errors, status=400)
+
+
+class UserAvatarUpdate(APIView):
+    """
+    API endpoint that update a Profile Avatar.
+    """
+
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, *args, **kwargs):
+        user = request.user
+        dataToUpdate = {
+            "avatar": transform_base64_into_avatar(
+                request.data["avatar"], request.data["format"]
+            )[0],
+        }
+        print(dataToUpdate)
+        profileSerializer = ProfileSerializer(user.profile, dataToUpdate, partial=True,)
+        if profileSerializer.is_valid():
+            profileSerializer.save()
+            return JsonResponse(profileSerializer.data, status=201)
+        return JsonResponse("Error", status=400)

@@ -26,7 +26,8 @@ class UserSerializer(serializers.ModelSerializer):
         instance.first_name = validated_data.get("first_name", instance.first_name)
         instance.last_name = validated_data.get("last_name", instance.last_name)
         instance.email = validated_data.get("email", instance.email)
-        instance.set_password(validated_data.get("password"))
+        if validated_data.get("password"):
+            instance.set_password(validated_data.get("password"))
         instance.save()
         return instance
 
@@ -36,7 +37,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ("user", "birth_date", "position", "sex", "qualification")
+        fields = ("user", "birth_date", "position", "sex", "qualification", "avatar")
 
     def create(self, validated_data):
         user_data = validated_data.pop("user")
@@ -57,5 +58,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         instance.qualification = validated_data.get(
             "qualification", instance.qualification
         )
+        if validated_data.get("avatar"):
+            instance.avatar = validated_data.get("avatar", instance.avatar)
         instance.save()
         return instance

@@ -1,3 +1,4 @@
+from backend.utils import avatar_folder
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
@@ -11,8 +12,11 @@ class Profile(models.Model):
         ("M", "Male"),
         ("F", "Female"),
     )
-    # avatar = models.ImageField(blank=True, default='avatar/default.png', upload_to='avatar/')
+
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+    avatar = models.ImageField(
+        blank=True, default="/users/default.png", upload_to=avatar_folder
+    )
     birth_date = models.DateField(null=True, blank=True)
     position = models.CharField(null=True, max_length=50, blank=True)
     sex = models.CharField(null=True, max_length=1, choices=SEX_CHOICES, blank=True)
