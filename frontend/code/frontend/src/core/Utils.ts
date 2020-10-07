@@ -43,27 +43,30 @@ export class Utils {
   }
 
   async postCall(url: string, data: string) {
-    return this.call("POST", url, data);
+    return this.call("POST", url, data, "");
   }
 
   async patchCall(url: string, data: string) {
-    return this.call("PATCH", url, data);
+    return this.call("PATCH", url, data, "");
   }
 
-  async call(type: string, url: string, data: string) {
+  async call(type: string, url: string, data: any, contentType: string) {
     let token = this.getUserToken();
     let headers = {};
+    if (contentType == undefined || contentType == "") {
+      contentType = "application/json";
+    }
     if (token != null) {
       headers = {
-        "Content-Type": "application/json",
+        "Content-Type": contentType,
         Authorization: "Token " + token,
       };
     } else {
       headers = {
-        "Content-Type": "application/json",
+        "Content-Type": contentType,
       };
     }
-    const response = await fetch(this.getApiEndpoint() + url, {
+    const response = await fetch(this.getApiEndpoint() + "/" + url, {
       method: type, // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached

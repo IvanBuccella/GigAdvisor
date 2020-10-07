@@ -10,20 +10,29 @@ import {
   IonRow,
   IonGrid,
   IonRadioGroup,
-  IonListHeader,
   IonLabel,
   IonRadio,
   IonToast,
   IonSlide,
   IonContent,
+  IonIcon,
 } from "@ionic/react";
-import { Console } from "console";
+import { camera } from "ionicons/icons";
+
+import { CameraResultType, CameraSource } from "@capacitor/core";
+import { useCamera } from "@ionic/react-hooks/camera";
+
 const utilities = new Utils();
 
 const Home: React.FC = () => {
+  const { getPhoto } = useCamera();
+
+  const [userUpdateAlert, setUserUpdateAlert] = useState(false);
+  const [userUpdateSuccess, setUserUpdateSuccess] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
   const [showLoader, setShowLoader] = useState(false);
+  const [avatar, setAvatar] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -38,11 +47,9 @@ const Home: React.FC = () => {
   useEffect(() => {
     utilities.pageProtected();
 
-    let data = JSON.stringify({
-      token: new Utils().getUserToken(),
-    });
-    utilities.postCall("user-profile", data).then((res) => {
+    utilities.postCall("user-profile", "").then((res) => {
       if (res.status) {
+        setAvatar(res.data.avatar);
         setFirstName(res.data.first_name);
         setLastName(res.data.last_name);
         setUsername(res.data.username);
@@ -58,9 +65,8 @@ const Home: React.FC = () => {
     });
   }, []);
 
-  const submit = () => {
+  const submitProfile = () => {
     let data = JSON.stringify({
-      token: new Utils().getUserToken(),
       firstName: firstName,
       lastName: lastName,
       email: email,
@@ -68,6 +74,19 @@ const Home: React.FC = () => {
       position: position,
       birthDate: birthDate,
       qualification: qualification,
+    });
+
+    utilities.patchCall("user-profile-update", data).then((res) => {
+      if (res.status) {
+        setUserUpdateSuccess(true);
+      } else {
+        setUserUpdateAlert(true);
+      }
+    });
+  };
+
+  const submitPassword = () => {
+    let data = JSON.stringify({
       password: password,
     });
 
@@ -77,14 +96,58 @@ const Home: React.FC = () => {
         return;
       }
     }
-    utilities.patchCall("user-profile-update", data).then((res) => {});
+    utilities.patchCall("user-password-update", data).then((res) => {
+      if (res.status) {
+        setUserUpdateSuccess(true);
+        setPassword("");
+        setConfirmPassword("");
+      } else {
+        setUserUpdateAlert(true);
+      }
+    });
+  };
 
-    console.log(data);
+  const submitProfilePhoto = async () => {
+    await getPhoto({
+      allowEditing: true,
+      resultType: CameraResultType.Base64,
+      source: CameraSource.Photos,
+      quality: 100,
+    })
+      .then((cameraPhoto) => {
+        let data = JSON.stringify({
+          avatar: cameraPhoto.base64String,
+          format: cameraPhoto.format,
+        });
+        utilities.patchCall("user-avatar-update", data).then((res) => {
+          if (res.status) {
+            setUserUpdateSuccess(true);
+            setAvatar(res.data.avatar);
+          } else {
+            setUserUpdateAlert(true);
+          }
+        });
+      })
+      .catch((error) => {});
   };
 
   return (
     <>
       <Loader showLoader={showLoader} />
+      <IonToast
+        isOpen={userUpdateAlert}
+        onDidDismiss={() => setUserUpdateAlert(false)}
+        message="Operation could not be done. Try again later"
+        duration={5000}
+        color="danger"
+      />
+      <IonToast
+        isOpen={userUpdateSuccess}
+        onDidDismiss={() => setUserUpdateSuccess(false)}
+        message="Operation Completed Successfully."
+        duration={5000}
+        color="success"
+      />
       <IonToast
         isOpen={passwordError}
         message="Passwords don't match or don't respect 8 characters minimum."
@@ -101,7 +164,7 @@ const Home: React.FC = () => {
               className="profile-form"
               onSubmit={(e) => {
                 e.preventDefault();
-                submit();
+                submitProfile();
               }}
             >
               <IonRow>
@@ -110,8 +173,17 @@ const Home: React.FC = () => {
                     lines="none"
                     className="form-item form-item-image mt1"
                   >
-                    <img alt="logo" src="/assets/logo.png" className="avatar" />
+                    <img
+                      alt="logo"
+                      src={new Utils().getApiEndpoint() + avatar}
+                      className="avatar"
+                      id="camera-photo"
+                    />
                   </IonItem>
+
+                  <IonButton onClick={() => submitProfilePhoto()}>
+                    <IonIcon icon={camera}></IonIcon>
+                  </IonButton>
                 </IonCol>
               </IonRow>
               <IonRow>
@@ -158,6 +230,8 @@ const Home: React.FC = () => {
                       required
                     ></IonInput>
                   </IonItem>
+                </IonCol>
+                <IonCol sizeXs="12" sizeSm="6" sizeMd="6" sizeLg="6" sizeXl="6">
                   <IonItem lines="none" className="form-item mt1">
                     <IonRadioGroup
                       value={sex}
@@ -175,8 +249,6 @@ const Home: React.FC = () => {
                       </IonItem>
                     </IonRadioGroup>
                   </IonItem>
-                </IonCol>
-                <IonCol sizeXs="12" sizeSm="6" sizeMd="6" sizeLg="6" sizeXl="6">
                   <IonItem lines="none" className="form-item mt1">
                     <IonInput
                       className="input-field"
@@ -210,6 +282,31 @@ const Home: React.FC = () => {
                       required
                     ></IonInput>
                   </IonItem>
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol>
+                  <IonItem lines="none" className="form-item mt1">
+                    <IonButton type="submit" className="profile-button">
+                      Update
+                    </IonButton>
+                  </IonItem>
+                </IonCol>
+              </IonRow>
+            </form>
+            <br />
+            <IonTitle size="large" className="form-title mt1 mb1">
+              Change your password
+            </IonTitle>
+            <form
+              className="profile-form"
+              onSubmit={(e) => {
+                e.preventDefault();
+                submitPassword();
+              }}
+            >
+              <IonRow>
+                <IonCol>
                   <IonItem lines="none" className="form-item mt1">
                     <IonInput
                       className="input-field"
@@ -220,6 +317,8 @@ const Home: React.FC = () => {
                       placeholder="Password"
                     ></IonInput>
                   </IonItem>
+                </IonCol>
+                <IonCol>
                   <IonItem lines="none" className="form-item mt1">
                     <IonInput
                       className="input-field"
@@ -232,11 +331,12 @@ const Home: React.FC = () => {
                   </IonItem>
                 </IonCol>
               </IonRow>
+
               <IonRow>
                 <IonCol>
                   <IonItem lines="none" className="form-item mt1">
                     <IonButton type="submit" className="profile-button">
-                      Update
+                      Update Password
                     </IonButton>
                   </IonItem>
                 </IonCol>
