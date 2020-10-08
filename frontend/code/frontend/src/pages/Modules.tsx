@@ -5,22 +5,13 @@ import {
   IonContent,
   IonCol,
   IonRow,
-  IonText,
-  IonImg,
-  IonRouterLink,
   IonIcon,
   IonCard,
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
-  IonCardContent,
 } from "@ionic/react";
-import {
-  barChartOutline,
-  starOutline,
-  peopleOutline,
-  receiptOutline,
-} from "ionicons/icons";
+import { barChartOutline, starOutline, peopleOutline } from "ionicons/icons";
 
 const utilities = new Utils();
 const Modules: React.FC = () => {

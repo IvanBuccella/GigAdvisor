@@ -5,8 +5,6 @@ import {
   IonToolbar,
   IonGrid,
   IonRow,
-  IonMenuButton,
-  IonLabel,
   IonRouterLink,
 } from "@ionic/react";
 

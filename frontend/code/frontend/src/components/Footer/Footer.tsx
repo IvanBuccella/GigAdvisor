@@ -4,7 +4,6 @@ import {
   IonToolbar,
   IonGrid,
   IonRow,
-  IonCol,
   IonButton,
   IonIcon,
   IonButtons,

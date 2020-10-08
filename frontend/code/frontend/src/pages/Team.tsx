@@ -12,12 +12,6 @@ import {
   IonCardTitle,
   IonCardContent,
 } from "@ionic/react";
-import {
-  barChartOutline,
-  starOutline,
-  peopleOutline,
-  receiptOutline,
-} from "ionicons/icons";
 
 const utilities = new Utils();
 const Team: React.FC = () => {

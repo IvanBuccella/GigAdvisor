@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import { Utils } from "../core/Utils";
 import { IonSlide, IonContent, IonRow, IonText } from "@ionic/react";
-import {
-  barChartOutline,
-  starOutline,
-  peopleOutline,
-  receiptOutline,
-} from "ionicons/icons";
 
 const utilities = new Utils();
 const KnowYourRights: React.FC = () => {
