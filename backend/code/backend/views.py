@@ -65,7 +65,8 @@ class UserProfile(APIView):
         retDict.update({"username": user.username})
         retDict.update({"avatar": profileSerializer.data["avatar"]})
         retDict.update({"birth_date": profileSerializer.data["birth_date"]})
-        retDict.update({"position": profileSerializer.data["position"]})
+        retDict.update({"latitude": profileSerializer.data["latitude"]})
+        retDict.update({"longitude": profileSerializer.data["longitude"]})
         retDict.update({"sex": profileSerializer.data["sex"]})
         retDict.update({"qualification": profileSerializer.data["qualification"]})
 
@@ -92,7 +93,8 @@ class UserProfileUpdate(APIView):
             userSerializer.save()
             dataToUpdate = {
                 "birth_date": request.data["birthDate"],
-                "position": request.data["position"],
+                "latitude": request.data["latitude"],
+                "longitude": request.data["longitude"],
                 "sex": request.data["sex"],
                 "qualification": request.data["qualification"],
             }

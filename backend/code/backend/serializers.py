@@ -37,7 +37,15 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ("user", "birth_date", "position", "sex", "qualification", "avatar")
+        fields = (
+            "user",
+            "birth_date",
+            "latitude",
+            "longitude",
+            "sex",
+            "qualification",
+            "avatar",
+        )
 
     def create(self, validated_data):
         user_data = validated_data.pop("user")
@@ -45,7 +53,8 @@ class ProfileSerializer(serializers.ModelSerializer):
         profile, created = Profile.objects.update_or_create(
             user=user,
             birth_date=validated_data.pop("birth_date"),
-            position=validated_data.pop("position"),
+            latitude=validated_data.pop("latitude"),
+            longitude=validated_data.pop("longitude"),
             sex=validated_data.pop("sex"),
             qualification=validated_data.pop("qualification"),
         )
@@ -53,7 +62,8 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         instance.birth_date = validated_data.get("birth_date", instance.birth_date)
-        instance.position = validated_data.get("position", instance.position)
+        instance.latitude = validated_data.get("latitude", instance.latitude)
+        instance.longitude = validated_data.get("longitude", instance.longitude)
         instance.sex = validated_data.get("sex", instance.sex)
         instance.qualification = validated_data.get(
             "qualification", instance.qualification

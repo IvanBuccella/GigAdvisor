@@ -18,7 +18,8 @@ class Profile(models.Model):
         blank=True, default="/users/default.png", upload_to=avatar_folder
     )
     birth_date = models.DateField(null=True, blank=True)
-    position = models.CharField(null=True, max_length=50, blank=True)
+    latitude = models.FloatField(null=True, blank=False, default=0)
+    longitude = models.FloatField(null=True, blank=False, default=0)
     sex = models.CharField(null=True, max_length=1, choices=SEX_CHOICES, blank=True)
     qualification = models.CharField(null=True, max_length=100, blank=True)
 

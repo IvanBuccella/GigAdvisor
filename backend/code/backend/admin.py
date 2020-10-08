@@ -19,7 +19,8 @@ class CustomUserAdmin(UserAdmin):
         "last_name",
         "get_birth_date",
         "get_qualification",
-        "get_position",
+        "get_latitude",
+        "get_longitude",
         "get_sex",
         "email",
         "is_staff",
@@ -41,10 +42,15 @@ class CustomUserAdmin(UserAdmin):
 
     get_qualification.short_description = "Qualification"
 
-    def get_position(self, instance):
-        return instance.profile.position
+    def get_latitude(self, instance):
+        return instance.profile.latitude
 
-    get_position.short_description = "Position"
+    get_latitude.short_description = "Latitude"
+
+    def get_longitude(self, instance):
+        return instance.profile.longitude
+
+    get_longitude.short_description = "Longitude"
 
     def get_inline_instances(self, request, obj=None):
         if not obj:
