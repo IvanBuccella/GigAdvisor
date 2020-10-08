@@ -17,6 +17,7 @@
 
 @mixin blue-button {
   --min-height: var(--input-height);
+  --min-width: var(--button-width);
   --background: var(--color-blue);
   height: var(--input-height);
   font-size: var(--font-size);

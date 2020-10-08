@@ -1,6 +1,10 @@
 .page-container.profile {
   @include container-centered(100%);
   .profile-form {
+    .change-avatar-button {
+      @include blue-button;
+      width: var(--button-width);
+    }
     .form-item {
       --background-focused: transparent;
       &.form-item-image {
@@ -26,6 +30,10 @@
             --border-color: transparent;
           }
         }
+      }
+      .position-button {
+        @include blue-button;
+        width: var(--button-width);
       }
     }
     .profile-button {

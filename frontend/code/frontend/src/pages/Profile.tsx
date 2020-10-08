@@ -16,8 +16,8 @@ import {
   IonContent,
   IonIcon,
 } from "@ionic/react";
-import { camera } from "ionicons/icons";
-
+import { camera, pinOutline } from "ionicons/icons";
+import { Geolocation } from "@ionic-native/geolocation";
 import { CameraResultType, CameraSource } from "@capacitor/core";
 import { useCamera } from "@ionic/react-hooks/camera";
 
@@ -37,7 +37,8 @@ const Home: React.FC = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [sex, setSex] = useState("");
-  const [position, setPosition] = useState("");
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
   const [birthDate, setBirthDate] = useState("");
   const [qualification, setQualification] = useState("");
   const [password, setPassword] = useState("");
@@ -54,7 +55,8 @@ const Home: React.FC = () => {
         setUsername(res.data.username);
         setEmail(res.data.email);
         setSex(res.data.sex);
-        setPosition(res.data.position);
+        setLatitude(res.data.latitude);
+        setLongitude(res.data.longitude);
         setBirthDate(res.data.birth_date);
         setQualification(res.data.qualification);
         setShowLoader(false);
@@ -70,7 +72,8 @@ const Home: React.FC = () => {
       lastName: lastName,
       email: email,
       sex: sex,
-      position: position,
+      latitude: latitude,
+      longitude: longitude,
       birthDate: birthDate,
       qualification: qualification,
     });
@@ -130,6 +133,16 @@ const Home: React.FC = () => {
       .catch((error) => {});
   };
 
+  const getPosition = async () => {
+    try {
+      const position = await Geolocation.getCurrentPosition();
+      setLatitude(position.coords.latitude);
+      setLongitude(position.coords.longitude);
+    } catch (e) {
+      setUserUpdateAlert(true);
+    }
+  };
+
   return (
     <>
       <Loader showLoader={showLoader} />
@@ -178,7 +191,10 @@ const Home: React.FC = () => {
                     />
                   </IonItem>
 
-                  <IonButton onClick={() => submitProfilePhoto()}>
+                  <IonButton
+                    onClick={() => submitProfilePhoto()}
+                    className="change-avatar-button"
+                  >
                     <IonIcon icon={camera}></IonIcon>
                   </IonButton>
                 </IonCol>
@@ -249,13 +265,32 @@ const Home: React.FC = () => {
                   <IonItem lines="none" className="form-item mt1">
                     <IonInput
                       className="input-field"
-                      name="position"
-                      value={position}
-                      onIonChange={(e) => setPosition(e.detail.value!)}
+                      name="latitude"
+                      value={latitude}
+                      onIonChange={(e) =>
+                        setLatitude(parseFloat(e.detail.value!))
+                      }
                       type="text"
-                      placeholder="Position"
+                      placeholder="Latitude"
                       required
                     ></IonInput>
+                    <IonInput
+                      className="input-field"
+                      name="longitude"
+                      value={longitude}
+                      onIonChange={(e) =>
+                        setLongitude(parseFloat(e.detail.value!))
+                      }
+                      type="text"
+                      placeholder="Longitude"
+                      required
+                    ></IonInput>
+                    <IonButton
+                      onClick={() => getPosition()}
+                      className="position-button"
+                    >
+                      <IonIcon icon={pinOutline}></IonIcon>
+                    </IonButton>
                   </IonItem>
                   <IonItem lines="none" className="form-item mt1">
                     <IonInput
