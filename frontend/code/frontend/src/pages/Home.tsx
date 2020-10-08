@@ -13,6 +13,9 @@ import {
   IonIcon,
   IonRow,
   IonCol,
+  IonLabel,
+  IonRadio,
+  IonRadioGroup,
 } from "@ionic/react";
 import {
   helpOutline,
@@ -20,7 +23,7 @@ import {
   receiptOutline,
   logInOutline,
 } from "ionicons/icons";
-import { withRouter } from "react-router-dom";
+
 const utilities = new Utils();
 
 const Home: React.FC = () => {
@@ -28,6 +31,7 @@ const Home: React.FC = () => {
     false
   ); /*useState(true) Remember to set it as true!!!*/
   const [showLanguageModal, setShowLanguageModal] = useState(false);
+  const [languageSelected, setLanguageSelected] = useState<string>("english");
   return (
     <IonSlide>
       <IonContent className="page-container home">
@@ -48,7 +52,15 @@ const Home: React.FC = () => {
 
         <IonModal isOpen={showLanguageModal} cssClass="modal language-modal">
           <h3 className="title">Choose your language</h3>
-          <IonText className="text">Languages Business Logic Here</IonText>
+          <IonText className="text">
+            <IonRadioGroup
+              value={languageSelected}
+              onIonChange={(e) => setLanguageSelected(e.detail.value)}
+            >
+              <IonLabel>English</IonLabel>
+              <IonRadio slot="start" value="english" />
+            </IonRadioGroup>
+          </IonText>
           <IonButton
             onClick={() => setShowLanguageModal(false)}
             className="button background-blue"
