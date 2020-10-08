@@ -13,6 +13,28 @@
 @import "pages/Team";
 @import "pages/Pubblications";
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.title-default {
+  position: relative;
+  --color: var(--color-blue);
+  color: var(--color-blue);
+}
+ion-card {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  ion-card-subtitle {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+  }
+}
 .page-container {
   --ion-default-font: "Lato", "Roboto", "Helvetica Neue", sans-serif;
   font-family: "Lato", "Roboto", "Helvetica Neue", sans-serif;
@@ -49,4 +71,9 @@
       }
     }
   }
+}
+
+.important-notice-modal {
+  --max-width: 350px;
+  --max-height: 350px;
 }

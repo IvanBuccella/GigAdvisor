@@ -6,15 +6,11 @@ import {
   IonCol,
   IonRow,
   IonText,
-  IonImg,
-  IonRouterLink,
-  IonIcon,
   IonCard,
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
   IonCardContent,
-  IonTitle,
 } from "@ionic/react";
 import {
   barChartOutline,
@@ -28,9 +24,7 @@ const Team: React.FC = () => {
   return (
     <IonSlide>
       <IonContent className="page-container team">
-        <IonTitle>
-          <h1 className="blue">Team</h1>
-        </IonTitle>
+        <h1>Team</h1>
         <IonText>
           The project stems from an ongoing interdisciplinary collaboration
           involving researchers with a background in legal informatics, computer

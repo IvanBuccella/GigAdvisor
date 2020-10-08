@@ -4,7 +4,6 @@ import {
   IonItem,
   IonButton,
   IonToast,
-  IonTitle,
   IonItemDivider,
   IonLabel,
   IonSlide,
@@ -84,9 +83,7 @@ const Signup: React.FC = () => {
             submit();
           }}
         >
-          <IonTitle size="large" className="form-title mt1 mb1">
-            Sign Up for free
-          </IonTitle>
+          <h1 className="form-title mt1 mb1">Sign Up</h1>
           <IonItem lines="none" className="form-item mt1">
             <IonInput
               className="input-field"

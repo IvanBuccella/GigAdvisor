@@ -7,7 +7,6 @@ import {
   IonCol,
   IonButton,
   IonIcon,
-  IonTitle,
   IonButtons,
 } from "@ionic/react";
 import {
@@ -18,6 +17,13 @@ import {
 } from "ionicons/icons";
 
 const Footer: React.FC = () => {
+  const isMenuItemActive = (pageName: string) => {
+    if (pageName == window.location.pathname) {
+      return "blue";
+    }
+    return "";
+  };
+
   return (
     <IonFooter className="footer">
       <IonToolbar className="footer-toolbar">
@@ -31,7 +37,11 @@ const Footer: React.FC = () => {
                   href="/"
                   className="footer-button"
                 >
-                  <IonIcon slot="start" icon={homeOutline} />
+                  <IonIcon
+                    slot="start"
+                    icon={homeOutline}
+                    className={"myclass " + isMenuItemActive("/")}
+                  />
                 </IonButton>
                 <IonButton
                   fill="clear"
@@ -39,7 +49,11 @@ const Footer: React.FC = () => {
                   href="/modules"
                   className="footer-button"
                 >
-                  <IonIcon slot="start" icon={walletOutline} />
+                  <IonIcon
+                    slot="start"
+                    icon={walletOutline}
+                    className={"" + isMenuItemActive("/modules")}
+                  />
                 </IonButton>
                 <IonButton
                   fill="clear"
@@ -47,7 +61,11 @@ const Footer: React.FC = () => {
                   href="/team"
                   className="footer-button"
                 >
-                  <IonIcon slot="start" icon={peopleOutline} />
+                  <IonIcon
+                    slot="start"
+                    icon={peopleOutline}
+                    className={"" + isMenuItemActive("/team")}
+                  />
                 </IonButton>
                 <IonButton
                   fill="clear"
@@ -55,7 +73,11 @@ const Footer: React.FC = () => {
                   href="/pubblications"
                   className="footer-button"
                 >
-                  <IonIcon slot="start" icon={newspaperOutline} />
+                  <IonIcon
+                    slot="start"
+                    icon={newspaperOutline}
+                    className={"" + isMenuItemActive("/pubblications")}
+                  />
                 </IonButton>
               </IonButtons>
             </IonToolbar>

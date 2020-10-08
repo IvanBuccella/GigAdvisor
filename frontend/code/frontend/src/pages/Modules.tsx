@@ -29,36 +29,50 @@ const Modules: React.FC = () => {
       <IonContent className="page-container modules">
         <IonRow>
           <IonCol>
-            <IonCard href="/rate-a-gig">
+            <IonCard href="/rate-a-gig" className="card module">
               <IonCardHeader>
                 <IonCardSubtitle>
-                  <IonIcon icon={starOutline} size="large" className="icon" />
+                  <IonIcon
+                    icon={starOutline}
+                    size="large"
+                    className="icon blue"
+                  />
                 </IonCardSubtitle>
-                <IonCardTitle>Rate your gig</IonCardTitle>
+                <IonCardTitle>
+                  <h3>Rate your gig</h3>
+                </IonCardTitle>
               </IonCardHeader>
             </IonCard>
           </IonCol>
           <IonCol>
-            <IonCard href="/blog">
+            <IonCard href="/blog" className="card module">
               <IonCardHeader>
                 <IonCardSubtitle>
-                  <IonIcon icon={peopleOutline} size="large" className="icon" />
+                  <IonIcon
+                    icon={peopleOutline}
+                    size="large"
+                    className="icon blue"
+                  />
                 </IonCardSubtitle>
-                <IonCardTitle>Connect with Others</IonCardTitle>
+                <IonCardTitle>
+                  <h3>Connect with Others</h3>
+                </IonCardTitle>
               </IonCardHeader>
             </IonCard>
           </IonCol>
           <IonCol>
-            <IonCard href="/ratings">
+            <IonCard href="/ratings" className="card module">
               <IonCardHeader>
                 <IonCardSubtitle>
                   <IonIcon
                     icon={barChartOutline}
                     size="large"
-                    className="icon"
+                    className="icon blue"
                   />
                 </IonCardSubtitle>
-                <IonCardTitle>Platform's Rating</IonCardTitle>
+                <IonCardTitle>
+                  <h3>Platform's Rating</h3>
+                </IonCardTitle>
               </IonCardHeader>
             </IonCard>
           </IonCol>

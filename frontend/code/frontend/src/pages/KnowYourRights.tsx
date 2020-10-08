@@ -1,21 +1,6 @@
 import React, { useState } from "react";
 import { Utils } from "../core/Utils";
-import {
-  IonSlide,
-  IonContent,
-  IonCol,
-  IonRow,
-  IonText,
-  IonImg,
-  IonRouterLink,
-  IonIcon,
-  IonCard,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonCardContent,
-  IonTitle,
-} from "@ionic/react";
+import { IonSlide, IonContent, IonRow, IonText } from "@ionic/react";
 import {
   barChartOutline,
   starOutline,
@@ -28,10 +13,8 @@ const KnowYourRights: React.FC = () => {
   return (
     <IonSlide>
       <IonContent className="page-container know-your-rights">
-        <IonTitle className="blue">
-          <h1>Know Your Rights</h1>
-        </IonTitle>
         <IonText>
+          <h1>Know Your Rights</h1>
           <p className="text-left">
             One of the goals of GigAdvisor is to inform crowd-workers. An
             accurate information is a sine qua to enable an effective protection
@@ -51,17 +34,17 @@ const KnowYourRights: React.FC = () => {
             riders have the following rights:
           </p>
         </IonText>
-        <br />
-        <br />
+
         <IonRow className="right">
           <div className="right-header">
             <img
               src="/assets/pages/know-your-rights/01.jpg"
               className="image"
             />
-            <IonTitle className="title purple">
-              <h5>THE RIGHT TO A WRITTEN CONTRACT</h5>
-            </IonTitle>
+
+            <h5 className="title purple ml1">
+              THE RIGHT TO A WRITTEN CONTRACT
+            </h5>
           </div>
 
           <IonText className="right-description">
@@ -79,9 +62,7 @@ const KnowYourRights: React.FC = () => {
               src="/assets/pages/know-your-rights/02.png"
               className="image"
             />
-            <IonTitle className="title blue">
-              <h5>THE RIGHT TO BE INFORMED</h5>
-            </IonTitle>
+            <h5 className="title ml1">THE RIGHT TO BE INFORMED</h5>
           </div>
 
           <IonText className="right-description">
@@ -98,9 +79,7 @@ const KnowYourRights: React.FC = () => {
               src="/assets/pages/know-your-rights/03.jpg"
               className="image"
             />
-            <IonTitle className="title green">
-              <h5>THE RIGHT TO A MINIMUM WAGE</h5>
-            </IonTitle>
+            <h5 className="title green ml1">THE RIGHT TO A MINIMUM WAGE</h5>
           </div>
 
           <IonText className="right-description">
@@ -118,9 +97,9 @@ const KnowYourRights: React.FC = () => {
               src="/assets/pages/know-your-rights/04.png"
               className="image"
             />
-            <IonTitle className="title red">
-              <h5>THE RIGHT TO ADDITIONAL INDEMNITIES</h5>
-            </IonTitle>
+            <h5 className="title red ml1">
+              THE RIGHT TO ADDITIONAL INDEMNITIES
+            </h5>
           </div>
 
           <IonText className="right-description">
@@ -138,9 +117,9 @@ const KnowYourRights: React.FC = () => {
               src="/assets/pages/know-your-rights/05.png"
               className="image"
             />
-            <IonTitle className="title orange">
-              <h5>THE RIGHT TO A PUBLIC INSURANCE</h5>
-            </IonTitle>
+            <h5 className="title orange ml1">
+              THE RIGHT TO A PUBLIC INSURANCE
+            </h5>
           </div>
 
           <IonText className="right-description">

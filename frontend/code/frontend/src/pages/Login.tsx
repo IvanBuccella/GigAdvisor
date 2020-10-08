@@ -4,9 +4,7 @@ import {
   IonItemDivider,
   IonItem,
   IonButton,
-  IonLoading,
   IonToast,
-  IonTitle,
   IonLabel,
   IonContent,
   IonSlide,
@@ -55,10 +53,7 @@ const Login: React.FC = () => {
       />
       <IonSlide>
         <IonContent className="page-container login">
-          <IonTitle size="large" className="form-title mt1 mb1">
-            Log In
-          </IonTitle>
-
+          <h1 className="form-title mt1 mb1">Log In</h1>
           <form
             className="login-form"
             onSubmit={(e) => {

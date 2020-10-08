@@ -1,21 +1,6 @@
 import React, { useState } from "react";
 import { Utils } from "../core/Utils";
-import {
-  IonSlide,
-  IonContent,
-  IonCol,
-  IonRow,
-  IonText,
-  IonImg,
-  IonRouterLink,
-  IonIcon,
-  IonCard,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonCardContent,
-  IonTitle,
-} from "@ionic/react";
+import { IonSlide, IonContent, IonText } from "@ionic/react";
 import {
   barChartOutline,
   starOutline,
@@ -28,12 +13,8 @@ const About: React.FC = () => {
   return (
     <IonSlide>
       <IonContent className="page-container about">
-        <IonTitle>
-          <h1>GigAdvisor in a nutshell...</h1>
-        </IonTitle>
-        <IonTitle className="blue text-left pl0">
-          <h5>An interdisciplinary research</h5>
-        </IonTitle>
+        <h1>GigAdvisor in a nutshell...</h1>
+        <h5 className="text-left pl0">An interdisciplinary research</h5>
         <IonText>
           <p className="text-left mt0 mb0">
             GigAdvisor is an experimental platform designed to work within the
@@ -51,9 +32,7 @@ const About: React.FC = () => {
             economy.
           </p>
         </IonText>
-        <IonTitle className="orange text-left pl0">
-          <h5>The goals</h5>
-        </IonTitle>
+        <h5 className="orange text-left pl0">The goals</h5>
         <IonText>
           <p className="text-left mt0 mb0">
             he project aims to sketch a methodological framework, a research
@@ -100,9 +79,7 @@ const About: React.FC = () => {
           </p>
         </IonText>
 
-        <IonTitle className="purple text-left pl0">
-          <h5>Next steps</h5>
-        </IonTitle>
+        <h5 className="purple text-left pl0">Next steps</h5>
         <IonText>
           <p className="text-left mt0 mb0">
             We are planning to use GigAdvisor within experimental settings

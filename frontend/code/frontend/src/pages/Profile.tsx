@@ -4,7 +4,6 @@ import Loader from "../components/Loader";
 import {
   IonItem,
   IonInput,
-  IonTitle,
   IonButton,
   IonCol,
   IonRow,
@@ -156,9 +155,7 @@ const Home: React.FC = () => {
       />
       <IonSlide>
         <IonContent className="page-container profile">
-          <IonTitle size="large" className="form-title mt1 mb1">
-            Profile
-          </IonTitle>
+          <h1 className="form-title mt1 mb1">Profile</h1>
           <IonGrid>
             <form
               className="profile-form"
@@ -295,9 +292,7 @@ const Home: React.FC = () => {
               </IonRow>
             </form>
             <br />
-            <IonTitle size="large" className="form-title mt1 mb1">
-              Change your password
-            </IonTitle>
+            <h1 className="form-title mt1 mb1">Change your password</h1>
             <form
               className="profile-form"
               onSubmit={(e) => {
