@@ -135,7 +135,11 @@ const Home: React.FC = () => {
 
   const getPosition = async () => {
     try {
-      const position = await Geolocation.getCurrentPosition();
+      const position = await Geolocation.getCurrentPosition({
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+      });
       setLatitude(position.coords.latitude);
       setLongitude(position.coords.longitude);
     } catch (e) {
