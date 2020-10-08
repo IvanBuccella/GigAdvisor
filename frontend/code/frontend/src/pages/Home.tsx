@@ -22,9 +22,68 @@ import {
   languageOutline,
   receiptOutline,
   logInOutline,
+  personCircleOutline,
+  logOutOutline,
 } from "ionicons/icons";
 
 const utilities = new Utils();
+
+function ReservedAreaCards() {
+  if (utilities.isAuthenticatedUser()) {
+    return (
+      <IonRow>
+        <IonCol>
+          <IonCard href="/profile">
+            <IonCardHeader>
+              <IonCardSubtitle>
+                <IonIcon
+                  icon={personCircleOutline}
+                  size="large"
+                  className="icon blue"
+                />
+              </IonCardSubtitle>
+              <IonCardTitle>
+                <h3>Profile</h3>
+              </IonCardTitle>
+            </IonCardHeader>
+          </IonCard>
+        </IonCol>
+        <IonCol>
+          <IonCard href="/logout">
+            <IonCardHeader>
+              <IonCardSubtitle>
+                <IonIcon
+                  icon={logOutOutline}
+                  size="large"
+                  className="icon blue"
+                />
+              </IonCardSubtitle>
+              <IonCardTitle>
+                <h3>Logout</h3>
+              </IonCardTitle>
+            </IonCardHeader>
+          </IonCard>
+        </IonCol>
+      </IonRow>
+    );
+  }
+  return (
+    <IonRow>
+      <IonCol>
+        <IonCard href="/login">
+          <IonCardHeader>
+            <IonCardSubtitle>
+              <IonIcon icon={logInOutline} size="large" className="icon blue" />
+            </IonCardSubtitle>
+            <IonCardTitle>
+              <h3>Login</h3>
+            </IonCardTitle>
+          </IonCardHeader>
+        </IonCard>
+      </IonCol>
+    </IonRow>
+  );
+}
 
 const Home: React.FC = () => {
   const [showNotice, setShowNotice] = useState(
@@ -32,6 +91,7 @@ const Home: React.FC = () => {
   ); /*useState(true) Remember to set it as true!!!*/
   const [showLanguageModal, setShowLanguageModal] = useState(false);
   const [languageSelected, setLanguageSelected] = useState<string>("english");
+
   return (
     <IonSlide>
       <IonContent className="page-container home">
@@ -40,7 +100,7 @@ const Home: React.FC = () => {
           <IonText className="text">
             This is a prototype of an experimental web-application under
             development for pure research purposes. Data presented in following
-            pages are fictitious.{" "}
+            pages are fictitious.
           </IonText>
           <IonButton
             onClick={() => setShowNotice(false)}
@@ -68,24 +128,8 @@ const Home: React.FC = () => {
             Save
           </IonButton>
         </IonModal>
-        <IonRow>
-          <IonCol>
-            <IonCard href="/login">
-              <IonCardHeader>
-                <IonCardSubtitle>
-                  <IonIcon
-                    icon={logInOutline}
-                    size="large"
-                    className="icon blue"
-                  />
-                </IonCardSubtitle>
-                <IonCardTitle>
-                  <h3>Log In</h3>
-                </IonCardTitle>
-              </IonCardHeader>
-            </IonCard>
-          </IonCol>
-        </IonRow>
+
+        <ReservedAreaCards />
         <IonRow>
           <IonCol>
             <IonCard href="/know-your-rights">
