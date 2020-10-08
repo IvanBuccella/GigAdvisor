@@ -5,10 +5,16 @@ http://ionicframework.com/docs/theming/ */
 :root {
   --color-white: #ffffff;
   --color-black: #181818;
-  --color-blue: #00aac9;
+  --color-blue: #05b7d7;
+  --color-orange: #ff7402;
+  --color-purple: #951d95;
+  --color-red: #c00000;
+  --color-green: #c00000;
+
   --padding-left: 16px;
   --font-size: 16px;
   --input-height: 50px;
+  --button-width: 50px;
 
   /** primary **/
   --ion-color-primary: #3880ff;
