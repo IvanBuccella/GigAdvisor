@@ -24,6 +24,7 @@ import {
   logInOutline,
   personCircleOutline,
   logOutOutline,
+  personAddOutline,
 } from "ionicons/icons";
 
 const utilities = new Utils();
@@ -77,6 +78,22 @@ function ReservedAreaCards() {
             </IonCardSubtitle>
             <IonCardTitle>
               <h3>Login</h3>
+            </IonCardTitle>
+          </IonCardHeader>
+        </IonCard>
+      </IonCol>
+      <IonCol>
+        <IonCard href="/signup">
+          <IonCardHeader>
+            <IonCardSubtitle>
+              <IonIcon
+                icon={personAddOutline}
+                size="large"
+                className="icon blue"
+              />
+            </IonCardSubtitle>
+            <IonCardTitle>
+              <h3>Sign Up</h3>
             </IonCardTitle>
           </IonCardHeader>
         </IonCard>
