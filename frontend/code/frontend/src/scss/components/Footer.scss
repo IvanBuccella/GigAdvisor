@@ -11,6 +11,12 @@
             width: 100%;
             .footer-button {
               flex-grow: 1;
+              text-align: center;
+              color: #fff;
+              span,
+              ion-icon {
+                width: 100%;
+              }
             }
           }
         }

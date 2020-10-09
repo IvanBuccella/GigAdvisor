@@ -4,9 +4,9 @@ import {
   IonToolbar,
   IonGrid,
   IonRow,
-  IonButton,
   IonIcon,
   IonButtons,
+  IonRouterLink,
 } from "@ionic/react";
 import {
   homeOutline,
@@ -30,54 +30,39 @@ const Footer: React.FC = () => {
           <IonRow className="footer-row">
             <IonToolbar className="footer-menu-container">
               <IonButtons slot="secondary" className="footer-buttons">
-                <IonButton
-                  fill="clear"
-                  color="light"
-                  href="/"
-                  className="footer-button"
-                >
+                <IonRouterLink href="/" className="footer-button">
                   <IonIcon
-                    slot="start"
                     icon={homeOutline}
-                    className={"myclass " + isMenuItemActive("/")}
+                    className={"" + isMenuItemActive("/")}
                   />
-                </IonButton>
-                <IonButton
-                  fill="clear"
-                  color="light"
-                  href="/modules"
-                  className="footer-button"
-                >
+                  <span className={"" + isMenuItemActive("/")}>Home</span>
+                </IonRouterLink>
+
+                <IonRouterLink href="/modules" className="footer-button">
                   <IonIcon
-                    slot="start"
                     icon={walletOutline}
                     className={"" + isMenuItemActive("/modules")}
                   />
-                </IonButton>
-                <IonButton
-                  fill="clear"
-                  color="light"
-                  href="/team"
-                  className="footer-button"
-                >
+                  <span className={"" + isMenuItemActive("/modules")}>
+                    Modules
+                  </span>
+                </IonRouterLink>
+                <IonRouterLink href="/team" className="footer-button">
                   <IonIcon
-                    slot="start"
                     icon={peopleOutline}
                     className={"" + isMenuItemActive("/team")}
                   />
-                </IonButton>
-                <IonButton
-                  fill="clear"
-                  color="light"
-                  href="/pubblications"
-                  className="footer-button"
-                >
+                  <span className={"" + isMenuItemActive("/team")}>Team</span>
+                </IonRouterLink>
+                <IonRouterLink href="/pubblications" className="footer-button">
                   <IonIcon
-                    slot="start"
                     icon={newspaperOutline}
                     className={"" + isMenuItemActive("/pubblications")}
                   />
-                </IonButton>
+                  <span className={"" + isMenuItemActive("/pubblications")}>
+                    Pubblications
+                  </span>
+                </IonRouterLink>
               </IonButtons>
             </IonToolbar>
           </IonRow>
