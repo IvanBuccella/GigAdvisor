@@ -10,16 +10,16 @@ from rest_framework.parsers import JSONParser
 from backend.serializers import (
     UserSerializer,
     ProfileSerializer,
+    CategorySerializer,
+    PlatformSerializer,
 )
-from backend.models import Profile
+from backend.models import Profile, Category, Platform
 from rest_framework import generics
 from .utils import transform_base64_into_avatar
 
 
 class UserAuth(ObtainAuthToken):
-    """
-    API endpoint that return token for user authentication.
-    """
+    # API endpoint that return token for user authentication.
 
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(
@@ -32,9 +32,7 @@ class UserAuth(ObtainAuthToken):
 
 
 class UserCreate(APIView):
-    """
-    API endpoint that create a new Profile.
-    """
+    # API endpoint that create a new User.
 
     def post(self, request, *args, **kwargs):
         data = JSONParser().parse(request)
@@ -46,9 +44,7 @@ class UserCreate(APIView):
 
 
 class UserProfile(APIView):
-    """
-    API endpoint that return a Profile.
-    """
+    # API endpoint that return a Profile.
 
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -74,9 +70,7 @@ class UserProfile(APIView):
 
 
 class UserProfileUpdate(APIView):
-    """
-    API endpoint that update a Profile.
-    """
+    # API endpoint that update a Profile.
 
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -109,9 +103,7 @@ class UserProfileUpdate(APIView):
 
 
 class UserPasswordUpdate(APIView):
-    """
-    API endpoint that update a Profile Password.
-    """
+    # API endpoint that update a Profile Password.
 
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -129,9 +121,7 @@ class UserPasswordUpdate(APIView):
 
 
 class UserAvatarUpdate(APIView):
-    """
-    API endpoint that update a Profile Avatar.
-    """
+    # API endpoint that update a Profile Avatar.
 
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -143,9 +133,28 @@ class UserAvatarUpdate(APIView):
                 request.data["avatar"], request.data["format"]
             )[0],
         }
-        print(dataToUpdate)
         profileSerializer = ProfileSerializer(user.profile, dataToUpdate, partial=True,)
         if profileSerializer.is_valid():
             profileSerializer.save()
             return JsonResponse(profileSerializer.data, status=201)
         return JsonResponse("Error", status=400)
+
+
+class Categories(APIView):
+    # API endpoint that return Categories.
+
+    def post(self, request, *args, **kwargs):
+        queryset = Category.objects.all()
+        Category.objects.get
+        categorySerializer = CategorySerializer(queryset, many=True)
+
+        return JsonResponse(categorySerializer.data, status=201, safe=False)
+
+
+class Platforms(APIView):
+    # API endpoint that return Platforms.
+    def post(self, request, *args, **kwargs):
+        queryset = Platform.objects.all()
+        platformSerializer = PlatformSerializer(queryset, many=True)
+
+        return JsonResponse(platformSerializer.data, status=201, safe=False)

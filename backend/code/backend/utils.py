@@ -4,9 +4,14 @@ from PIL import Image
 from django.core.files.base import ContentFile
 
 
-def avatar_folder(instance, filename):
+def user_avatar_folder(instance, filename):
     base, extension = os.path.splitext(filename.lower())
     return f"users/{instance.pk}/{filename.lower()}"
+
+
+def platform_logo_folder(instance, filename):
+    base, extension = os.path.splitext(filename.lower())
+    return f"platforms/{instance.pk}/{filename.lower()}"
 
 
 def transform_base64_into_avatar(_dataurl, _format):

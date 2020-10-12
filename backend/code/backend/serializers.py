@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from backend.models import Profile
+from backend.models import Profile, Category, Platform
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -72,3 +72,17 @@ class ProfileSerializer(serializers.ModelSerializer):
             instance.avatar = validated_data.get("avatar", instance.avatar)
         instance.save()
         return instance
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ("name", "slug")
+
+
+class PlatformSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Platform
+        fields = ("name", "slug", "logo", "category")
+
+    category = CategorySerializer(required=True)

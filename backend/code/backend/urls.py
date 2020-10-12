@@ -39,6 +39,8 @@ urlpatterns = [
         views.UserAvatarUpdate.as_view(),
         name="user-avatar-update",
     ),
+    path("categories", views.Categories.as_view(), name="categories",),
+    path("platforms", views.Platforms.as_view(), name="platforms",),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
