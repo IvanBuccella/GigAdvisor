@@ -36,6 +36,7 @@ import KnowYourRights from "./pages/KnowYourRights";
 import About from "./pages/About";
 import Team from "./pages/Team";
 import Pubblications from "./pages/Pubblications";
+import Platforms from "./pages/Platforms";
 
 const App: React.FC = () => (
   <IonApp>
@@ -64,6 +65,7 @@ const App: React.FC = () => (
               component={KnowYourRights}
               exact={true}
             />
+            <Route path="/platforms" component={Platforms} exact={true} />
           </IonRouterOutlet>
         </IonReactRouter>
       </IonContent>

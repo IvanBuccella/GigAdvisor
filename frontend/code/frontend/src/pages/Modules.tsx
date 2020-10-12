@@ -11,7 +11,12 @@ import {
   IonCardSubtitle,
   IonCardTitle,
 } from "@ionic/react";
-import { barChartOutline, starOutline, peopleOutline } from "ionicons/icons";
+import {
+  barChartOutline,
+  starOutline,
+  peopleOutline,
+  addOutline,
+} from "ionicons/icons";
 
 const utilities = new Utils();
 const Modules: React.FC = () => {
@@ -20,11 +25,43 @@ const Modules: React.FC = () => {
       <IonContent className="page-container modules">
         <IonRow>
           <IonCol>
-            <IonCard href="/rate-a-gig" className="card module">
+            <IonCard href="/ratings" className="card module">
+              <IonCardHeader>
+                <IonCardSubtitle>
+                  <IonIcon
+                    icon={barChartOutline}
+                    size="large"
+                    className="icon blue"
+                  />
+                </IonCardSubtitle>
+                <IonCardTitle>
+                  <h3>Platform's Rating</h3>
+                </IonCardTitle>
+              </IonCardHeader>
+            </IonCard>
+          </IonCol>
+          <IonCol>
+            <IonCard href="/platforms" className="card module">
               <IonCardHeader>
                 <IonCardSubtitle>
                   <IonIcon
                     icon={starOutline}
+                    size="large"
+                    className="icon blue"
+                  />
+                </IonCardSubtitle>
+                <IonCardTitle>
+                  <h3>Reviews</h3>
+                </IonCardTitle>
+              </IonCardHeader>
+            </IonCard>
+          </IonCol>
+          <IonCol>
+            <IonCard href="/rate-a-gig" className="card module">
+              <IonCardHeader>
+                <IonCardSubtitle>
+                  <IonIcon
+                    icon={addOutline}
                     size="large"
                     className="icon blue"
                   />
@@ -47,22 +84,6 @@ const Modules: React.FC = () => {
                 </IonCardSubtitle>
                 <IonCardTitle>
                   <h3>Connect with Others</h3>
-                </IonCardTitle>
-              </IonCardHeader>
-            </IonCard>
-          </IonCol>
-          <IonCol>
-            <IonCard href="/ratings" className="card module">
-              <IonCardHeader>
-                <IonCardSubtitle>
-                  <IonIcon
-                    icon={barChartOutline}
-                    size="large"
-                    className="icon blue"
-                  />
-                </IonCardSubtitle>
-                <IonCardTitle>
-                  <h3>Platform's Rating</h3>
                 </IonCardTitle>
               </IonCardHeader>
             </IonCard>
