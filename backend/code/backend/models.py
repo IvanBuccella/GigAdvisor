@@ -52,3 +52,32 @@ class Platform(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Field(models.Model):
+    name = models.CharField(null=False, max_length=200, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Review(models.Model):
+    name = models.CharField(null=False, max_length=200, blank=True)
+    text = models.TextField(null=False, blank=True)
+    date = models.DateTimeField("date published", auto_now=True)
+    latitude = models.FloatField(null=True, blank=False, default=0)
+    longitude = models.FloatField(null=True, blank=False, default=0)
+    platform = models.ForeignKey(Platform, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
+class ReviewField(models.Model):
+    review = models.ForeignKey(Review, on_delete=models.CASCADE)
+    field = models.ForeignKey(Field, on_delete=models.CASCADE)
+    value = models.IntegerField(null=False, blank=False, default=0)
+
+    def __str__(self):
+        return str(self.review) + " - " + str(self.field)

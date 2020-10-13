@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from backend.models import Profile, Category, Platform
+from backend.models import Profile, Category, Platform, Review, Field, ReviewField
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -83,6 +83,39 @@ class CategorySerializer(serializers.ModelSerializer):
 class PlatformSerializer(serializers.ModelSerializer):
     class Meta:
         model = Platform
-        fields = ("name", "slug", "logo", "category")
+        fields = ("id", "name", "slug", "logo", "category")
 
     category = CategorySerializer(required=True)
+
+
+class FieldSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = (
+            "id",
+            "name",
+        )
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = (
+            "id",
+            "name",
+            "text",
+            "date",
+            "latitude",
+            "longitude",
+        )
+
+    date = serializers.DateTimeField(format="%d/%m/%Y - %H:%M:%S")
+
+
+class ReviewFieldSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ReviewField
+        fields = ("review", "field", "value")
+
+    review = ReviewSerializer(required=True)
+    field = FieldSerializer(required=True)

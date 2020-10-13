@@ -12,10 +12,13 @@ from backend.serializers import (
     ProfileSerializer,
     CategorySerializer,
     PlatformSerializer,
+    FieldSerializer,
+    ReviewSerializer,
+    ReviewFieldSerializer,
 )
-from backend.models import Profile, Category, Platform
+from backend.models import Profile, Category, Platform, Review, Field, ReviewField
 from rest_framework import generics
-from .utils import transform_base64_into_avatar
+from .utils import transform_base64_into_avatar, decimal_format
 
 
 class UserAuth(ObtainAuthToken):
@@ -32,7 +35,7 @@ class UserAuth(ObtainAuthToken):
 
 
 class UserCreate(APIView):
-    # API endpoint that create a new User.
+    # API endpoint that create a new Profile.
 
     def post(self, request, *args, **kwargs):
         data = JSONParser().parse(request)
@@ -152,9 +155,71 @@ class Categories(APIView):
 
 
 class Platforms(APIView):
-    # API endpoint that return Platforms.
+    # API endpoint that return Platforms or a specific Platform.
     def post(self, request, *args, **kwargs):
-        queryset = Platform.objects.all()
-        platformSerializer = PlatformSerializer(queryset, many=True)
+        if request.data and request.data["slug"]:
+            dataToReturn = []
+            # get fields
+            querysetField = Field.objects.all()
+            fieldSerializer = FieldSerializer(querysetField, many=True)
 
-        return JsonResponse(platformSerializer.data, status=201, safe=False)
+            querysetPlatform = Platform.objects.filter(slug=request.data["slug"])
+            platformSerializer = PlatformSerializer(querysetPlatform, many=True)
+            for platform in platformSerializer.data:
+                fields = []
+                totalValueSum = 0
+                totalValueNumber = 0
+                for field in fieldSerializer.data:
+                    valueSum = 0
+                    valueNumber = 0
+                    querysetReview = Review.objects.filter(platform=platform["id"])
+                    reviewSerializer = ReviewSerializer(querysetReview, many=True)
+                    for review in reviewSerializer.data:
+                        querysetReviewField = ReviewField.objects.filter(
+                            review=review["id"], field=field["id"]
+                        )
+                        reviewFieldSerializer = ReviewFieldSerializer(
+                            querysetReviewField, many=True
+                        )
+                        for reviewField in reviewFieldSerializer.data:
+                            valueNumber = valueNumber + 1
+                            valueSum = int(valueSum) + int(reviewField["value"])
+                            totalValueSum = totalValueSum + int(reviewField["value"])
+                    if valueNumber > 0:
+                        totalValueNumber = totalValueNumber + 1
+                        fields.append(
+                            {
+                                "name": field["name"],
+                                "count": decimal_format(valueNumber),
+                                "sum": decimal_format(valueSum),
+                                "avg": decimal_format(valueSum / valueNumber),
+                            }
+                        )
+                if totalValueNumber > 0:
+                    platform["count"] = decimal_format(totalValueNumber)
+                    platform["sum"] = decimal_format(totalValueSum)
+                    platform["avg"] = decimal_format(totalValueSum / totalValueNumber)
+                    platform["fields"] = fields
+                else:
+                    platform["count"] = 0
+                    platform["sum"] = 0
+                    platform["avg"] = 0
+                    platform["fields"] = fields
+                dataToReturn = platform
+            return JsonResponse(dataToReturn, status=201, safe=False)
+        else:
+            querysetPlatform = Platform.objects.all()
+            platformSerializer = PlatformSerializer(querysetPlatform, many=True)
+            dataToReturn = platformSerializer.data
+            return JsonResponse(dataToReturn, status=201, safe=False)
+
+
+class Reviews(APIView):
+    # API endpoint that return Platform's Reviews.
+    def post(self, request, *args, **kwargs):
+        if request.data and request.data["id"]:
+            querysetReview = Review.objects.filter(platform=request.data["id"])
+            reviewSerializer = ReviewSerializer(querysetReview, many=True)
+            return JsonResponse(reviewSerializer.data, status=201, safe=False)
+        else:
+            return JsonResponse({}, status=404, safe=False)

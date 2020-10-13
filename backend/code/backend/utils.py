@@ -4,6 +4,10 @@ from PIL import Image
 from django.core.files.base import ContentFile
 
 
+def decimal_format(number):
+    return "{:.2f}".format(round(number, 2))
+
+
 def user_avatar_folder(instance, filename):
     base, extension = os.path.splitext(filename.lower())
     return f"users/{instance.pk}/{filename.lower()}"
