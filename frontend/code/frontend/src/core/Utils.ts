@@ -3,6 +3,10 @@ import config from "../env.config.json";
 export class Utils {
   constructor() {}
 
+  getLastItem(path: string) {
+    return path.substring(path.lastIndexOf("/") + 1);
+  }
+
   getApiEndpoint() {
     return config.API_ENDPOINT;
   }

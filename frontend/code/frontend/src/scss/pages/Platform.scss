@@ -1,0 +1,37 @@
+.platform {
+  .platform-container {
+    .platform-left {
+      max-width: 30%;
+
+      .rating-list {
+        .rating {
+          border-top: 1px solid var(--color-grey);
+          .title {
+            width: 100%;
+            font-size: 0.8em;
+          }
+          .value {
+            width: 100%;
+          }
+        }
+      }
+    }
+    .platform-right {
+      .review {
+        .card {
+          width: 100%;
+          .subtitle {
+            display: flex;
+            align-items: center;
+            .icon {
+              margin-right: 5px;
+            }
+            p {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}

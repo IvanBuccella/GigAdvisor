@@ -14,7 +14,7 @@ import {
 
 const utilities = new Utils();
 
-const Modules: React.FC = () => {
+const Platforms: React.FC = () => {
   const [platforms, setPlatforms] = useState([]);
 
   function PlatformCards() {
@@ -61,8 +61,7 @@ const Modules: React.FC = () => {
   return (
     <IonSlide>
       <IonContent className="page-container platforms">
-        <h1 className="form-title mt1 mb1">See Reviews</h1>
-        <h3 className="black mt1 mb1">Choose a Platform</h3>
+        <h1 className="form-title mt1 mb1">Choose a Platform</h1>
         <IonRow className="platforms-list">
           <PlatformCards />
         </IonRow>
@@ -71,4 +70,4 @@ const Modules: React.FC = () => {
   );
 };
 
-export default Modules;
+export default Platforms;

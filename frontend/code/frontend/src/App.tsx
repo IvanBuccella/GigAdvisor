@@ -38,6 +38,7 @@ import Team from "./pages/Team";
 import Pubblications from "./pages/Pubblications";
 import Platforms from "./pages/Platforms";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Platform from "./pages/Platform";
 
 const App: React.FC = () => (
   <IonApp>
@@ -72,6 +73,7 @@ const App: React.FC = () => (
               component={PrivacyPolicy}
               exact={true}
             />
+            <Route path="/platform" component={Platform} exact={false} />
           </IonRouterOutlet>
         </IonReactRouter>
       </IonContent>
