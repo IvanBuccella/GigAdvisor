@@ -8,6 +8,7 @@ import {
   IonLabel,
   IonSlide,
   IonContent,
+  IonRouterLink,
 } from "@ionic/react";
 import { Utils } from "../core/Utils";
 import Loader from "../components/Loader";
@@ -149,6 +150,11 @@ const Signup: React.FC = () => {
               placeholder="Confirm Password"
               required
             ></IonInput>
+          </IonItem>
+          <IonItem lines="none" className="form-item mt1">
+            By submitting this form you agree to the&nbsp;
+            <IonRouterLink href="/privacy-policy">Privacy Policy</IonRouterLink>
+            .
           </IonItem>
 
           <IonItem lines="none" className="form-item mt1">

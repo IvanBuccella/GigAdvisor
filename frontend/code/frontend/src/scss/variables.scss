@@ -2,7 +2,7 @@
   margin-top: 0;
 }
 .mb0 {
-  margin-top: 0;
+  margin-bottom: 0;
 }
 .ml0 {
   margin-left: 0;
@@ -28,13 +28,25 @@
   padding-top: 0;
 }
 .pb0 {
-  padding-top: 0;
+  padding-bottom: 0;
 }
 .pr0 {
   padding-left: 0;
 }
 .pl0 {
   padding-left: 0;
+}
+.pt1 {
+  padding-top: 1em;
+}
+.pb1 {
+  padding-bottom: 1em;
+}
+.pr1 {
+  padding-left: 1em;
+}
+.pl1 {
+  padding-left: 1em;
 }
 
 .blue {
@@ -60,6 +72,9 @@
 }
 .black {
   color: var(--color-black);
+}
+.grey {
+  color: var(--color-grey);
 }
 
 .text-left {
