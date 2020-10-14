@@ -15,6 +15,7 @@ http://ionicframework.com/docs/theming/ */
   --padding-left: 16px;
   --font-size: 16px;
   --input-height: 50px;
+  --textarea-height: 100px;
   --button-width: 50px;
 
   /** primary **/

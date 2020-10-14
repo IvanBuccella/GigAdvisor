@@ -43,7 +43,7 @@ const Signup: React.FC = () => {
           setSignupOk(true);
           setTimeout(function () {
             utilities.pageRedirect("login");
-          }, 5000);
+          }, 2000);
         } else {
           setSignupError(true);
         }
