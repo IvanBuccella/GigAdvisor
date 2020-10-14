@@ -107,9 +107,18 @@ class ReviewSerializer(serializers.ModelSerializer):
             "date",
             "latitude",
             "longitude",
+            "platform",
+            "profile",
         )
 
-    date = serializers.DateTimeField(format="%d/%m/%Y - %H:%M:%S")
+    id = serializers.IntegerField(required=False, read_only=True)
+    date = serializers.DateTimeField(format="%d/%m/%Y - %H:%M:%S", read_only=True)
+    platform = serializers.PrimaryKeyRelatedField(
+        read_only=False, queryset=Platform.objects.all()
+    )
+    profile = serializers.PrimaryKeyRelatedField(
+        read_only=False, queryset=Profile.objects.all()
+    )
 
 
 class ReviewFieldSerializer(serializers.ModelSerializer):
@@ -117,5 +126,9 @@ class ReviewFieldSerializer(serializers.ModelSerializer):
         model = ReviewField
         fields = ("review", "field", "value")
 
-    review = ReviewSerializer(required=True)
-    field = FieldSerializer(required=True)
+    review = serializers.PrimaryKeyRelatedField(
+        read_only=False, queryset=Review.objects.all()
+    )
+    field = serializers.PrimaryKeyRelatedField(
+        read_only=False, queryset=Field.objects.all()
+    )

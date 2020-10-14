@@ -189,6 +189,7 @@ class Platforms(APIView):
                         totalValueNumber = totalValueNumber + 1
                         fields.append(
                             {
+                                "id": field["id"],
                                 "name": field["name"],
                                 "count": decimal_format(valueNumber),
                                 "sum": decimal_format(valueSum),
@@ -222,4 +223,53 @@ class Reviews(APIView):
             reviewSerializer = ReviewSerializer(querysetReview, many=True)
             return JsonResponse(reviewSerializer.data, status=201, safe=False)
         else:
-            return JsonResponse({}, status=404, safe=False)
+            return JsonResponse({}, status=400, safe=False)
+
+
+class ReviewCreate(APIView):
+    # API endpoint that create a new Review (with annex ReviewFields instances).
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, *args, **kwargs):
+        user = request.user
+        if request.data:
+            data = {
+                "name": request.data["name"],
+                "text": request.data["text"],
+                "latitude": request.data["latitude"],
+                "longitude": request.data["longitude"],
+                "platform": request.data["platform"],
+                "profile": request.user.id,
+            }
+            reviewSerializer = ReviewSerializer(data=data)
+            if reviewSerializer.is_valid():
+                review = reviewSerializer.save()
+                error = ""
+                fieldIds = request.data["fieldIds"]
+                fieldValues = request.data["fieldValues"]
+                for i in range(len(fieldIds)):
+                    if int(fieldValues[i]) > 0:
+                        data = {
+                            "field": fieldIds[i],
+                            "review": reviewSerializer.data["id"],
+                            "value": fieldValues[i],
+                        }
+                        reviewFieldSerializer = ReviewFieldSerializer(data=data)
+                        if reviewFieldSerializer.is_valid():
+                            reviewFieldSerializer.save()
+                        else:
+                            error = reviewFieldSerializer.errors
+                    else:
+                        error = "Fields Error"
+                if len(fieldIds) == 0:
+                    error = "No Fields Received"
+                if error:
+                    instance = Review.objects.get(id=reviewSerializer.data["id"])
+                    instance.delete()
+                    return JsonResponse(error, status=400, safe=False)
+                return JsonResponse("OK", status=201, safe=False)
+            return JsonResponse(reviewSerializer.errors, status=400, safe=False)
+        else:
+            return JsonResponse({}, status=400, safe=False)
+
