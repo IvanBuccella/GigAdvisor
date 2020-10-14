@@ -2,6 +2,9 @@
   .platform-container {
     .platform-left {
       max-width: 30%;
+      @media only screen and(max-width:760px) {
+        max-width: 100%;
+      }
 
       .rating-list {
         .rating {
@@ -17,6 +20,13 @@
       }
     }
     .platform-right {
+      .review-button {
+        @include blue-button;
+
+        @media only screen and(max-width:760px) {
+          margin-top: 1em;
+        }
+      }
       .review {
         .card {
           width: 100%;
