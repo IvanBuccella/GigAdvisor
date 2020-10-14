@@ -1,0 +1,29 @@
+.page-container.review {
+  .review-form {
+    .column {
+      display: flex;
+      align-items: center;
+    }
+    .form-item {
+      --background-focused: transparent;
+      &.title {
+        width: 100%;
+      }
+      .input-field {
+        @include input-field;
+
+        &.textarea {
+          height: var(--textarea-height);
+        }
+      }
+      .position-button {
+        @include blue-button;
+        width: var(--button-width);
+      }
+    }
+    .profile-button {
+      @include blue-button;
+      width: 100%;
+    }
+  }
+}

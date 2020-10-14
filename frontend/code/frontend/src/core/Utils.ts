@@ -81,7 +81,7 @@ export class Utils {
       body: data, // body data type must match "Content-Type" header
     });
     return {
-      status: response.status == 400 ? false : true,
+      status: response.status != 201 ? false : true,
       data: await response.json(),
     }; // parses JSON response into native JavaScript objects
   }

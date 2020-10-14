@@ -11,6 +11,7 @@ import {
   IonCardTitle,
   IonImg,
   IonIcon,
+  IonButton,
 } from "@ionic/react";
 import { timeOutline } from "ionicons/icons";
 
@@ -135,6 +136,12 @@ const Platform: React.FC = () => {
             </IonCard>
           </IonCol>
           <IonCol className="platform-right">
+            <IonButton
+              onClick={() => utilities.pageRedirect("review/" + platform.slug)}
+              className="review-button text-left"
+            >
+              Rate {platform.name} Platform
+            </IonButton>
             <ReviewsCards />
           </IonCol>
         </IonRow>
