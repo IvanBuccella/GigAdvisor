@@ -185,9 +185,9 @@ class Platforms(APIView):
                         for reviewField in reviewFieldSerializer.data:
                             valueNumber = valueNumber + 1
                             valueSum = int(valueSum) + int(reviewField["value"])
-                            totalValueSum = totalValueSum + int(reviewField["value"])
                     if valueNumber > 0:
                         totalValueNumber = totalValueNumber + 1
+                        totalValueSum = totalValueSum + (valueSum / valueNumber)
                         fields.append(
                             {
                                 "id": field["id"],
