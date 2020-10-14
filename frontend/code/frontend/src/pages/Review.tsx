@@ -55,7 +55,7 @@ const Review: React.FC = () => {
   }
 
   useEffect(() => {
-    //utilities.pageProtected();
+    utilities.pageProtected();
 
     let data = {
       slug: utilities.getLastItem(window.location.pathname),
