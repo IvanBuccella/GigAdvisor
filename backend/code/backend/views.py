@@ -19,6 +19,7 @@ from backend.serializers import (
 from backend.models import Profile, Category, Platform, Review, Field, ReviewField
 from rest_framework import generics
 from .utils import transform_base64_into_avatar, decimal_format
+from django.db.models import F
 
 
 class UserAuth(ObtainAuthToken):
@@ -219,7 +220,9 @@ class Reviews(APIView):
     # API endpoint that return Platform's Reviews.
     def post(self, request, *args, **kwargs):
         if request.data and request.data["id"]:
-            querysetReview = Review.objects.filter(platform=request.data["id"])
+            querysetReview = Review.objects.filter(
+                platform=request.data["id"]
+            ).order_by(F("date").desc())
             reviewSerializer = ReviewSerializer(querysetReview, many=True)
             return JsonResponse(reviewSerializer.data, status=201, safe=False)
         else:
