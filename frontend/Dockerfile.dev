@@ -6,4 +6,5 @@ WORKDIR /app
 RUN rm -rf /app/node_modules && \
     npm install @ionic/cli native-run cordova-res cordova-plugin-geolocation && \
     npm install @ionic/react @ionic/react-router @ionic/react-hooks @ionic/pwa-elements @ionic-native/core @ionic-native/geolocation && \
-    npm install node-sass
+    npm install node-sass && \
+    npm install d3 @types/d3-selection @types/d3-scale @types/d3-array @types/d3-axis

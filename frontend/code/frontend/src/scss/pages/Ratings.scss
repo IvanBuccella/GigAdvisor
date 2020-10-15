@@ -1,0 +1,24 @@
+.page-container.ratings {
+  #platformsChart {
+    text {
+      font-weight: normal;
+      font-size: 1em;
+      fill: var(--color-black);
+    }
+    .platform {
+      fill: var(--color-blue);
+    }
+    .platform-text {
+      fill: var(--color-black);
+      font-weight: normal;
+      font-size: 1em;
+    }
+
+    .title-x,
+    .title-y {
+      font-weight: bold;
+      font-size: 1.5em;
+      fill: var(--color-black);
+    }
+  }
+}
