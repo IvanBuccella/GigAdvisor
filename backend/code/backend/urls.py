@@ -42,7 +42,8 @@ urlpatterns = [
     path("categories", views.Categories.as_view(), name="categories",),
     path("platforms", views.Platforms.as_view(), name="platforms",),
     path("reviews", views.Reviews.as_view(), name="reviews",),
-    path("review", views.ReviewCreate.as_view(), name="review-create",),
+    path("review", views.ReviewCreate.as_view(), name="review",),
+    path("platforms-rating", views.PlatformsRating.as_view(), name="platforms-rating",),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
