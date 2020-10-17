@@ -1,5 +1,23 @@
 .page-container.ratings {
-  #platformsChart {
+  .platform-chart {
+    &.platform-chart-field svg {
+      width: 50%;
+      @media only screen and (max-width: 767px) {
+        width: 100%;
+      }
+      .platform:nth-child(2n) {
+        fill: var(--color-purple);
+      }
+      .platform:nth-child(2n + 1) {
+        fill: var(--color-orange);
+      }
+      .platform:nth-child(2n + 2) {
+        fill: var(--color-green);
+      }
+    }
+    svg {
+      width: 100%;
+    }
     text {
       font-weight: normal;
       font-size: 1em;

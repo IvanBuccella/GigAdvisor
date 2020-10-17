@@ -28,14 +28,15 @@ let barChartHeight: number;
 let barChartMargin = { top: 50, right: 20, bottom: 30, left: 40 };
 
 const Ratings: React.FC = () => {
-  function barChartInit(chartData: any) {
+  const [charts, setCharts] = useState(<></>);
+
+  function barChartInit(chartData: any, chartId: string) {
     barChartWidth = 900 - barChartMargin.left - barChartMargin.right;
     barChartHeight = 500 - barChartMargin.top - barChartMargin.bottom;
     svg = d3
-      .select("#platformsChart")
+      .select("body")
+      .select("#" + chartId)
       .append("svg")
-      .attr("width", "100%")
-      .attr("height", "100%")
       .attr("viewBox", "0 0 900 550");
     g = svg
       .append("g")
@@ -59,7 +60,7 @@ const Ratings: React.FC = () => {
     ]);
   }
 
-  function barChartDrawXAxis() {
+  function barChartDrawXAxis(chartName: string) {
     g.append("g")
       .attr("class", "axis axis--x")
       .attr("transform", "translate(0," + barChartHeight + ")")
@@ -68,7 +69,7 @@ const Ratings: React.FC = () => {
       .attr("class", "title-x")
       .attr("dx", "430")
       .attr("dy", "3em")
-      .text("Platforms");
+      .text(chartName);
   }
 
   function barChartDrawYAxis() {
@@ -118,9 +119,9 @@ const Ratings: React.FC = () => {
       });
   }
 
-  function drawBarChart(chartData: any) {
-    barChartInit(chartData);
-    barChartDrawXAxis();
+  function drawBarChart(chartData: any, chartId: string, chartName: string) {
+    barChartInit(chartData, chartId);
+    barChartDrawXAxis(chartName);
     barChartDrawYAxis();
     barChartDrawRetcanglesWithText(chartData);
   }
@@ -135,7 +136,24 @@ const Ratings: React.FC = () => {
             avg: res.data[i].avg,
           });
         }
-        drawBarChart(chartData);
+        drawBarChart(chartData, "platformsChart", "Platforms");
+
+        utilities.postCall("fields-rating", "").then((res) => {
+          if (res.status) {
+            for (let i = 0; i < res.data.length; i++) {
+              setCharts(
+                <IonCol>
+                  {charts}
+                  <div
+                    id={"field-" + i}
+                    className="platform-chart platform-chart-field"
+                  ></div>
+                </IonCol>
+              );
+              drawBarChart(res.data[i].values, "field-" + i, res.data[i].name);
+            }
+          }
+        });
       }
     });
   }, []);
@@ -145,8 +163,9 @@ const Ratings: React.FC = () => {
       <IonContent className="page-container ratings">
         <h1 className="form-title mt1 mb1">Platform's Rating</h1>
         <IonRow>
-          <IonCol>
-            <div id="platformsChart"></div>
+          <IonCol className="chartContainer">
+            <div id="platformsChart" className="platform-chart"></div>
+            {charts}
           </IonCol>
         </IonRow>
       </IonContent>
