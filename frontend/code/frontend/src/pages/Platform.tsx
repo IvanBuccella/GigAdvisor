@@ -24,8 +24,6 @@ const Platform: React.FC = () => {
     slug: "",
     logo: "",
     category: "",
-    count: 0,
-    sum: 0,
     avg: 0,
     fields: [],
   });
@@ -75,8 +73,6 @@ const Platform: React.FC = () => {
           slug: elem.slug,
           logo: elem.logo,
           category: elem.category.name,
-          count: elem.count,
-          sum: elem.sum,
           avg: elem.avg,
           fields: elem.fields,
         });

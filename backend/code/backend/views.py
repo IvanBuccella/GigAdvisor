@@ -19,7 +19,7 @@ from backend.serializers import (
 from backend.models import Profile, Category, Platform, Review, Field, ReviewField
 from rest_framework import generics
 from .utils import transform_base64_into_avatar, decimal_format
-from django.db.models import F
+from django.db.models import F, Count, Sum
 
 
 class UserAuth(ObtainAuthToken):
@@ -156,52 +156,37 @@ class Categories(APIView):
 
 
 def get_platform_data_with_ratings(platform, withFields):
-    # get fields
-    querysetField = Field.objects.all()
-    fieldSerializer = FieldSerializer(querysetField, many=True)
+    values = (
+        ReviewField.objects.filter(
+            review__in=Review.objects.filter(platform=platform["id"]),
+        )
+        .values("field")
+        .annotate(sum=Sum("value"), number=Count("value"))
+    )
+    if values.count():
+        fields = []
+        valuesSum = 0
+        valuesNumber = 0
 
-    fields = []
-    totalValueSum = 0
-    totalValueNumber = 0
-    for field in fieldSerializer.data:
-        valueSum = 0
-        valueNumber = 0
-        querysetReview = Review.objects.filter(platform=platform["id"])
-        reviewSerializer = ReviewSerializer(querysetReview, many=True)
-        for review in reviewSerializer.data:
-            querysetReviewField = ReviewField.objects.filter(
-                review=review["id"], field=field["id"]
-            )
-            reviewFieldSerializer = ReviewFieldSerializer(
-                querysetReviewField, many=True
-            )
-            for reviewField in reviewFieldSerializer.data:
-                valueNumber = valueNumber + 1
-                valueSum = int(valueSum) + int(reviewField["value"])
-        if valueNumber > 0:
-            totalValueNumber = totalValueNumber + 1
-            totalValueSum = totalValueSum + (valueSum / valueNumber)
-            fields.append(
-                {
-                    "id": field["id"],
-                    "name": field["name"],
-                    "count": decimal_format(valueNumber),
-                    "sum": decimal_format(valueSum),
-                    "avg": decimal_format(valueSum / valueNumber),
-                }
-            )
-    if totalValueNumber > 0:
-        platform["count"] = decimal_format(totalValueNumber)
-        platform["sum"] = decimal_format(totalValueSum)
-        platform["avg"] = decimal_format(totalValueSum / totalValueNumber)
+        if withFields:
+            allFields = Field.objects.all()
+        for value in values:
+            valuesSum = valuesSum + value["sum"]
+            valuesNumber = valuesNumber + value["number"]
+            if withFields:
+                fields.append(
+                    {
+                        "id": value["field"],
+                        "name": allFields[value["field"] - 1].name,
+                        "avg": decimal_format(value["sum"] / value["number"]),
+                    }
+                )
+        platform["avg"] = decimal_format(valuesSum / valuesNumber)
         if withFields:
             platform["fields"] = fields
     else:
-        platform["count"] = 0
-        platform["sum"] = 0
         platform["avg"] = 0
-        if withFields:
-            platform["fields"] = fields
+        platform["fields"] = []
     return platform
 
 
@@ -291,5 +276,42 @@ class PlatformsRating(APIView):
         dataToReturn = []
         for platform in platformSerializer.data:
             dataToReturn.append(get_platform_data_with_ratings(platform, 0))
+        return JsonResponse(dataToReturn, status=201, safe=False)
+
+
+def get_platform_data_with_ratings_by_field(field):
+    dataToReturn = []
+    querysetPlatform = Platform.objects.all()
+    platformSerializer = PlatformSerializer(querysetPlatform, many=True)
+    for platform in platformSerializer.data:
+        values = (
+            ReviewField.objects.filter(
+                review__in=Review.objects.filter(platform=platform["id"]),
+                field=field["id"],
+            )
+            .values("field")
+            .annotate(sum=Sum("value"), number=Count("value"))
+        )
+        if values.count():
+            avg = decimal_format(values[0]["sum"] / values[0]["number"])
+            dataToReturn.append({"name": platform["name"], "avg": avg})
+        else:
+            dataToReturn.append({"name": platform["name"], "avg": 0})
+    return dataToReturn
+
+
+class FieldsRating(APIView):
+    # API endpoint that return all Fields' Rating.
+    def post(self, request, *args, **kwargs):
+        querysetField = Field.objects.all()
+        fieldSerializer = FieldSerializer(querysetField, many=True)
+        dataToReturn = []
+        for field in fieldSerializer.data:
+            dataToReturn.append(
+                {
+                    "name": field["name"],
+                    "values": get_platform_data_with_ratings_by_field(field),
+                }
+            )
         return JsonResponse(dataToReturn, status=201, safe=False)
 
