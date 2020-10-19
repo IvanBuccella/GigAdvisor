@@ -16,10 +16,41 @@ import {
 } from "ionicons/icons";
 
 const Footer: React.FC = () => {
-  const isMenuItemActive = (pageName: string) => {
-    if (pageName == window.location.pathname) {
+  const isActiveMenuItem = (pageName: string) => {
+    let pageSlug = window.location.pathname.split("/")[1];
+
+    if (pageName == "modules") {
+      let modulesPages = [
+        "modules",
+        "platforms",
+        "platform",
+        "review",
+        "ratings",
+      ];
+      if (modulesPages.includes(pageSlug)) {
+        return "blue";
+      }
+    } else if (pageName == "home") {
+      let homePages = [
+        "",
+        "home",
+        "login",
+        "logout",
+        "know-your-rights",
+        "about",
+        "signup",
+        "privacy-policy",
+        "profile",
+      ];
+      if (homePages.includes(pageSlug)) {
+        return "blue";
+      }
+    } else if (pageName == "team" && pageSlug == "team") {
+      return "blue";
+    } else if (pageName == "pubblications" && pageSlug == "pubblications") {
       return "blue";
     }
+
     return "";
   };
 
@@ -33,33 +64,33 @@ const Footer: React.FC = () => {
                 <IonRouterLink href="/" className="footer-button">
                   <IonIcon
                     icon={homeOutline}
-                    className={"" + isMenuItemActive("/")}
+                    className={"" + isActiveMenuItem("home")}
                   />
-                  <span className={"" + isMenuItemActive("/")}>Home</span>
+                  <span className={"" + isActiveMenuItem("home")}>Home</span>
                 </IonRouterLink>
 
                 <IonRouterLink href="/modules" className="footer-button">
                   <IonIcon
                     icon={walletOutline}
-                    className={"" + isMenuItemActive("/modules")}
+                    className={"" + isActiveMenuItem("modules")}
                   />
-                  <span className={"" + isMenuItemActive("/modules")}>
+                  <span className={"" + isActiveMenuItem("modules")}>
                     Modules
                   </span>
                 </IonRouterLink>
                 <IonRouterLink href="/team" className="footer-button">
                   <IonIcon
                     icon={peopleOutline}
-                    className={"" + isMenuItemActive("/team")}
+                    className={"" + isActiveMenuItem("team")}
                   />
-                  <span className={"" + isMenuItemActive("/team")}>Team</span>
+                  <span className={"" + isActiveMenuItem("team")}>Team</span>
                 </IonRouterLink>
                 <IonRouterLink href="/pubblications" className="footer-button">
                   <IonIcon
                     icon={newspaperOutline}
-                    className={"" + isMenuItemActive("/pubblications")}
+                    className={"" + isActiveMenuItem("pubblications")}
                   />
-                  <span className={"" + isMenuItemActive("/pubblications")}>
+                  <span className={"" + isActiveMenuItem("pubblications")}>
                     Pubblications
                   </span>
                 </IonRouterLink>

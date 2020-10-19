@@ -29,6 +29,20 @@ const Platform: React.FC = () => {
   });
   const [reviews, setReviews] = useState([]);
 
+  function RateButton() {
+    if (utilities.isAuthenticatedUser()) {
+      return (
+        <IonButton
+          onClick={() => utilities.pageRedirect("review/" + platform.slug)}
+          className="review-button text-left"
+        >
+          Rate {platform.name} Platform
+        </IonButton>
+      );
+    }
+    return <></>;
+  }
+
   function ReviewsCards() {
     let ret = <></>;
     let review = null;
@@ -132,12 +146,7 @@ const Platform: React.FC = () => {
             </IonCard>
           </IonCol>
           <IonCol className="platform-right">
-            <IonButton
-              onClick={() => utilities.pageRedirect("review/" + platform.slug)}
-              className="review-button text-left"
-            >
-              Rate {platform.name} Platform
-            </IonButton>
+            <RateButton />
             <ReviewsCards />
           </IonCol>
         </IonRow>
