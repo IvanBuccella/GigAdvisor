@@ -11,12 +11,7 @@ import {
   IonCardSubtitle,
   IonCardTitle,
 } from "@ionic/react";
-import {
-  barChartOutline,
-  starOutline,
-  peopleOutline,
-  addOutline,
-} from "ionicons/icons";
+import { barChartOutline, starOutline, peopleOutline } from "ionicons/icons";
 
 const utilities = new Utils();
 const Modules: React.FC = () => {
@@ -52,22 +47,6 @@ const Modules: React.FC = () => {
                 </IonCardSubtitle>
                 <IonCardTitle>
                   <h3>Reviews</h3>
-                </IonCardTitle>
-              </IonCardHeader>
-            </IonCard>
-          </IonCol>
-          <IonCol>
-            <IonCard href="/rate-a-gig" className="card module">
-              <IonCardHeader>
-                <IonCardSubtitle>
-                  <IonIcon
-                    icon={addOutline}
-                    size="large"
-                    className="icon blue"
-                  />
-                </IonCardSubtitle>
-                <IonCardTitle>
-                  <h3>Rate your gig</h3>
                 </IonCardTitle>
               </IonCardHeader>
             </IonCard>
