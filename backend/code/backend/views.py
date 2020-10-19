@@ -315,3 +315,10 @@ class FieldsRating(APIView):
             )
         return JsonResponse(dataToReturn, status=201, safe=False)
 
+
+class Fields(APIView):
+    # API endpoint that return all Fields.
+    def post(self, request, *args, **kwargs):
+        querysetField = Field.objects.all()
+        fieldSerializer = FieldSerializer(querysetField, many=True)
+        return JsonResponse(fieldSerializer.data, status=201, safe=False)

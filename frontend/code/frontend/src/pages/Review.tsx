@@ -40,8 +40,8 @@ const Review: React.FC = () => {
     id: 0,
     name: "",
     slug: "",
-    fields: [],
   });
+  const [fields, setFields] = useState([]);
 
   function setFieldValues(element: any, fieldValue: any) {
     let fieldId = element.attributes.name.value.replace("field-", "");
@@ -69,7 +69,10 @@ const Review: React.FC = () => {
           id: elem.id,
           name: elem.name,
           slug: elem.slug,
-          fields: elem.fields,
+        });
+
+        utilities.postCall("fields", "").then((res) => {
+          setFields(res.data);
         });
       }
     });
@@ -112,11 +115,11 @@ const Review: React.FC = () => {
     }
   };
 
-  const fields = [];
+  const retFields = [];
   let field = null;
-  for (let i = 0; i < platform.fields.length; i++) {
-    field = platform.fields[i];
-    fields.push(
+  for (let i = 0; i < fields.length; i++) {
+    field = fields[i];
+    retFields.push(
       <IonRow className="rating pt1 pb1 text-left">
         <IonCol
           sizeXs="12"
@@ -257,8 +260,7 @@ const Review: React.FC = () => {
                   </IonItem>
                 </IonCol>
               </IonRow>
-              {fields}
-
+              {retFields}
               <IonRow>
                 <IonCol>
                   <IonItem lines="none" className="form-item mt1">
