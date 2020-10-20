@@ -1,3 +1,4 @@
+from autoslug import AutoSlugField
 from backend.utils import user_avatar_folder, platform_logo_folder
 from django.db import models
 from django.contrib.auth.models import User
@@ -36,7 +37,7 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
 
 class Category(models.Model):
     name = models.CharField(null=False, max_length=200, blank=True)
-    slug = models.CharField(null=False, max_length=200, blank=True)
+    slug = AutoSlugField(populate_from="name", blank=True, unique=True)
 
     def __str__(self):
         return self.name
@@ -44,7 +45,7 @@ class Category(models.Model):
 
 class Platform(models.Model):
     name = models.CharField(null=False, max_length=200, blank=True)
-    slug = models.CharField(null=False, max_length=200, blank=True)
+    slug = AutoSlugField(populate_from="name", blank=True, unique=True)
     logo = models.ImageField(
         blank=True, default="/platforms/default.png", upload_to=platform_logo_folder
     )
