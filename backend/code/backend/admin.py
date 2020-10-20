@@ -1,7 +1,16 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
-from backend.models import Profile, Category, Platform, Field, Review, ReviewField
+from backend.models import (
+    Profile,
+    Category,
+    Platform,
+    Field,
+    Review,
+    ReviewField,
+    Topic,
+    Comment,
+)
 
 
 class ProfileInline(admin.StackedInline):
@@ -65,3 +74,5 @@ admin.site.register(Platform)
 admin.site.register(Field)
 admin.site.register(Review)
 admin.site.register(ReviewField)
+admin.site.register(Topic)
+admin.site.register(Comment)

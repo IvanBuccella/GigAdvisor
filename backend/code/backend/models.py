@@ -82,3 +82,26 @@ class ReviewField(models.Model):
 
     def __str__(self):
         return str(self.review) + " - " + str(self.field)
+
+
+class Topic(models.Model):
+    title = models.CharField(null=False, max_length=200, blank=True)
+    slug = AutoSlugField(populate_from="title", blank=True, unique=True)
+    date = models.DateTimeField("date published", auto_now=True)
+
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+
+
+class Comment(models.Model):
+    text = models.TextField(null=False)
+    date = models.DateTimeField("date published", auto_now=True)
+
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.topic) + " - " + self.text
