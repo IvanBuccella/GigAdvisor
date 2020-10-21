@@ -23,6 +23,7 @@ class Profile(models.Model):
     longitude = models.FloatField(null=True, blank=False, default=0)
     sex = models.CharField(null=True, max_length=1, choices=SEX_CHOICES, blank=True)
     qualification = models.CharField(null=True, max_length=100, blank=True)
+    address = models.CharField(null=True, max_length=100, blank=True)
 
     def __str__(self):  # __unicode__ for Python 2
         return self.user.username

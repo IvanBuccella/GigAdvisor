@@ -69,6 +69,7 @@ class UserProfile(APIView):
         retDict.update({"longitude": profileSerializer.data["longitude"]})
         retDict.update({"sex": profileSerializer.data["sex"]})
         retDict.update({"qualification": profileSerializer.data["qualification"]})
+        retDict.update({"address": profileSerializer.data["address"]})
 
         return JsonResponse(retDict, status=201)
 
@@ -95,6 +96,7 @@ class UserProfileUpdate(APIView):
                 "longitude": request.data["longitude"],
                 "sex": request.data["sex"],
                 "qualification": request.data["qualification"],
+                "address": request.data["address"],
             }
             profileSerializer = ProfileSerializer(
                 user.profile, data=dataToUpdate, partial=True

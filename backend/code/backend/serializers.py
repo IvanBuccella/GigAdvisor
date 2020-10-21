@@ -44,6 +44,7 @@ class ProfileSerializer(serializers.ModelSerializer):
             "longitude",
             "sex",
             "qualification",
+            "address",
             "avatar",
         )
 
@@ -57,6 +58,7 @@ class ProfileSerializer(serializers.ModelSerializer):
             longitude=validated_data.pop("longitude"),
             sex=validated_data.pop("sex"),
             qualification=validated_data.pop("qualification"),
+            address=validated_data.pop("address"),
         )
         return profile
 
@@ -68,6 +70,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         instance.qualification = validated_data.get(
             "qualification", instance.qualification
         )
+        instance.address = validated_data.get("address", instance.address)
         if validated_data.get("avatar"):
             instance.avatar = validated_data.get("avatar", instance.avatar)
         instance.save()

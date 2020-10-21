@@ -41,6 +41,7 @@ const Home: React.FC = () => {
   const [longitude, setLongitude] = useState(0);
   const [birthDate, setBirthDate] = useState("");
   const [qualification, setQualification] = useState("");
+  const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -59,6 +60,7 @@ const Home: React.FC = () => {
         setLongitude(res.data.longitude);
         setBirthDate(res.data.birth_date);
         setQualification(res.data.qualification);
+        setAddress(res.data.address);
         setShowLoader(false);
       } else {
         utilities.pageRedirect("login");
@@ -76,6 +78,7 @@ const Home: React.FC = () => {
       longitude: longitude,
       birthDate: birthDate,
       qualification: qualification,
+      address: address,
     });
 
     utilities.patchCall("user-profile-update", data).then((res) => {
@@ -316,6 +319,25 @@ const Home: React.FC = () => {
                       type="text"
                       placeholder="Qualification"
                       required
+                    ></IonInput>
+                  </IonItem>
+                </IonCol>
+
+                <IonCol
+                  sizeXs="12"
+                  sizeSm="12"
+                  sizeMd="12"
+                  sizeLg="12"
+                  sizeXl="12"
+                >
+                  <IonItem lines="none" className="form-item mt1">
+                    <IonInput
+                      className="input-field"
+                      name="address"
+                      value={address}
+                      onIonChange={(e) => setAddress(e.detail.value!)}
+                      type="text"
+                      placeholder="Address"
                     ></IonInput>
                   </IonItem>
                 </IonCol>
