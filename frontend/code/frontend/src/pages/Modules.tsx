@@ -52,7 +52,7 @@ const Modules: React.FC = () => {
             </IonCard>
           </IonCol>
           <IonCol>
-            <IonCard href="/blog" className="card module">
+            <IonCard href="/connect-with-others" className="card module">
               <IonCardHeader>
                 <IonCardSubtitle>
                   <IonIcon

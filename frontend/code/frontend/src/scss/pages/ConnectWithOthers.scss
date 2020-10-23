@@ -1,0 +1,15 @@
+.page-container.connect-with-others {
+  .create-topic-button {
+    @include blue-button;
+
+    @media only screen and(max-width:760px) {
+      margin-top: 1em;
+      max-width: 100%;
+      font-size: 0.7em;
+    }
+  }
+  .topics-list {
+    .topic {
+    }
+  }
+}

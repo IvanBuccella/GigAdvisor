@@ -41,6 +41,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Platform from "./pages/Platform";
 import Review from "./pages/Review";
 import Ratings from "./pages/Ratings";
+import ConnectWithOthers from "./pages/ConnectWithOthers";
 
 const App: React.FC = () => (
   <IonApp>
@@ -78,6 +79,11 @@ const App: React.FC = () => (
             <Route path="/platform" component={Platform} exact={false} />
             <Route path="/review" component={Review} exact={false} />
             <Route path="/ratings" component={Ratings} exact={true} />
+            <Route
+              path="/connect-with-others"
+              component={ConnectWithOthers}
+              exact={true}
+            />
           </IonRouterOutlet>
         </IonReactRouter>
       </IonContent>
