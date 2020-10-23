@@ -15,8 +15,18 @@ from backend.serializers import (
     FieldSerializer,
     ReviewSerializer,
     ReviewFieldSerializer,
+    TopicSerializer,
 )
-from backend.models import Profile, Category, Platform, Review, Field, ReviewField
+from backend.models import (
+    Profile,
+    Category,
+    Platform,
+    Review,
+    Field,
+    ReviewField,
+    Topic,
+    Comment,
+)
 from rest_framework import generics
 from .utils import transform_base64_into_avatar, decimal_format
 from django.db.models import F, Count, Sum
@@ -139,7 +149,11 @@ class UserAvatarUpdate(APIView):
                 request.data["avatar"], request.data["format"]
             )[0],
         }
-        profileSerializer = ProfileSerializer(user.profile, dataToUpdate, partial=True,)
+        profileSerializer = ProfileSerializer(
+            user.profile,
+            dataToUpdate,
+            partial=True,
+        )
         if profileSerializer.is_valid():
             profileSerializer.save()
             return JsonResponse(profileSerializer.data, status=201)
@@ -194,9 +208,10 @@ def get_platform_data_with_ratings(platform, withFields):
 
 class Platforms(APIView):
     # API endpoint that return Platforms or a specific Platform.
+
     def post(self, request, *args, **kwargs):
+        dataToReturn = []
         if request.data and request.data["slug"]:
-            dataToReturn = []
             querysetPlatform = Platform.objects.filter(slug=request.data["slug"])
             platformSerializer = PlatformSerializer(querysetPlatform, many=True)
             for platform in platformSerializer.data:
@@ -211,6 +226,7 @@ class Platforms(APIView):
 
 class Reviews(APIView):
     # API endpoint that return Platform's Reviews.
+
     def post(self, request, *args, **kwargs):
         if request.data and request.data["id"]:
             querysetReview = Review.objects.filter(
@@ -224,6 +240,7 @@ class Reviews(APIView):
 
 class ReviewCreate(APIView):
     # API endpoint that create a new Review (with annex ReviewFields instances).
+
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
@@ -272,6 +289,7 @@ class ReviewCreate(APIView):
 
 class PlatformsRating(APIView):
     # API endpoint that return all Platforms' Rating.
+
     def post(self, request, *args, **kwargs):
         querysetPlatform = Platform.objects.all()
         platformSerializer = PlatformSerializer(querysetPlatform, many=True)
@@ -304,6 +322,7 @@ def get_platform_data_with_ratings_by_field(field):
 
 class FieldsRating(APIView):
     # API endpoint that return all Fields' Rating.
+
     def post(self, request, *args, **kwargs):
         querysetField = Field.objects.all()
         fieldSerializer = FieldSerializer(querysetField, many=True)
@@ -320,7 +339,59 @@ class FieldsRating(APIView):
 
 class Fields(APIView):
     # API endpoint that return all Fields.
+
     def post(self, request, *args, **kwargs):
         querysetField = Field.objects.all()
         fieldSerializer = FieldSerializer(querysetField, many=True)
         return JsonResponse(fieldSerializer.data, status=201, safe=False)
+
+
+class Topics(APIView):
+    # API endpoint that return Topics or a specific Topic
+
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        dataToReturn = []
+        if request.data and request.data["slug"]:
+            querysetTopic = Topic.objects.filter(slug=request.data["slug"])
+            topicSerializer = TopicSerializer(querysetTopic, many=True)
+            comments = (
+                Comment.objects.filter(
+                    topic=topicSerializer.data[0]["id"],
+                )
+                .values("topic")
+                .annotate(number=Count("id"))
+            )
+            dataToReturn.append(
+                {
+                    "title": topicSerializer.data[0]["title"],
+                    "slug": topicSerializer.data[0]["slug"],
+                    "date": topicSerializer.data[0]["date"],
+                    "category": topicSerializer.data[0]["category"],
+                    "count": comments[0]["number"],
+                }
+            )
+            return JsonResponse(dataToReturn, status=201, safe=False)
+        else:
+            querysetTopic = Topic.objects.all()
+            topicSerializer = TopicSerializer(querysetTopic, many=True)
+            for topic in topicSerializer.data:
+                comments = (
+                    Comment.objects.filter(
+                        topic=topic["id"],
+                    )
+                    .values("topic")
+                    .annotate(number=Count("id"))
+                )
+                dataToReturn.append(
+                    {
+                        "title": topic["title"],
+                        "slug": topic["slug"],
+                        "date": topic["date"],
+                        "category": topic["category"],
+                        "count": comments[0]["number"],
+                    }
+                )
+            return JsonResponse(dataToReturn, status=201, safe=False)

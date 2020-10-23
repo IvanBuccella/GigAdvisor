@@ -1,6 +1,14 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from backend.models import Profile, Category, Platform, Review, Field, ReviewField
+from backend.models import (
+    Profile,
+    Category,
+    Platform,
+    Review,
+    Field,
+    ReviewField,
+    Topic,
+)
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -135,3 +143,12 @@ class ReviewFieldSerializer(serializers.ModelSerializer):
     field = serializers.PrimaryKeyRelatedField(
         read_only=False, queryset=Field.objects.all()
     )
+
+
+class TopicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Topic
+        fields = ("id", "title", "slug", "date", "profile", "category")
+
+    category = CategorySerializer(required=True)
+    date = serializers.DateTimeField(format="%d/%m/%Y", read_only=True)
