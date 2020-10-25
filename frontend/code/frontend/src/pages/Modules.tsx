@@ -31,6 +31,10 @@ const Modules: React.FC = () => {
                 </IonCardSubtitle>
                 <IonCardTitle>
                   <h3>Platform's Rating</h3>
+                  <h6 className="black">
+                    This module shows real-time analysis and visualization of
+                    data resulting from the assessments made by crowd workers.
+                  </h6>
                 </IonCardTitle>
               </IonCardHeader>
             </IonCard>
@@ -47,6 +51,11 @@ const Modules: React.FC = () => {
                 </IonCardSubtitle>
                 <IonCardTitle>
                   <h3>Reviews</h3>
+                  <h6 className="black">
+                    This module allowes crowd workers to evaluate digital labour
+                    platforms they work for, according to a series of predefined
+                    criteria
+                  </h6>
                 </IonCardTitle>
               </IonCardHeader>
             </IonCard>
@@ -63,6 +72,10 @@ const Modules: React.FC = () => {
                 </IonCardSubtitle>
                 <IonCardTitle>
                   <h3>Connect with Others</h3>
+                  <h6 className="black">
+                    This module allowes crowd workers to discuss issues and
+                    share ideas about their working experience
+                  </h6>
                 </IonCardTitle>
               </IonCardHeader>
             </IonCard>
