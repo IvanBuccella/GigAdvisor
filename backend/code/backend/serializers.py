@@ -8,6 +8,7 @@ from backend.models import (
     Field,
     ReviewField,
     Topic,
+    Comment,
 )
 
 
@@ -157,5 +158,20 @@ class TopicSerializer(serializers.ModelSerializer):
     )
     category = serializers.PrimaryKeyRelatedField(
         read_only=False, queryset=Category.objects.all()
+    )
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ("text", "date", "profile", "topic")
+
+    topic = TopicSerializer(required=True)
+    date = serializers.DateTimeField(format="%d/%m/%Y", read_only=True)
+    profile = serializers.PrimaryKeyRelatedField(
+        read_only=False, queryset=Profile.objects.all()
+    )
+    topic = serializers.PrimaryKeyRelatedField(
+        read_only=False, queryset=Topic.objects.all()
     )
 

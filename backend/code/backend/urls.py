@@ -47,6 +47,7 @@ urlpatterns = [
     path("fields-rating", views.FieldsRating.as_view(), name="fields-rating"),
     path("fields", views.Fields.as_view(), name="fields"),
     path("topics", views.Topics.as_view(), name="topics"),
+    path("topic-create", views.TopicCreate.as_view(), name="topic-create"),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

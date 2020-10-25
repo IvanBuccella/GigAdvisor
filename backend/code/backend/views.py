@@ -16,6 +16,7 @@ from backend.serializers import (
     ReviewSerializer,
     ReviewFieldSerializer,
     TopicSerializer,
+    CommentSerializer,
 )
 from backend.models import (
     Profile,
@@ -149,11 +150,7 @@ class UserAvatarUpdate(APIView):
                 request.data["avatar"], request.data["format"]
             )[0],
         }
-        profileSerializer = ProfileSerializer(
-            user.profile,
-            dataToUpdate,
-            partial=True,
-        )
+        profileSerializer = ProfileSerializer(user.profile, dataToUpdate, partial=True,)
         if profileSerializer.is_valid():
             profileSerializer.save()
             return JsonResponse(profileSerializer.data, status=201)
@@ -358,9 +355,7 @@ class Topics(APIView):
             querysetTopic = Topic.objects.filter(slug=request.data["slug"])
             topicSerializer = TopicSerializer(querysetTopic, many=True)
             comments = (
-                Comment.objects.filter(
-                    topic=topicSerializer.data[0]["id"],
-                )
+                Comment.objects.filter(topic=topicSerializer.data[0]["id"],)
                 .values("topic")
                 .annotate(number=Count("id"))
             )
@@ -393,3 +388,41 @@ class Topics(APIView):
                     }
                 )
             return JsonResponse(dataToReturn, status=201, safe=False)
+
+
+class TopicCreate(APIView):
+    # API endpoint that create a new Topic (with annex Comment instance).
+
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, *args, **kwargs):
+        user = request.user
+        if request.data:
+            data = {
+                "title": request.data["title"],
+                "category": request.data["category"],
+                "profile": request.user.id,
+            }
+            topicSerializer = TopicSerializer(data=data)
+            if topicSerializer.is_valid():
+                topic = topicSerializer.save()
+                data = {
+                    "text": request.data["text"],
+                    "topic": topicSerializer.data["id"],
+                    "profile": request.user.id,
+                }
+                commentSerializer = CommentSerializer(data=data)
+                if commentSerializer.is_valid():
+                    commentSerializer.save()
+                else:
+                    instance = Topic.objects.get(id=topicSerializer.data["id"])
+                    instance.delete()
+                    return JsonResponse(
+                        commentSerializer.errors, status=400, safe=False
+                    )
+                return JsonResponse("OK", status=201, safe=False)
+            return JsonResponse(topicSerializer.errors, status=400, safe=False)
+        else:
+            return JsonResponse({}, status=400, safe=False)
+
