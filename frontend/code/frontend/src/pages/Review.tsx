@@ -29,7 +29,7 @@ const Review: React.FC = () => {
   const [reviewInsertAlert, setReviewInsertAlert] = useState(false);
   const [reviewInsertSuccess, setReviewInsertSuccess] = useState(false);
 
-  const [showLoader, setShowLoader] = useState(false);
+  const [showLoader, setShowLoader] = useState(true);
   const [name, setName] = useState("");
   const [text, setText] = useState("");
   const [latitude, setLatitude] = useState(0);
@@ -78,6 +78,7 @@ const Review: React.FC = () => {
 
         utilities.postCall("fields", "").then((res) => {
           setFields(res.data);
+          setShowLoader(false);
         });
       }
     });
