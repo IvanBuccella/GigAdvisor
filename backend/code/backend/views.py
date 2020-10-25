@@ -360,15 +360,13 @@ class Topics(APIView):
                 .values("topic")
                 .annotate(number=Count("id"))
             )
-            dataToReturn.append(
-                {
-                    "title": topicSerializer.data[0]["title"],
-                    "slug": topicSerializer.data[0]["slug"],
-                    "date": topicSerializer.data[0]["date"],
-                    "category": topicSerializer.data[0]["category"],
-                    "count": comments[0]["number"],
-                }
-            )
+            dataToReturn = {
+                "title": topicSerializer.data[0]["title"],
+                "slug": topicSerializer.data[0]["slug"],
+                "date": topicSerializer.data[0]["date"],
+                "category": topicSerializer.data[0]["category"],
+                "count": comments[0]["number"],
+            }
             return JsonResponse(dataToReturn, status=201, safe=False)
         else:
             querysetTopic = Topic.objects.all().order_by(F("date").desc())
