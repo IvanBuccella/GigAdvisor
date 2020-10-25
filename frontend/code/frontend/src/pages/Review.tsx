@@ -264,7 +264,7 @@ const Review: React.FC = () => {
               <IonRow>
                 <IonCol>
                   <IonItem lines="none" className="form-item mt1">
-                    <IonButton type="submit" className="profile-button">
+                    <IonButton type="submit" className="create-button">
                       Insert
                     </IonButton>
                   </IonItem>
