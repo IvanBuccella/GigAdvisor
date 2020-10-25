@@ -42,6 +42,7 @@ import Platform from "./pages/Platform";
 import Review from "./pages/Review";
 import Ratings from "./pages/Ratings";
 import ConnectWithOthers from "./pages/ConnectWithOthers";
+import TopicCreate from "./pages/TopicCreate";
 
 const App: React.FC = () => (
   <IonApp>
@@ -84,6 +85,7 @@ const App: React.FC = () => (
               component={ConnectWithOthers}
               exact={true}
             />
+            <Route path="/topic-create" component={TopicCreate} exact={true} />
           </IonRouterOutlet>
         </IonReactRouter>
       </IonContent>

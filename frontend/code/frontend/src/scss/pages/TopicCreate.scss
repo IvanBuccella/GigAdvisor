@@ -1,0 +1,28 @@
+.page-container.topic-create {
+  .topic-create-form {
+    .column {
+      display: flex;
+      align-items: center;
+    }
+    .form-item {
+      --background-focused: transparent;
+      &.title {
+        width: 100%;
+      }
+      .input-field {
+        @include input-field;
+
+        &.textarea {
+          height: var(--textarea-height);
+        }
+        &.select {
+          width: 100%;
+        }
+      }
+    }
+    .create-button {
+      @include blue-button;
+      width: 100%;
+    }
+  }
+}
