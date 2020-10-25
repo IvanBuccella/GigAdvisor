@@ -19,6 +19,7 @@
 @import "pages/Ratings";
 @import "pages/ConnectWithOthers";
 @import "pages/TopicCreate";
+@import "pages/Topic";
 
 h1,
 h2,
@@ -40,6 +41,14 @@ ion-card {
     text-align: center;
     display: flex;
     justify-content: center;
+  }
+}
+ion-textarea {
+  .textarea-wrapper {
+    height: 100%;
+    textarea {
+      height: 100%;
+    }
   }
 }
 .page-container {
