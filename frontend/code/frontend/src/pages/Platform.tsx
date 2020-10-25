@@ -14,10 +14,12 @@ import {
   IonButton,
 } from "@ionic/react";
 import { timeOutline } from "ionicons/icons";
+import Loader from "../components/Loader";
 
 const utilities = new Utils();
 
 const Platform: React.FC = () => {
+  const [showLoader, setShowLoader] = useState(true);
   const [platform, setPlatform] = useState({
     id: 0,
     name: "",
@@ -99,6 +101,7 @@ const Platform: React.FC = () => {
           if (res.status) {
             setReviews(res.data);
           }
+          setShowLoader(false);
         });
       }
     });
@@ -117,39 +120,42 @@ const Platform: React.FC = () => {
   }
 
   return (
-    <IonSlide>
-      <IonContent className="page-container platform">
-        <h1 className="form-title mt1 mb1">See Reviews</h1>
-        <IonRow className="platform-container">
-          <IonCol className="platform-left">
-            <IonCard>
-              <IonCardHeader>
-                <IonCardSubtitle>
-                  <IonImg
-                    src={utilities.getApiEndpoint() + platform.logo}
-                    className="image"
-                  />
-                </IonCardSubtitle>
-                <IonCardTitle>
-                  <h3 className="title blue text-left">{platform.name}</h3>
-                  <h6 className="category grey text-left">
-                    Category: {platform.category}
-                  </h6>
-                  <h5 className="rating-total black text-left">
-                    Rating: {platform.avg}
-                  </h5>
-                  <div className="rating-list mt1 mb1">{fields}</div>
-                </IonCardTitle>
-              </IonCardHeader>
-            </IonCard>
-          </IonCol>
-          <IonCol className="platform-right">
-            <RateButton />
-            <ReviewsCards />
-          </IonCol>
-        </IonRow>
-      </IonContent>
-    </IonSlide>
+    <>
+      <Loader showLoader={showLoader} />
+      <IonSlide>
+        <IonContent className="page-container platform">
+          <h1 className="form-title mt1 mb1">See Reviews</h1>
+          <IonRow className="platform-container">
+            <IonCol className="platform-left">
+              <IonCard>
+                <IonCardHeader>
+                  <IonCardSubtitle>
+                    <IonImg
+                      src={utilities.getApiEndpoint() + platform.logo}
+                      className="image"
+                    />
+                  </IonCardSubtitle>
+                  <IonCardTitle>
+                    <h3 className="title blue text-left">{platform.name}</h3>
+                    <h6 className="category grey text-left">
+                      Category: {platform.category}
+                    </h6>
+                    <h5 className="rating-total black text-left">
+                      Rating: {platform.avg}
+                    </h5>
+                    <div className="rating-list mt1 mb1">{fields}</div>
+                  </IonCardTitle>
+                </IonCardHeader>
+              </IonCard>
+            </IonCol>
+            <IonCol className="platform-right">
+              <RateButton />
+              <ReviewsCards />
+            </IonCol>
+          </IonRow>
+        </IonContent>
+      </IonSlide>
+    </>
   );
 };
 

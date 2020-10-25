@@ -28,7 +28,7 @@ const Topic: React.FC = () => {
     false
   );
 
-  const [showLoader, setShowLoader] = useState(false);
+  const [showLoader, setShowLoader] = useState(true);
   const [topic, setTopic] = useState({
     id: 0,
     title: "",
@@ -109,6 +109,7 @@ const Topic: React.FC = () => {
           if (res.status) {
             setComments(res.data);
           }
+          setShowLoader(false);
         });
       }
     });

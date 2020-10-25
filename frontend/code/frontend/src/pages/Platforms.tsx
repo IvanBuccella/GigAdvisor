@@ -11,10 +11,12 @@ import {
   IonCardTitle,
   IonImg,
 } from "@ionic/react";
+import Loader from "../components/Loader";
 
 const utilities = new Utils();
 
 const Platforms: React.FC = () => {
+  const [showLoader, setShowLoader] = useState(true);
   const [platforms, setPlatforms] = useState([]);
 
   function PlatformCards() {
@@ -55,18 +57,22 @@ const Platforms: React.FC = () => {
       if (res.status) {
         setPlatforms(res.data);
       }
+      setShowLoader(false);
     });
   }, []);
 
   return (
-    <IonSlide>
-      <IonContent className="page-container platforms">
-        <h1 className="form-title mt1 mb1">Choose a Platform</h1>
-        <IonRow className="platforms-list">
-          <PlatformCards />
-        </IonRow>
-      </IonContent>
-    </IonSlide>
+    <>
+      <Loader showLoader={showLoader} />
+      <IonSlide>
+        <IonContent className="page-container platforms">
+          <h1 className="form-title mt1 mb1">Choose a Platform</h1>
+          <IonRow className="platforms-list">
+            <PlatformCards />
+          </IonRow>
+        </IonContent>
+      </IonSlide>
+    </>
   );
 };
 

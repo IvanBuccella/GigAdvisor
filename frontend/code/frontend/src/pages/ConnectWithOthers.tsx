@@ -11,10 +11,12 @@ import {
   IonButton,
 } from "@ionic/react";
 import { chatbubbleEllipsesOutline } from "ionicons/icons";
+import Loader from "../components/Loader";
 
 const utilities = new Utils();
 
 const ConnectWithOthers: React.FC = () => {
+  const [showLoader, setShowLoader] = useState(true);
   const [topics, setTopics] = useState([]);
 
   function TopicRows() {
@@ -56,26 +58,30 @@ const ConnectWithOthers: React.FC = () => {
       if (res.status) {
         setTopics(res.data);
       }
+      setShowLoader(false);
     });
   }, []);
 
   return (
-    <IonSlide>
-      <IonContent className="page-container connect-with-others">
-        <h1 className="form-title mt1 mb1">Topics</h1>
-        <IonButton
-          onClick={() => utilities.pageRedirect("topic-create")}
-          className="create-topic-button text-left"
-        >
-          Create Topic
-        </IonButton>
-        <IonRow className="topics-list">
-          <IonGrid>
-            <TopicRows />
-          </IonGrid>
-        </IonRow>
-      </IonContent>
-    </IonSlide>
+    <>
+      <Loader showLoader={showLoader} />
+      <IonSlide>
+        <IonContent className="page-container connect-with-others">
+          <h1 className="form-title mt1 mb1">Topics</h1>
+          <IonButton
+            onClick={() => utilities.pageRedirect("topic-create")}
+            className="create-topic-button text-left"
+          >
+            Create Topic
+          </IonButton>
+          <IonRow className="topics-list">
+            <IonGrid>
+              <TopicRows />
+            </IonGrid>
+          </IonRow>
+        </IonContent>
+      </IonSlide>
+    </>
   );
 };
 

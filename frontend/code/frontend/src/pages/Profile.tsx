@@ -30,7 +30,7 @@ const Home: React.FC = () => {
   const [userUpdateSuccess, setUserUpdateSuccess] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
-  const [showLoader, setShowLoader] = useState(false);
+  const [showLoader, setShowLoader] = useState(true);
   const [avatar, setAvatar] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -65,6 +65,7 @@ const Home: React.FC = () => {
       } else {
         utilities.pageRedirect("login");
       }
+      setShowLoader(false);
     });
   }, []);
 
