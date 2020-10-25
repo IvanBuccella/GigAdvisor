@@ -97,9 +97,7 @@ const Platform: React.FC = () => {
         };
         utilities.postCall("reviews", JSON.stringify(data)).then((res) => {
           if (res.status) {
-            res.data.forEach((elem: any) => {
-              setReviews(res.data);
-            });
+            setReviews(res.data);
           }
         });
       }
