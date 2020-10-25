@@ -88,7 +88,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ("name", "slug")
+        fields = ("id", "name", "slug")
 
 
 class PlatformSerializer(serializers.ModelSerializer):

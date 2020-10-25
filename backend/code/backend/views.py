@@ -375,13 +375,11 @@ class Topics(APIView):
             )
             return JsonResponse(dataToReturn, status=201, safe=False)
         else:
-            querysetTopic = Topic.objects.all()
+            querysetTopic = Topic.objects.all().order_by(F("date").desc())
             topicSerializer = TopicSerializer(querysetTopic, many=True)
             for topic in topicSerializer.data:
                 comments = (
-                    Comment.objects.filter(
-                        topic=topic["id"],
-                    )
+                    Comment.objects.filter(topic=topic["id"],)
                     .values("topic")
                     .annotate(number=Count("id"))
                 )
