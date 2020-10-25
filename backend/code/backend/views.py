@@ -170,9 +170,7 @@ class Categories(APIView):
 
     def post(self, request, *args, **kwargs):
         queryset = Category.objects.all()
-        Category.objects.get
         categorySerializer = CategorySerializer(queryset, many=True)
-
         return JsonResponse(categorySerializer.data, status=201, safe=False)
 
 
@@ -221,12 +219,11 @@ class Platforms(APIView):
             platformSerializer = PlatformSerializer(querysetPlatform, many=True)
             for platform in platformSerializer.data:
                 dataToReturn = get_platform_data_with_ratings(platform, 1)
-            return JsonResponse(dataToReturn, status=201, safe=False)
         else:
             querysetPlatform = Platform.objects.all()
             platformSerializer = PlatformSerializer(querysetPlatform, many=True)
             dataToReturn = platformSerializer.data
-            return JsonResponse(dataToReturn, status=201, safe=False)
+        return json_response(dataToReturn)
 
 
 class Reviews(APIView):
@@ -301,7 +298,7 @@ class PlatformsRating(APIView):
         dataToReturn = []
         for platform in platformSerializer.data:
             dataToReturn.append(get_platform_data_with_ratings(platform, 0))
-        return JsonResponse(dataToReturn, status=201, safe=False)
+        return json_response(dataToReturn)
 
 
 def get_platform_data_with_ratings_by_field(field):
@@ -339,7 +336,7 @@ class FieldsRating(APIView):
                     "values": get_platform_data_with_ratings_by_field(field),
                 }
             )
-        return JsonResponse(dataToReturn, status=201, safe=False)
+        return json_response(dataToReturn)
 
 
 class Fields(APIView):
@@ -362,19 +359,20 @@ class Topics(APIView):
         if request.data and request.data["slug"]:
             querysetTopic = Topic.objects.filter(slug=request.data["slug"])
             topicSerializer = TopicSerializerGet(querysetTopic, many=True)
-            comments = (
-                Comment.objects.filter(topic=topicSerializer.data[0]["id"],)
-                .values("topic")
-                .annotate(number=Count("id"))
-            )
-            dataToReturn = {
-                "title": topicSerializer.data[0]["title"],
-                "slug": topicSerializer.data[0]["slug"],
-                "date": topicSerializer.data[0]["date"],
-                "category": topicSerializer.data[0]["category"],
-                "count": comments[0]["number"],
-            }
-            return JsonResponse(dataToReturn, status=201, safe=False)
+            if querysetTopic.count() > 0:
+                comments = (
+                    Comment.objects.filter(topic=topicSerializer.data[0]["id"],)
+                    .values("topic")
+                    .annotate(number=Count("id"))
+                )
+                dataToReturn = {
+                    "id": topicSerializer.data[0]["id"],
+                    "title": topicSerializer.data[0]["title"],
+                    "slug": topicSerializer.data[0]["slug"],
+                    "date": topicSerializer.data[0]["date"],
+                    "category": topicSerializer.data[0]["category"],
+                    "count": comments[0]["number"],
+                }
         else:
             querysetTopic = Topic.objects.all().order_by(F("date").desc())
             topicSerializer = TopicSerializerGet(querysetTopic, many=True)
@@ -393,7 +391,7 @@ class Topics(APIView):
                         "count": comments[0]["number"],
                     }
                 )
-            return JsonResponse(dataToReturn, status=201, safe=False)
+        return json_response(dataToReturn)
 
 
 class TopicCreate(APIView):
