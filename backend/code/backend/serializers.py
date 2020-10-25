@@ -152,3 +152,10 @@ class TopicSerializer(serializers.ModelSerializer):
 
     category = CategorySerializer(required=True)
     date = serializers.DateTimeField(format="%d/%m/%Y", read_only=True)
+    profile = serializers.PrimaryKeyRelatedField(
+        read_only=False, queryset=Profile.objects.all()
+    )
+    category = serializers.PrimaryKeyRelatedField(
+        read_only=False, queryset=Category.objects.all()
+    )
+
