@@ -16,6 +16,7 @@ import * as d3 from "d3-selection";
 import * as d3Scale from "d3-scale";
 import * as d3Array from "d3-array";
 import * as d3Axis from "d3-axis";
+import Loader from "../components/Loader";
 
 const utilities = new Utils();
 let x: any;
@@ -28,6 +29,7 @@ let barChartHeight: number;
 let barChartMargin = { top: 50, right: 20, bottom: 30, left: 40 };
 
 const Ratings: React.FC = () => {
+  const [showLoader, setShowLoader] = useState(true);
   const [charts, setCharts] = useState(<></>);
 
   function barChartInit(chartData: any, chartId: string) {
@@ -153,23 +155,27 @@ const Ratings: React.FC = () => {
               drawBarChart(res.data[i].values, "field-" + i, res.data[i].name);
             }
           }
+          setShowLoader(false);
         });
       }
     });
   }, []);
 
   return (
-    <IonSlide>
-      <IonContent className="page-container ratings">
-        <h1 className="form-title mt1 mb1">Platform's Rating</h1>
-        <IonRow>
-          <IonCol className="chartContainer">
-            <div id="platformsChart" className="platform-chart"></div>
-            {charts}
-          </IonCol>
-        </IonRow>
-      </IonContent>
-    </IonSlide>
+    <>
+      <Loader showLoader={showLoader} />
+      <IonSlide>
+        <IonContent className="page-container ratings">
+          <h1 className="form-title mt1 mb1">Platform's Rating</h1>
+          <IonRow>
+            <IonCol className="chartContainer">
+              <div id="platformsChart" className="platform-chart"></div>
+              {charts}
+            </IonCol>
+          </IonRow>
+        </IonContent>
+      </IonSlide>
+    </>
   );
 };
 
