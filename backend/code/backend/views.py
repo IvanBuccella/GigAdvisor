@@ -17,7 +17,8 @@ from backend.serializers import (
     ReviewFieldSerializer,
     TopicSerializerGet,
     TopicSerializerSet,
-    CommentSerializer,
+    CommentSerializerGet,
+    CommentSerializerSet,
 )
 from backend.models import (
     Profile,
@@ -32,6 +33,12 @@ from backend.models import (
 from rest_framework import generics
 from .utils import transform_base64_into_avatar, decimal_format
 from django.db.models import F, Count, Sum
+
+
+def json_response(dataToReturn):
+    if dataToReturn == []:
+        return JsonResponse(dataToReturn, status=400, safe=False)
+    return JsonResponse(dataToReturn, status=201, safe=False)
 
 
 class UserAuth(ObtainAuthToken):
@@ -411,7 +418,7 @@ class TopicCreate(APIView):
                     "topic": topicSerializer.data["id"],
                     "profile": request.user.id,
                 }
-                commentSerializer = CommentSerializer(data=data)
+                commentSerializer = CommentSerializerSet(data=data)
                 if commentSerializer.is_valid():
                     commentSerializer.save()
                 else:
@@ -425,3 +432,53 @@ class TopicCreate(APIView):
         else:
             return JsonResponse({}, status=400, safe=False)
 
+
+class Comments(APIView):
+    # API endpoint that return Comments of a specific Topic.
+
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        dataToReturn = []
+        if request.data and request.data["id"]:
+            querysetComment = Comment.objects.filter(topic=request.data["id"]).order_by(
+                F("date").asc()
+            )
+            commentSerializer = CommentSerializerGet(querysetComment, many=True)
+            for comment in commentSerializer.data:
+                dataToReturn.append(
+                    {
+                        "text": comment["text"],
+                        "date": comment["date"],
+                        "user": {
+                            "username": comment["profile"]["user"]["username"],
+                            "avatar": comment["profile"]["avatar"],
+                        },
+                    }
+                )
+        return json_response(dataToReturn)
+
+
+class CommentCreate(APIView):
+    # API endpoint that create a new Comment for a specific Topic.
+
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, *args, **kwargs):
+        user = request.user
+        if request.data:
+            data = {
+                "text": request.data["text"],
+                "topic": request.data["topic"],
+                "profile": request.user.id,
+            }
+            commentSerializer = CommentSerializerSet(data=data)
+            if commentSerializer.is_valid():
+                commentSerializer.save()
+                return JsonResponse("OK", status=201, safe=False)
+            else:
+                return JsonResponse(commentSerializer.errors, status=400, safe=False)
+        else:
+            return JsonResponse({}, status=400, safe=False)

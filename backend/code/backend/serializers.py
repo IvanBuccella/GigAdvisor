@@ -169,12 +169,11 @@ class TopicSerializerSet(serializers.ModelSerializer):
     )
 
 
-class CommentSerializer(serializers.ModelSerializer):
+class CommentSerializerSet(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ("text", "date", "profile", "topic")
 
-    topic = TopicSerializerGet(required=True)
     date = serializers.DateTimeField(format="%d/%m/%Y", read_only=True)
     profile = serializers.PrimaryKeyRelatedField(
         read_only=False, queryset=Profile.objects.all()
@@ -183,3 +182,12 @@ class CommentSerializer(serializers.ModelSerializer):
         read_only=False, queryset=Topic.objects.all()
     )
 
+
+class CommentSerializerGet(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ("text", "date", "profile", "topic")
+
+    topic = TopicSerializerGet(required=True)
+    date = serializers.DateTimeField(format="%d/%m/%Y - %H:%M:%S", read_only=True)
+    profile = ProfileSerializer(required=True)
