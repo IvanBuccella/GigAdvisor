@@ -27,20 +27,20 @@ const ConnectWithOthers: React.FC = () => {
         <>
           {ret}
           <IonRow className="topic">
-            <IonCol>
+            <IonCol size="7">
               <IonRouterLink href={"/topic/" + topic["slug"]}>
                 <h3 className="title blue text-left">{topic["title"]}</h3>
               </IonRouterLink>
             </IonCol>
-            <IonCol>
+            <IonCol size="2">
               <p>{topic["category"]["name"]}</p>
             </IonCol>
-            <IonCol>
+            <IonCol size="1">
               <p>
                 <IonIcon icon={chatbubbleEllipsesOutline} /> {topic["count"]}
               </p>
             </IonCol>
-            <IonCol>
+            <IonCol size="2">
               <p>{topic["date"]}</p>
             </IonCol>
           </IonRow>
