@@ -51,7 +51,7 @@ const ConnectWithOthers: React.FC = () => {
   }
 
   useEffect(() => {
-    utilities.pageProtected();
+    utilities.pageProtected("connect-with-others");
     utilities.postCall("topics", "").then((res) => {
       if (res.status) {
         setTopics(res.data);

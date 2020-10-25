@@ -55,10 +55,15 @@ const Review: React.FC = () => {
   }
 
   useEffect(() => {
-    utilities.pageProtected();
+    let platformSlug = utilities.getLastItem(window.location.pathname);
+    let redirectPage = "platforms";
+    if (platformSlug != "review") {
+      redirectPage = "review/" + platformSlug;
+    }
+    utilities.pageProtected(redirectPage);
 
     let data = {
-      slug: utilities.getLastItem(window.location.pathname),
+      slug: platformSlug,
       id: 0,
     };
     utilities.postCall("platforms", JSON.stringify(data)).then((res) => {

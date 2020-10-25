@@ -32,7 +32,7 @@ const TopicCreate: React.FC = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    utilities.pageProtected();
+    utilities.pageProtected("topic-create");
     utilities.postCall("categories", "").then((res) => {
       if (res.status) {
         setCategories(res.data);

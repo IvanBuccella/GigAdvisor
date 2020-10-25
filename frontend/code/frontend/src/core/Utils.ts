@@ -16,13 +16,16 @@ export class Utils {
     localStorage.setItem("ga-auth", data);
   }
 
-  pageProtected() {
+  pageProtected(from: string = "") {
     if (!this.isAuthenticatedUser()) {
-      this.pageRedirect("login");
+      this.pageRedirect("login?from=" + from);
     }
   }
 
-  pageRedirect(to: string) {
+  pageRedirect(to: string | null, fallback: string = "") {
+    if (to == null) {
+      to = fallback;
+    }
     window.location.href = "/" + to;
   }
 
@@ -44,6 +47,15 @@ export class Utils {
       return true;
     }
     return false;
+  }
+
+  getRedirectPage() {
+    return this.getUrlParameter("from");
+  }
+
+  getUrlParameter(parameterName: string) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(parameterName);
   }
 
   async postCall(url: string, data: string) {

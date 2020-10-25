@@ -46,7 +46,7 @@ const Home: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   useEffect(() => {
-    utilities.pageProtected();
+    utilities.pageProtected("profile");
 
     utilities.postCall("user-profile", "").then((res) => {
       if (res.status) {
