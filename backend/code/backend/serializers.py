@@ -146,18 +146,26 @@ class ReviewFieldSerializer(serializers.ModelSerializer):
     )
 
 
-class TopicSerializer(serializers.ModelSerializer):
+class TopicSerializerGet(serializers.ModelSerializer):
     class Meta:
         model = Topic
         fields = ("id", "title", "slug", "date", "profile", "category")
 
     category = CategorySerializer(required=True)
     date = serializers.DateTimeField(format="%d/%m/%Y", read_only=True)
-    profile = serializers.PrimaryKeyRelatedField(
-        read_only=False, queryset=Profile.objects.all()
-    )
+
+
+class TopicSerializerSet(serializers.ModelSerializer):
+    class Meta:
+        model = Topic
+        fields = ("id", "title", "slug", "date", "profile", "category")
+
+    date = serializers.DateTimeField(format="%d/%m/%Y", read_only=True)
     category = serializers.PrimaryKeyRelatedField(
         read_only=False, queryset=Category.objects.all()
+    )
+    profile = serializers.PrimaryKeyRelatedField(
+        read_only=False, queryset=Profile.objects.all()
     )
 
 
@@ -166,7 +174,7 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = ("text", "date", "profile", "topic")
 
-    topic = TopicSerializer(required=True)
+    topic = TopicSerializerGet(required=True)
     date = serializers.DateTimeField(format="%d/%m/%Y", read_only=True)
     profile = serializers.PrimaryKeyRelatedField(
         read_only=False, queryset=Profile.objects.all()

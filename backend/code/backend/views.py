@@ -15,7 +15,8 @@ from backend.serializers import (
     FieldSerializer,
     ReviewSerializer,
     ReviewFieldSerializer,
-    TopicSerializer,
+    TopicSerializerGet,
+    TopicSerializerSet,
     CommentSerializer,
 )
 from backend.models import (
@@ -353,7 +354,7 @@ class Topics(APIView):
         dataToReturn = []
         if request.data and request.data["slug"]:
             querysetTopic = Topic.objects.filter(slug=request.data["slug"])
-            topicSerializer = TopicSerializer(querysetTopic, many=True)
+            topicSerializer = TopicSerializerGet(querysetTopic, many=True)
             comments = (
                 Comment.objects.filter(topic=topicSerializer.data[0]["id"],)
                 .values("topic")
@@ -371,7 +372,7 @@ class Topics(APIView):
             return JsonResponse(dataToReturn, status=201, safe=False)
         else:
             querysetTopic = Topic.objects.all().order_by(F("date").desc())
-            topicSerializer = TopicSerializer(querysetTopic, many=True)
+            topicSerializer = TopicSerializerGet(querysetTopic, many=True)
             for topic in topicSerializer.data:
                 comments = (
                     Comment.objects.filter(topic=topic["id"],)
@@ -404,7 +405,7 @@ class TopicCreate(APIView):
                 "category": request.data["category"],
                 "profile": request.user.id,
             }
-            topicSerializer = TopicSerializer(data=data)
+            topicSerializer = TopicSerializerSet(data=data)
             if topicSerializer.is_valid():
                 topic = topicSerializer.save()
                 data = {
