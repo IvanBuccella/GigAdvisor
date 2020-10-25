@@ -19,8 +19,8 @@ import {
 const utilities = new Utils();
 
 const TopicCreate: React.FC = () => {
-  const [TopicCreateInsertAlert, setTopicCreateInsertAlert] = useState(false);
-  const [TopicCreateInsertSuccess, setTopicCreateInsertSuccess] = useState(
+  const [topicCreateInsertAlert, setTopicCreateInsertAlert] = useState(false);
+  const [topicCreateInsertSuccess, setTopicCreateInsertSuccess] = useState(
     false
   );
 
@@ -77,14 +77,14 @@ const TopicCreate: React.FC = () => {
     <>
       <Loader showLoader={showLoader} />
       <IonToast
-        isOpen={TopicCreateInsertAlert}
+        isOpen={topicCreateInsertAlert}
         onDidDismiss={() => setTopicCreateInsertAlert(false)}
         message="Operation could not be done. Try again later"
         duration={5000}
         color="danger"
       />
       <IonToast
-        isOpen={TopicCreateInsertSuccess}
+        isOpen={topicCreateInsertSuccess}
         onDidDismiss={() => setTopicCreateInsertSuccess(false)}
         message="Operation Completed Successfully."
         duration={5000}
