@@ -27,6 +27,10 @@ const Footer: React.FC = () => {
         "review",
         "ratings",
         "connect-with-others",
+        "topic",
+        "topic-create",
+        "platforms-map",
+        "platform-map",
       ];
       if (modulesPages.includes(pageSlug)) {
         return "blue";
