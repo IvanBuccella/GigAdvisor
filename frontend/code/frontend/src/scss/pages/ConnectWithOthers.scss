@@ -10,6 +10,46 @@
   }
   .topics-list {
     .topic {
+      margin: 0.5em 0 0.5em 0;
+      .category,
+      .count,
+      .date {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        p {
+          font-weight: normal;
+
+          margin: 0;
+        }
+      }
+      .title {
+        h3 {
+          margin: 0;
+          font-size: 1em;
+        }
+      }
+      .category {
+        p {
+          font-size: 0.8em;
+        }
+        @media only screen and(max-width:1024px) {
+          display: none;
+        }
+      }
+      .count {
+        p {
+          font-size: 0.8em;
+        }
+      }
+      .date {
+        @media only screen and(max-width:660px) {
+          display: none;
+        }
+        p {
+          font-size: 0.8em;
+        }
+      }
     }
   }
 }
