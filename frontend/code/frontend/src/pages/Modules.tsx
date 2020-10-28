@@ -11,7 +11,12 @@ import {
   IonCardSubtitle,
   IonCardTitle,
 } from "@ionic/react";
-import { barChartOutline, starOutline, peopleOutline } from "ionicons/icons";
+import {
+  barChartOutline,
+  starOutline,
+  peopleOutline,
+  pinOutline,
+} from "ionicons/icons";
 
 const utilities = new Utils();
 const Modules: React.FC = () => {
@@ -55,6 +60,25 @@ const Modules: React.FC = () => {
                     This module allowes crowd workers to evaluate digital labour
                     platforms they work for, according to a series of predefined
                     criteria
+                  </h6>
+                </IonCardTitle>
+              </IonCardHeader>
+            </IonCard>
+          </IonCol>
+          <IonCol>
+            <IonCard href="/platforms-map" className="card module">
+              <IonCardHeader>
+                <IonCardSubtitle>
+                  <IonIcon
+                    icon={pinOutline}
+                    size="large"
+                    className="icon blue"
+                  />
+                </IonCardSubtitle>
+                <IonCardTitle>
+                  <h3>Reviews' Maps</h3>
+                  <h6 className="black">
+                    This module allowes crowd workers to see reviews maps.
                   </h6>
                 </IonCardTitle>
               </IonCardHeader>

@@ -44,6 +44,8 @@ import Ratings from "./pages/Ratings";
 import ConnectWithOthers from "./pages/ConnectWithOthers";
 import TopicCreate from "./pages/TopicCreate";
 import Topic from "./pages/Topic";
+import PlatformsMap from "./pages/PlatformsMap";
+import PlatformMap from "./pages/PlatformMap";
 
 const App: React.FC = () => (
   <IonApp>
@@ -88,6 +90,12 @@ const App: React.FC = () => (
             />
             <Route path="/topic-create" component={TopicCreate} exact={true} />
             <Route path="/topic" component={Topic} exact={false} />
+            <Route
+              path="/platforms-map"
+              component={PlatformsMap}
+              exact={true}
+            />
+            <Route path="/platform-map" component={PlatformMap} exact={false} />
           </IonRouterOutlet>
         </IonReactRouter>
       </IonContent>
