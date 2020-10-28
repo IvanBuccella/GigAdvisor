@@ -166,7 +166,14 @@ const Topic: React.FC = () => {
             }}
           >
             <IonRow>
-              <IonCol size="10" className="column">
+              <IonCol
+                sizeXl="10"
+                sizeLg="10"
+                sizeMd="12"
+                sizeSm="12"
+                sizeXs="12"
+                className="column"
+              >
                 <IonItem lines="none" className="form-item mt1">
                   <IonTextarea
                     className="input-field textarea ml0"
@@ -178,7 +185,14 @@ const Topic: React.FC = () => {
                   />
                 </IonItem>
               </IonCol>
-              <IonCol className="column">
+              <IonCol
+                sizeXl="2"
+                sizeLg="2"
+                sizeMd="12"
+                sizeSm="12"
+                sizeXs="12"
+                className="column"
+              >
                 <IonItem lines="none" className="form-item mt1">
                   <IonButton type="submit" className="comment-button">
                     Publish
