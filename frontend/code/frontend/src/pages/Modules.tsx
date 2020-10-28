@@ -24,7 +24,7 @@ const Modules: React.FC = () => {
     <IonSlide>
       <IonContent className="page-container modules">
         <IonRow>
-          <IonCol>
+          <IonCol sizeXl="3" sizeLg="4" sizeMd="6" sizeSm="6" sizeXs="12">
             <IonCard href="/ratings" className="card module">
               <IonCardHeader>
                 <IonCardSubtitle>
@@ -44,7 +44,7 @@ const Modules: React.FC = () => {
               </IonCardHeader>
             </IonCard>
           </IonCol>
-          <IonCol>
+          <IonCol sizeXl="3" sizeLg="4" sizeMd="6" sizeSm="6" sizeXs="12">
             <IonCard href="/platforms" className="card module">
               <IonCardHeader>
                 <IonCardSubtitle>
@@ -65,7 +65,7 @@ const Modules: React.FC = () => {
               </IonCardHeader>
             </IonCard>
           </IonCol>
-          <IonCol>
+          <IonCol sizeXl="3" sizeLg="4" sizeMd="6" sizeSm="6" sizeXs="12">
             <IonCard href="/platforms-map" className="card module">
               <IonCardHeader>
                 <IonCardSubtitle>
@@ -84,7 +84,7 @@ const Modules: React.FC = () => {
               </IonCardHeader>
             </IonCard>
           </IonCol>
-          <IonCol>
+          <IonCol sizeXl="3" sizeLg="4" sizeMd="6" sizeSm="6" sizeXs="12">
             <IonCard href="/connect-with-others" className="card module">
               <IonCardHeader>
                 <IonCardSubtitle>
