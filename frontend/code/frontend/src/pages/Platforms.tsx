@@ -28,7 +28,14 @@ const Platforms: React.FC = () => {
       ret = (
         <>
           {ret}
-          <IonCol className="platform">
+          <IonCol
+            className="platform"
+            sizeXl="3"
+            sizeLg="4"
+            sizeMd="6"
+            sizeSm="6"
+            sizeXs="12"
+          >
             <IonCard href={"/platform/" + platform["slug"]}>
               <IonCardHeader>
                 <IonCardSubtitle>
