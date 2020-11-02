@@ -158,7 +158,11 @@ class UserAvatarUpdate(APIView):
                 request.data["avatar"], request.data["format"]
             )[0],
         }
-        profileSerializer = ProfileSerializer(user.profile, dataToUpdate, partial=True,)
+        profileSerializer = ProfileSerializer(
+            user.profile,
+            dataToUpdate,
+            partial=True,
+        )
         if profileSerializer.is_valid():
             profileSerializer.save()
             return JsonResponse(profileSerializer.data, status=201)
@@ -367,29 +371,56 @@ class Topics(APIView):
 
     def post(self, request, *args, **kwargs):
         dataToReturn = []
-        if request.data and request.data["slug"]:
-            querysetTopic = Topic.objects.filter(slug=request.data["slug"])
-            topicSerializer = TopicSerializerGet(querysetTopic, many=True)
-            if querysetTopic.count() > 0:
-                comments = (
-                    Comment.objects.filter(topic=topicSerializer.data[0]["id"],)
-                    .values("topic")
-                    .annotate(number=Count("id"))
-                )
-                dataToReturn = {
-                    "id": topicSerializer.data[0]["id"],
-                    "title": topicSerializer.data[0]["title"],
-                    "slug": topicSerializer.data[0]["slug"],
-                    "date": topicSerializer.data[0]["date"],
-                    "category": topicSerializer.data[0]["category"],
-                    "count": comments[0]["number"],
-                }
+        if request.data:
+            if request.data["slug"] != "":
+                querysetTopic = Topic.objects.filter(slug=request.data["slug"])
+                topicSerializer = TopicSerializerGet(querysetTopic, many=True)
+                if querysetTopic.count() > 0:
+                    comments = (
+                        Comment.objects.filter(
+                            topic=topicSerializer.data[0]["id"],
+                        )
+                        .values("topic")
+                        .annotate(number=Count("id"))
+                    )
+                    dataToReturn = {
+                        "id": topicSerializer.data[0]["id"],
+                        "title": topicSerializer.data[0]["title"],
+                        "slug": topicSerializer.data[0]["slug"],
+                        "date": topicSerializer.data[0]["date"],
+                        "category": topicSerializer.data[0]["category"],
+                        "count": comments[0]["number"],
+                    }
+            elif request.data["category"] != "":
+                querysetTopic = Topic.objects.filter(
+                    category=Category.objects.get(slug=request.data["category"])
+                ).order_by(F("date").desc())
+                topicSerializer = TopicSerializerGet(querysetTopic, many=True)
+                for topic in topicSerializer.data:
+                    comments = (
+                        Comment.objects.filter(
+                            topic=topic["id"],
+                        )
+                        .values("topic")
+                        .annotate(number=Count("id"))
+                    )
+                    dataToReturn.append(
+                        {
+                            "title": topic["title"],
+                            "slug": topic["slug"],
+                            "date": topic["date"],
+                            "category": topic["category"],
+                            "count": comments[0]["number"],
+                        }
+                    )
         else:
             querysetTopic = Topic.objects.all().order_by(F("date").desc())
             topicSerializer = TopicSerializerGet(querysetTopic, many=True)
             for topic in topicSerializer.data:
                 comments = (
-                    Comment.objects.filter(topic=topic["id"],)
+                    Comment.objects.filter(
+                        topic=topic["id"],
+                    )
                     .values("topic")
                     .annotate(number=Count("id"))
                 )
