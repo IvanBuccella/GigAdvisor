@@ -86,7 +86,7 @@ const App: React.FC = () => (
             <Route
               path="/connect-with-others"
               component={ConnectWithOthers}
-              exact={true}
+              exact={false}
             />
             <Route path="/topic-create" component={TopicCreate} exact={true} />
             <Route path="/topic" component={Topic} exact={false} />

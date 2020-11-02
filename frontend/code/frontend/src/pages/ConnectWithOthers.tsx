@@ -9,6 +9,8 @@ import {
   IonRouterLink,
   IonIcon,
   IonButton,
+  IonSelect,
+  IonSelectOption,
 } from "@ionic/react";
 import { chatbubbleEllipsesOutline } from "ionicons/icons";
 import Loader from "../components/Loader";
@@ -18,6 +20,8 @@ const utilities = new Utils();
 const ConnectWithOthers: React.FC = () => {
   const [showLoader, setShowLoader] = useState(true);
   const [topics, setTopics] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState("");
 
   function TopicRows() {
     let ret = <></>;
@@ -58,13 +62,50 @@ const ConnectWithOthers: React.FC = () => {
     return ret;
   }
 
+  function CategoriesOptions() {
+    let ret = (
+      <>
+        <IonSelectOption value="">All Categories</IonSelectOption>
+      </>
+    );
+
+    for (let i = 0; i < categories.length; i++) {
+      ret = (
+        <>
+          {ret}
+          <IonSelectOption value={categories[i]["slug"]}>
+            {categories[i]["name"]}
+          </IonSelectOption>
+        </>
+      );
+    }
+    return ret;
+  }
+
   useEffect(() => {
     utilities.pageProtected("connect-with-others");
-    utilities.postCall("topics", "").then((res) => {
+
+    utilities.postCall("categories", "").then((res) => {
       if (res.status) {
-        setTopics(res.data);
+        setCategories(res.data);
       }
-      setShowLoader(false);
+
+      let data = "";
+      let tmp = utilities.getLastItem(window.location.pathname);
+      if (window.location.pathname.split("/").length > 2 && tmp != "") {
+        data = JSON.stringify({
+          slug: "",
+          category: tmp,
+        });
+        setCategory(tmp);
+      }
+
+      utilities.postCall("topics", data).then((res) => {
+        if (res.status) {
+          setTopics(res.data);
+        }
+        setShowLoader(false);
+      });
     });
   }, []);
 
@@ -74,12 +115,46 @@ const ConnectWithOthers: React.FC = () => {
       <IonSlide>
         <IonContent className="page-container connect-with-others">
           <h1 className="form-title mt1 mb1">Topics</h1>
-          <IonButton
-            onClick={() => utilities.pageRedirect("topic-create")}
-            className="create-topic-button text-left"
-          >
-            Create Topic
-          </IonButton>
+          <IonRow>
+            <IonCol
+              sizeLg="2"
+              sizeMd="6"
+              sizeSm="6"
+              sizeXs="12"
+              className="text-left"
+            >
+              <IonSelect
+                value={category}
+                okText="Choose"
+                cancelText="Dismiss"
+                onIonChange={(e) => {
+                  if (
+                    utilities.getLastItem(window.location.pathname) !=
+                    e.detail.value
+                  ) {
+                    setCategory(e.detail.value);
+                    utilities.pageRedirect(
+                      window.location.pathname.split("/")[1] +
+                        "/" +
+                        e.detail.value
+                    );
+                  }
+                }}
+                className="select-category pl0 pr0 pt0 pb0"
+              >
+                <CategoriesOptions />
+              </IonSelect>
+            </IonCol>
+            <IonCol className="text-right">
+              <IonButton
+                onClick={() => utilities.pageRedirect("topic-create")}
+                className="create-topic-button text-left"
+              >
+                Create Topic
+              </IonButton>
+            </IonCol>
+          </IonRow>
+
           <IonRow className="topics-list">
             <IonGrid>
               <TopicRows />
