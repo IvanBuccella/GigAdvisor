@@ -64,6 +64,7 @@ const Platform: React.FC = () => {
     let data = {
       slug: utilities.getLastItem(window.location.pathname),
       id: 0,
+      withAvg: false,
     };
     utilities.postCall("platforms", JSON.stringify(data)).then((res) => {
       if (res.status) {
@@ -82,6 +83,7 @@ const Platform: React.FC = () => {
         data = {
           slug: "",
           id: elem.id,
+          withAvg: false,
         };
         utilities.postCall("reviews", JSON.stringify(data)).then((res) => {
           if (res.status) {
