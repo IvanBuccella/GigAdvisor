@@ -38,6 +38,7 @@ const PlatformMap: React.FC = () => {
     let data = {
       slug: utilities.getLastItem(window.location.pathname),
       id: 0,
+      withAvg: false,
     };
     utilities.postCall("platforms", JSON.stringify(data)).then((res) => {
       if (res.status) {
@@ -56,6 +57,7 @@ const PlatformMap: React.FC = () => {
         data = {
           slug: "",
           id: elem.id,
+          withAvg: true,
         };
         utilities.postCall("reviews", JSON.stringify(data)).then((res) => {
           if (res.status) {
@@ -74,6 +76,7 @@ const PlatformMap: React.FC = () => {
       "https://mt.google.com/vt/icon?color=ff004C13&name=icons/spotlight/spotlight-waypoint-b.png";
 
     let ret = <></>;
+    let icon = redMark;
     for (let i = 0; i < reviews.length; i++) {
       if (
         reviews[i]["latitude"] != undefined &&
@@ -85,6 +88,10 @@ const PlatformMap: React.FC = () => {
           setCenterLatitude(reviews[i]["latitude"]);
           setCenterLongitude(reviews[i]["longitude"]);
         }
+        icon = redMark;
+        if (reviews[i]["avg"] > 2) {
+          icon = greenMark;
+        }
         ret = (
           <>
             {ret}
@@ -93,7 +100,7 @@ const PlatformMap: React.FC = () => {
                 lat: reviews[i]["latitude"],
                 lng: reviews[i]["longitude"],
               }}
-              icon={redMark}
+              icon={icon}
             />
           </>
         );
