@@ -235,6 +235,17 @@ class Reviews(APIView):
                 platform=request.data["id"]
             ).order_by(F("date").desc())
             reviewSerializer = ReviewSerializer(querysetReview, many=True)
+
+            if request.data["withAvg"]:
+                for review in reviewSerializer.data:
+                    print(review)
+                    reviewValue = (
+                        ReviewField.objects.filter(review=review["id"])
+                        .values("review")
+                        .annotate(sum=Sum("value"), number=Count("value"))
+                    )
+                    review["avg"] = reviewValue[0]["sum"] / reviewValue[0]["number"]
+
             return JsonResponse(reviewSerializer.data, status=201, safe=False)
         else:
             return JsonResponse({}, status=400, safe=False)
