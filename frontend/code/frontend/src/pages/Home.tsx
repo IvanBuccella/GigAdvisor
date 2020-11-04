@@ -103,9 +103,7 @@ function ReservedAreaCards() {
 }
 
 const Home: React.FC = () => {
-  const [showNotice, setShowNotice] = useState(
-    false
-  ); /*useState(true) Remember to set it as true!!!*/
+  const [showNotice, setShowNotice] = useState(true);
   const [showLanguageModal, setShowLanguageModal] = useState(false);
   const [languageSelected, setLanguageSelected] = useState<string>("english");
 
