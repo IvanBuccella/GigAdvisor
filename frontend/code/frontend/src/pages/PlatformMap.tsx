@@ -126,6 +126,7 @@ const PlatformMap: React.FC = () => {
                 }}
                 center={{ lat: centerLatitude, lng: centerLongitude }}
                 zoom={6}
+                clickableIcons={false}
               >
                 <MapMarkers />
               </GoogleMap>
