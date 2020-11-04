@@ -58,6 +58,7 @@ class Platform(models.Model):
 
 class Field(models.Model):
     name = models.CharField(null=False, max_length=200, blank=True)
+    color = models.CharField(null=False, max_length=20, blank=True)
 
     def __str__(self):
         return self.name

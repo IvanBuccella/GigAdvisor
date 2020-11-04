@@ -102,10 +102,11 @@ class PlatformSerializer(serializers.ModelSerializer):
 
 class FieldSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Review
+        model = Field
         fields = (
             "id",
             "name",
+            "color",
         )
 
 
