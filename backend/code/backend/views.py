@@ -538,9 +538,11 @@ class PlatformTrend(APIView):
                 fields = []
                 for field in fieldSerializer.data:
                     querySetReviewField = ReviewField.objects.filter(
-                        review__in=Review.objects.filter(platform=platform["id"]),
+                        review__in=Review.objects.filter(
+                            platform=platform["id"]
+                        ).order_by(F("date").asc()),
                         field=field["id"],
-                    )
+                    )[0:20]
                     reviewFields = ReviewFieldSerializer(querySetReviewField, many=True)
                     fieldValues = []
                     i = 1
