@@ -522,3 +522,41 @@ class CommentCreate(APIView):
                 return JsonResponse(commentSerializer.errors, status=400, safe=False)
         else:
             return JsonResponse({}, status=400, safe=False)
+
+
+class PlatformTrend(APIView):
+    # API endpoint that return Platform trend
+
+    def post(self, request, *args, **kwargs):
+        dataToReturn = []
+        if request.data and request.data["slug"]:
+            querysetPlatform = Platform.objects.filter(slug=request.data["slug"])
+            platformSerializer = PlatformSerializer(querysetPlatform, many=True)
+            for platform in platformSerializer.data:
+                querysetField = Field.objects.all()
+                fieldSerializer = FieldSerializer(querysetField, many=True)
+                fields = []
+                for field in fieldSerializer.data:
+                    querySetReviewField = ReviewField.objects.filter(
+                        review__in=Review.objects.filter(platform=platform["id"]),
+                        field=field["id"],
+                    )
+                    reviewFields = ReviewFieldSerializer(querySetReviewField, many=True)
+                    fieldValues = []
+                    i = 1
+                    for reviewField in reviewFields.data:
+                        fieldValues.append({"time": i, "value": reviewField["value"]})
+                        i = i + 1
+                    fields.append(
+                        {
+                            "name": field["name"],
+                            "color": field["color"],
+                            "values": fieldValues,
+                        }
+                    )
+                dataToReturn = {
+                    "name": platform["name"],
+                    "fields": fields,
+                }
+
+        return json_response(dataToReturn)

@@ -50,6 +50,8 @@ urlpatterns = [
     path("topic-create", views.TopicCreate.as_view(), name="topic-create"),
     path("comments", views.Comments.as_view(), name="comments"),
     path("comment-create", views.CommentCreate.as_view(), name="comment-create"),
+    path("platform-trend", views.PlatformTrend.as_view(), name="platform-trend"),
+    
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
