@@ -4,6 +4,16 @@
       display: block;
     }
 
+    .review-button,
+    .trend-button {
+      @include blue-button;
+
+      @media only screen and(max-width:760px) {
+        margin-top: 1em;
+        max-width: 100%;
+        font-size: 0.7em;
+      }
+    }
     .platform-left {
       max-width: 30%;
       @media only screen and(max-width:760px) {
@@ -24,15 +34,6 @@
       }
     }
     .platform-right {
-      .review-button {
-        @include blue-button;
-
-        @media only screen and(max-width:760px) {
-          margin-top: 1em;
-          max-width: 100%;
-          font-size: 0.7em;
-        }
-      }
       .review {
         .card {
           width: 100%;

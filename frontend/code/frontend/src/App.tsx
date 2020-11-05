@@ -46,6 +46,7 @@ import TopicCreate from "./pages/TopicCreate";
 import Topic from "./pages/Topic";
 import PlatformsMap from "./pages/PlatformsMap";
 import PlatformMap from "./pages/PlatformMap";
+import PlatformTrend from "./pages/PlatformTrend";
 
 const App: React.FC = () => (
   <IonApp>
@@ -96,6 +97,11 @@ const App: React.FC = () => (
               exact={true}
             />
             <Route path="/platform-map" component={PlatformMap} exact={false} />
+            <Route
+              path="/platform-trend"
+              component={PlatformTrend}
+              exact={false}
+            />
           </IonRouterOutlet>
         </IonReactRouter>
       </IonContent>

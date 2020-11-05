@@ -60,6 +60,22 @@ const Platform: React.FC = () => {
     return ret;
   }
 
+  function TrendButton() {
+    if (reviews.length > 1) {
+      return (
+        <IonButton
+          onClick={() =>
+            utilities.pageRedirect("platform-trend/" + platform.slug)
+          }
+          className="review-button text-left"
+        >
+          See Trend
+        </IonButton>
+      );
+    }
+    return <></>;
+  }
+
   useEffect(() => {
     let data = {
       slug: utilities.getLastItem(window.location.pathname),
@@ -132,6 +148,7 @@ const Platform: React.FC = () => {
                       Rating: {platform.avg}
                     </h5>
                     <div className="rating-list mt1 mb1">{fields}</div>
+                    <TrendButton />
                   </IonCardTitle>
                 </IonCardHeader>
               </IonCard>
