@@ -35,10 +35,10 @@ const PlatformMap: React.FC = () => {
   const [centerLongitude, setCenterLongitude] = useState(12.3959135);
 
   useEffect(() => {
+    let platformSlug = utilities.getLastItem(window.location.pathname);
     let data = {
-      slug: utilities.getLastItem(window.location.pathname),
-      id: 0,
-      withAvg: false,
+      slug: platformSlug,
+      withAvg: 1,
     };
     utilities.postCall("platforms", JSON.stringify(data)).then((res) => {
       if (res.status) {
@@ -55,9 +55,8 @@ const PlatformMap: React.FC = () => {
         });
 
         data = {
-          slug: "",
-          id: elem.id,
-          withAvg: true,
+          slug: platformSlug,
+          withAvg: 1,
         };
         utilities.postCall("reviews", JSON.stringify(data)).then((res) => {
           if (res.status) {

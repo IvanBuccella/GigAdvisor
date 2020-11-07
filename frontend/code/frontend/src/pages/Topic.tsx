@@ -87,6 +87,7 @@ const Topic: React.FC = () => {
   useEffect(() => {
     let data = {
       slug: utilities.getLastItem(window.location.pathname),
+      category: "",
       id: 0,
     };
     utilities.postCall("topics", JSON.stringify(data)).then((res) => {
@@ -103,6 +104,7 @@ const Topic: React.FC = () => {
 
         data = {
           slug: "",
+          category: "",
           id: elem.id,
         };
         utilities.postCall("comments", JSON.stringify(data)).then((res) => {

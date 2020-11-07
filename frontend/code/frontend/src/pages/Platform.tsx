@@ -77,10 +77,10 @@ const Platform: React.FC = () => {
   }
 
   useEffect(() => {
+    let platformSlug = utilities.getLastItem(window.location.pathname);
     let data = {
-      slug: utilities.getLastItem(window.location.pathname),
-      id: 0,
-      withAvg: false,
+      slug: platformSlug,
+      withAvg: 0,
     };
     utilities.postCall("platforms", JSON.stringify(data)).then((res) => {
       if (res.status) {
@@ -97,9 +97,8 @@ const Platform: React.FC = () => {
         });
 
         data = {
-          slug: "",
-          id: elem.id,
-          withAvg: false,
+          slug: platformSlug,
+          withAvg: 0,
         };
         utilities.postCall("reviews", JSON.stringify(data)).then((res) => {
           if (res.status) {
