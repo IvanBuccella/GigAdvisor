@@ -16,6 +16,7 @@ import {
   starOutline,
   peopleOutline,
   pinOutline,
+  cloudDownloadOutline,
 } from "ionicons/icons";
 
 const utilities = new Utils();
@@ -99,6 +100,25 @@ const Modules: React.FC = () => {
                   <h6 className="black">
                     This module allowes crowd workers to discuss issues and
                     share ideas about their working experience
+                  </h6>
+                </IonCardTitle>
+              </IonCardHeader>
+            </IonCard>
+          </IonCol>
+          <IonCol sizeXl="3" sizeLg="4" sizeMd="6" sizeSm="6" sizeXs="12">
+            <IonCard href="/api-endpoints" className="card module">
+              <IonCardHeader>
+                <IonCardSubtitle>
+                  <IonIcon
+                    icon={cloudDownloadOutline}
+                    size="large"
+                    className="icon blue"
+                  />
+                </IonCardSubtitle>
+                <IonCardTitle>
+                  <h3>API Endpoints</h3>
+                  <h6 className="black">
+                    This module allowes everyone to get GigAdvisor's Data
                   </h6>
                 </IonCardTitle>
               </IonCardHeader>

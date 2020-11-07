@@ -259,7 +259,6 @@ class Reviews(APIView):
 
             if int(request.data["withAvg"]) == 1:
                 for review in reviewSerializer.data:
-                    print(review)
                     reviewValue = (
                         ReviewField.objects.filter(review=review["id"])
                         .values("review")

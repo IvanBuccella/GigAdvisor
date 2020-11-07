@@ -47,6 +47,7 @@ import Topic from "./pages/Topic";
 import PlatformsMap from "./pages/PlatformsMap";
 import PlatformMap from "./pages/PlatformMap";
 import PlatformTrend from "./pages/PlatformTrend";
+import ApiEndpoints from "./pages/ApiEndpoints";
 
 const App: React.FC = () => (
   <IonApp>
@@ -100,6 +101,11 @@ const App: React.FC = () => (
             <Route
               path="/platform-trend"
               component={PlatformTrend}
+              exact={false}
+            />
+            <Route
+              path="/api-endpoints"
+              component={ApiEndpoints}
               exact={false}
             />
           </IonRouterOutlet>

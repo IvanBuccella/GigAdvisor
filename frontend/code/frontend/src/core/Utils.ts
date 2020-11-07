@@ -7,7 +7,10 @@ export class Utils {
     return path.substring(path.lastIndexOf("/") + 1);
   }
 
-  getApiEndpoint() {
+  getApiEndpoint(publicURL = false) {
+    if (publicURL) {
+      return config.PUBLIC_API_ENDPOINT;
+    }
     return config.API_ENDPOINT;
   }
 
