@@ -31,7 +31,7 @@ from backend.models import (
     Comment,
 )
 from rest_framework import generics
-from .utils import transform_base64_into_avatar, decimal_format
+from .utils import transform_base64_into_avatar, decimal_format, is_integer
 from django.db.models import F, Count, Sum
 
 
@@ -171,6 +171,8 @@ class UserAvatarUpdate(APIView):
 
 class Categories(APIView):
     # API endpoint that return Categories.
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         queryset = Category.objects.all()
@@ -215,10 +217,14 @@ def get_platform_data_with_ratings(platform, withFields):
 
 class Platforms(APIView):
     # API endpoint that return Platforms or a specific Platform.
+    def get(self, request, *args, **kwargs):
+        if request.GET and "slug" in request.GET:
+            request.data["slug"] = request.GET["slug"]
+        return self.post(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         dataToReturn = []
-        if request.data and request.data["slug"]:
+        if request.data and "slug" in request.data and request.data["slug"] is not "":
             querysetPlatform = Platform.objects.filter(slug=request.data["slug"])
             platformSerializer = PlatformSerializer(querysetPlatform, many=True)
             for platform in platformSerializer.data:
@@ -232,15 +238,26 @@ class Platforms(APIView):
 
 class Reviews(APIView):
     # API endpoint that return Platform's Reviews.
+    def get(self, request, *args, **kwargs):
+        if request.GET and "slug" in request.GET and "withAvg" in request.GET:
+            request.data["slug"] = request.GET["slug"]
+            request.data["withAvg"] = request.GET["withAvg"]
+        return self.post(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        if request.data and request.data["id"]:
+        if (
+            request.data
+            and "slug" in request.data
+            and "withAvg" in request.data
+            and request.data["slug"] is not ""
+            and is_integer(request.data["withAvg"])
+        ):
             querysetReview = Review.objects.filter(
-                platform=request.data["id"]
+                platform=Platform.objects.get(slug=request.data["slug"])
             ).order_by(F("date").desc())
             reviewSerializer = ReviewSerializer(querysetReview, many=True)
 
-            if request.data["withAvg"]:
+            if int(request.data["withAvg"]) == 1:
                 for review in reviewSerializer.data:
                     print(review)
                     reviewValue = (
@@ -263,7 +280,22 @@ class ReviewCreate(APIView):
 
     def patch(self, request, *args, **kwargs):
         user = request.user
-        if request.data:
+        if (
+            request.data
+            and "name" in request.data
+            and request.data["name"] is not ""
+            and "text" in request.data
+            and request.data["text"] is not ""
+            and "latitude" in request.data
+            and request.data["latitude"] is not ""
+            and "longitude" in request.data
+            and request.data["longitude"] is not ""
+            and "platform" in request.data
+            and is_integer(request.data["platform"])
+            and int(request.data["platform"]) > 0
+            and "fieldIds" in request.data
+            and "fieldValues" in request.data
+        ):
             data = {
                 "name": request.data["name"],
                 "text": request.data["text"],
@@ -306,6 +338,8 @@ class ReviewCreate(APIView):
 
 class PlatformsRating(APIView):
     # API endpoint that return all Platforms' Rating.
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         querysetPlatform = Platform.objects.all()
@@ -339,6 +373,8 @@ def get_platform_data_with_ratings_by_field(field):
 
 class FieldsRating(APIView):
     # API endpoint that return all Fields' Rating.
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         querysetField = Field.objects.all()
@@ -356,6 +392,8 @@ class FieldsRating(APIView):
 
 class Fields(APIView):
     # API endpoint that return all Fields.
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         querysetField = Field.objects.all()
@@ -371,8 +409,8 @@ class Topics(APIView):
 
     def post(self, request, *args, **kwargs):
         dataToReturn = []
-        if request.data:
-            if request.data["slug"] != "":
+        if request.data and "slug" in request.data and "category" in request.data:
+            if request.data["slug"] is not "":
                 querysetTopic = Topic.objects.filter(slug=request.data["slug"])
                 topicSerializer = TopicSerializerGet(querysetTopic, many=True)
                 if querysetTopic.count() > 0:
@@ -391,7 +429,7 @@ class Topics(APIView):
                         "category": topicSerializer.data[0]["category"],
                         "count": comments[0]["number"],
                     }
-            elif request.data["category"] != "":
+            elif request.data["category"] is not "":
                 querysetTopic = Topic.objects.filter(
                     category=Category.objects.get(slug=request.data["category"])
                 ).order_by(F("date").desc())
@@ -444,7 +482,14 @@ class TopicCreate(APIView):
 
     def patch(self, request, *args, **kwargs):
         user = request.user
-        if request.data:
+        if (
+            request.data
+            and "title" in request.data
+            and "category" in request.data
+            and "text" in request.data
+            and is_integer(request.data["category"])
+            and int(request.data["category"]) > 0
+        ):
             data = {
                 "title": request.data["title"],
                 "category": request.data["category"],
@@ -481,10 +526,15 @@ class Comments(APIView):
 
     def post(self, request, *args, **kwargs):
         dataToReturn = []
-        if request.data and request.data["id"]:
-            querysetComment = Comment.objects.filter(topic=request.data["id"]).order_by(
-                F("date").asc()
-            )
+        if (
+            request.data
+            and "id" in request.data
+            and is_integer(request.data["id"])
+            and int(request.data["id"]) > 0
+        ):
+            querysetComment = Comment.objects.filter(
+                topic=int(request.data["id"])
+            ).order_by(F("date").asc())
             commentSerializer = CommentSerializerGet(querysetComment, many=True)
             for comment in commentSerializer.data:
                 dataToReturn.append(
@@ -508,7 +558,13 @@ class CommentCreate(APIView):
 
     def patch(self, request, *args, **kwargs):
         user = request.user
-        if request.data:
+        if (
+            request.data
+            and "text" in request.data
+            and "topic" in request.data
+            and is_integer(request.data["topic"])
+            and int(request.data["topic"]) > 0
+        ):
             data = {
                 "text": request.data["text"],
                 "topic": request.data["topic"],
@@ -526,10 +582,14 @@ class CommentCreate(APIView):
 
 class PlatformTrend(APIView):
     # API endpoint that return Platform trend
+    def get(self, request, *args, **kwargs):
+        if request.GET and "slug" in request.GET:
+            request.data["slug"] = request.GET["slug"]
+        return self.post(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         dataToReturn = []
-        if request.data and request.data["slug"]:
+        if request.data and "slug" in request.data and request.data["slug"] is not "":
             querysetPlatform = Platform.objects.filter(slug=request.data["slug"])
             platformSerializer = PlatformSerializer(querysetPlatform, many=True)
             for platform in platformSerializer.data:
