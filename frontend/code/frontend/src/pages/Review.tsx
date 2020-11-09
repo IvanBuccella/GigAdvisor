@@ -85,6 +85,7 @@ const Review: React.FC = () => {
   }, []);
 
   const submitReview = () => {
+    setShowLoader(true);
     let data = JSON.stringify({
       platform: platform.id,
       name: name,
@@ -96,6 +97,7 @@ const Review: React.FC = () => {
     });
     utilities.patchCall("review", data).then((res) => {
       if (res.status) {
+        setShowLoader(false);
         setReviewInsertSuccess(true);
 
         setTimeout(function () {

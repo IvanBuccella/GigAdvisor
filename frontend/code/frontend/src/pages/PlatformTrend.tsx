@@ -15,7 +15,6 @@ import {
 import * as d3 from "d3-selection";
 import * as d3Scale from "d3-scale";
 import * as d3Shape from "d3-shape";
-import * as d3Array from "d3-array";
 import * as d3Axis from "d3-axis";
 import Loader from "../components/Loader";
 
@@ -24,6 +23,7 @@ let x: any;
 let y: any;
 let svg: any;
 let g: any;
+let line: any;
 let allGroup: any;
 let allGroupColors: any;
 
@@ -36,10 +36,17 @@ const PlatformTrend: React.FC = () => {
   const [platform, setPlatform] = useState("");
 
   function scatterPlotChartInit(chartData: any, chartId: string) {
+    let width = window.innerWidth;
+    if (width >= 767) {
+      width = width * 0.75;
+    }
     scatterPlotChartWidth =
-      900 - scatterPlotChartMargin.left - scatterPlotChartMargin.right;
+      width - scatterPlotChartMargin.left - scatterPlotChartMargin.right;
     scatterPlotChartHeight =
-      600 - scatterPlotChartMargin.top - scatterPlotChartMargin.bottom;
+      window.innerHeight -
+      300 -
+      scatterPlotChartMargin.top -
+      scatterPlotChartMargin.bottom;
     svg = d3
       .select("#" + chartId)
       .append("svg")
@@ -60,16 +67,35 @@ const PlatformTrend: React.FC = () => {
       );
     allGroup = [];
     allGroupColors = [];
-    for (let i = 0; i < Object.keys(chartData).length; i++) {
-      if (chartData[i]["values"].length > 0) {
-        allGroup.push(chartData[i]["name"]);
-        allGroupColors[chartData[i]["name"]] = chartData[i]["color"];
+    let chart = document.getElementById(chartId);
+    if (chart != null) {
+      chart.appendChild(document.createElement("br"));
+      let div = document.createElement("div");
+      div.className = "legend-container";
+      for (let i = 0; i < Object.keys(chartData).length; i++) {
+        if (chartData[i]["values"].length > 0) {
+          allGroup.push(chartData[i]["name"]);
+          allGroupColors[chartData[i]["name"]] = chartData[i]["color"];
+        }
+        var element = document.createElement("p");
+        element.style.color = chartData[i]["color"];
+        element.textContent = chartData[i]["name"];
+        div.appendChild(element);
       }
+      chart.appendChild(div);
     }
   }
 
   function scatterPlotChartDrawXAxis(chartData: any) {
-    x = d3Scale.scaleLinear().domain([0, 21]).range([1, scatterPlotChartWidth]);
+    let max = 0;
+    if (chartData.length > 0) {
+      max = chartData[0]["values"].length;
+    }
+    max++;
+    x = d3Scale
+      .scaleLinear()
+      .domain([0, max])
+      .range([1, scatterPlotChartWidth]);
     svg
       .append("g")
       .attr(
@@ -93,7 +119,7 @@ const PlatformTrend: React.FC = () => {
   }
 
   function scatterPlotChartDrawLines(chartData: any) {
-    var line = d3Shape
+    line = d3Shape
       .line()
       .x(function (d: any) {
         return x(+d.time);
@@ -144,32 +170,6 @@ const PlatformTrend: React.FC = () => {
       .attr("stroke", "black");
   }
 
-  function scatterPlotChartDrawLabels(chartData: any) {
-    svg
-      .selectAll("myLabels")
-      .data(chartData)
-      .enter()
-      .append("g")
-      .append("text")
-      .attr("class", function (d: any) {
-        return d.name;
-      })
-      .datum(function (d: any) {
-        return { name: d.name, value: d.values[d.values.length - 1] };
-      })
-      .attr("transform", function (d: any) {
-        return "translate(" + x(d.value.time) + "," + y(d.value.value) + ")";
-      })
-      .attr("x", 12)
-      .text(function (d: any) {
-        return d.name;
-      })
-      .style("fill", function (d: any) {
-        return allGroupColors[d.name];
-      })
-      .style("font-size", 10);
-  }
-
   function drawScatterPlotChart(chartData: any, chartId: string) {
     scatterPlotChartInit(chartData, chartId);
     if (allGroup.length > 0) {
@@ -177,7 +177,6 @@ const PlatformTrend: React.FC = () => {
       scatterPlotChartDrawYAxis(chartData);
       scatterPlotChartDrawLines(chartData);
       scatterPlotChartDrawPoints(chartData);
-      scatterPlotChartDrawLabels(chartData);
     }
   }
 

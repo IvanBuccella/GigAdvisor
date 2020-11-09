@@ -47,6 +47,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     utilities.pageProtected("profile");
+    setShowLoader(true);
 
     utilities.postCall("user-profile", "").then((res) => {
       if (res.status) {
@@ -81,8 +82,9 @@ const Home: React.FC = () => {
       qualification: qualification,
       address: address,
     });
-
+    setShowLoader(true);
     utilities.patchCall("user-profile-update", data).then((res) => {
+      setShowLoader(false);
       if (res.status) {
         setUserUpdateSuccess(true);
       } else {
@@ -102,7 +104,9 @@ const Home: React.FC = () => {
         return;
       }
     }
+    setShowLoader(true);
     utilities.patchCall("user-password-update", data).then((res) => {
+      setShowLoader(false);
       if (res.status) {
         setUserUpdateSuccess(true);
         setPassword("");
@@ -125,7 +129,9 @@ const Home: React.FC = () => {
           avatar: cameraPhoto.base64String,
           format: cameraPhoto.format,
         });
+        setShowLoader(true);
         utilities.patchCall("user-avatar-update", data).then((res) => {
+          setShowLoader(false);
           if (res.status) {
             setUserUpdateSuccess(true);
             setAvatar(res.data.avatar);

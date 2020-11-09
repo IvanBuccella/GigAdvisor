@@ -31,7 +31,9 @@ const Footer: React.FC = () => {
         "topic-create",
         "platforms-map",
         "platform-map",
+        "api-endpoints",
       ];
+
       if (modulesPages.includes(pageSlug)) {
         return "blue";
       }
