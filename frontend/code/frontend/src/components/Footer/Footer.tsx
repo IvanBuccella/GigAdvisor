@@ -32,6 +32,7 @@ const Footer: React.FC = () => {
         "platforms-map",
         "platform-map",
         "api-endpoints",
+        "platform-trend",
       ];
 
       if (modulesPages.includes(pageSlug)) {
