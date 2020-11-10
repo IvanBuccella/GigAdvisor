@@ -601,7 +601,7 @@ class PlatformTrend(APIView):
                             platform=platform["id"]
                         ).order_by(F("date").asc()),
                         field=field["id"],
-                    )[0:20]
+                    )
                     reviewFields = ReviewFieldSerializer(querySetReviewField, many=True)
                     fieldValues = []
                     i = 1
