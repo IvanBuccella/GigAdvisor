@@ -3,6 +3,13 @@ import config from "../env.config.json";
 export class Utils {
   constructor() {}
 
+  isMobile() {
+    if (window.innerWidth >= 767) {
+      return false;
+    }
+    return true;
+  }
+
   getLastItem(path: string) {
     return path.substring(path.lastIndexOf("/") + 1);
   }

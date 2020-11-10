@@ -41,7 +41,7 @@ const PlatformTrend: React.FC = () => {
 
   function scatterPlotChartInit(chartId: string) {
     let width = window.innerWidth;
-    if (width >= 767) {
+    if (!utilities.isMobile()) {
       width = width * 0.75;
     }
     scatterPlotChartWidth =
@@ -109,6 +109,12 @@ const PlatformTrend: React.FC = () => {
 
   function scatterPlotChartDrawXAxis() {
     x = d3Scale.scaleLinear().domain([0, 10]).range([1, scatterPlotChartWidth]);
+    if (utilities.isMobile()) {
+      x = d3Scale
+        .scaleLinear()
+        .domain([0, 6])
+        .range([1, scatterPlotChartWidth]);
+    }
     xAxis = svg
       .append("g")
       .attr("class", "x-axis")
