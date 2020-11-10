@@ -7,5 +7,5 @@ RUN rm -rf /app/node_modules && \
     npm install @ionic/cli native-run cordova-res cordova-plugin-geolocation && \
     npm install @ionic/react @ionic/react-router @ionic/react-hooks @ionic/pwa-elements @ionic-native/core @ionic-native/geolocation && \
     npm install node-sass && \        
-    npm install @types/d3 @types/d3-selection @types/d3-scale @types/d3-scale-chromatic @types/d3-array @types/d3-axis @types/d3-path @types/d3-shape @types/d3-zoom @types/d3-interpolate @types/d3-color @types/d3-geo d3-geo-projection d3-geo-polygon @types/d3-transition @types/d3-drag d3-tile @types/d3-random @types/d3-fetch @types/d3-format @types/d3-time-format @types/d3-hierarchy @types/d3-quadtree && \
+    npm install d3 @types/d3 @types/d3-selection @types/d3-scale @types/d3-scale-chromatic @types/d3-array @types/d3-axis @types/d3-path @types/d3-shape @types/d3-zoom @types/d3-interpolate @types/d3-color @types/d3-geo d3-geo-projection d3-geo-polygon @types/d3-transition @types/d3-drag d3-tile @types/d3-random @types/d3-fetch @types/d3-format @types/d3-time-format @types/d3-hierarchy @types/d3-quadtree && \
     npm install @react-google-maps/api
