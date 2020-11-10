@@ -148,11 +148,25 @@ const PlatformTrend: React.FC = () => {
         return lineGenerator(d.values);
       })
       .attr("class", "lines")
+      .attr("name", function (d: any) {
+        return d.name;
+      })
       .attr("stroke", function (d: any) {
         return allGroupColors[d.name];
       })
-      .style("stroke-width", 4)
-      .style("fill", "none");
+      .style("stroke-width", 3)
+      .style("fill", "none")
+      .on("mouseover", function (element: any) {
+        console.log(element);
+        element.target.style.filter =
+          "drop-shadow(0px 0px 5px " +
+          allGroupColors[element.target.getAttribute("name")] +
+          ")";
+      })
+      .on("mouseleave", function (element: any) {
+        console.log(element);
+        element.target.style.filter = "none";
+      });
   }
 
   function scatterPlotChartDrawPoints() {

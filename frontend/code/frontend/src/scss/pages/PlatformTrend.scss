@@ -1,5 +1,8 @@
 .page-container.platform-trend {
   .platform-chart {
+    path.lines {
+      cursor: pointer;
+    }
     .legend-container {
       width: 100%;
       display: flex;
