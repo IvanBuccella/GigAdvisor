@@ -16,14 +16,18 @@ import * as d3 from "d3-selection";
 import * as d3Scale from "d3-scale";
 import * as d3Shape from "d3-shape";
 import * as d3Axis from "d3-axis";
+import * as d3Zoom from "d3-zoom";
 import Loader from "../components/Loader";
 
 const utilities = new Utils();
 let x: any;
+let xAxis: any;
 let y: any;
+let zoom: any;
 let svg: any;
 let g: any;
-let line: any;
+let chartData: any;
+let lineGenerator: any;
 let allGroup: any;
 let allGroupColors: any;
 
@@ -35,7 +39,7 @@ const PlatformTrend: React.FC = () => {
   const [showLoader, setShowLoader] = useState(true);
   const [platform, setPlatform] = useState("");
 
-  function scatterPlotChartInit(chartData: any, chartId: string) {
+  function scatterPlotChartInit(chartId: string) {
     let width = window.innerWidth;
     if (width >= 767) {
       width = width * 0.75;
@@ -65,6 +69,23 @@ const PlatformTrend: React.FC = () => {
           10 +
           ")"
       );
+
+    zoom = d3Zoom.zoom().on("zoom", updateChart);
+    svg
+      .append("rect")
+      .attr("width", scatterPlotChartWidth)
+      .attr("height", scatterPlotChartHeight)
+      .style("fill", "none")
+      .style("pointer-events", "all")
+      .attr(
+        "transform",
+        "translate(" +
+          scatterPlotChartMargin.left +
+          "," +
+          scatterPlotChartMargin.top +
+          ")"
+      )
+      .call(zoom);
     allGroup = [];
     allGroupColors = [];
     let chart = document.getElementById(chartId);
@@ -86,18 +107,11 @@ const PlatformTrend: React.FC = () => {
     }
   }
 
-  function scatterPlotChartDrawXAxis(chartData: any) {
-    let max = 0;
-    if (chartData.length > 0) {
-      max = chartData[0]["values"].length;
-    }
-    max++;
-    x = d3Scale
-      .scaleLinear()
-      .domain([0, max])
-      .range([1, scatterPlotChartWidth]);
-    svg
+  function scatterPlotChartDrawXAxis() {
+    x = d3Scale.scaleLinear().domain([0, 10]).range([1, scatterPlotChartWidth]);
+    xAxis = svg
       .append("g")
+      .attr("class", "x-axis")
       .attr(
         "transform",
         "translate(24," +
@@ -107,7 +121,7 @@ const PlatformTrend: React.FC = () => {
       .call(d3Axis.axisBottom(x));
   }
 
-  function scatterPlotChartDrawYAxis(chartData: any) {
+  function scatterPlotChartDrawYAxis() {
     y = d3Scale
       .scaleLinear()
       .domain([0, 6])
@@ -118,23 +132,16 @@ const PlatformTrend: React.FC = () => {
       .attr("transform", "translate(25,0)");
   }
 
-  function scatterPlotChartDrawLines(chartData: any) {
-    line = d3Shape
-      .line()
-      .x(function (d: any) {
-        return x(+d.time);
-      })
-      .y(function (d: any) {
-        return y(+d.value);
-      });
+  function scatterPlotChartDrawLines() {
     svg
-      .selectAll("myLines")
+      .selectAll("lines")
       .data(chartData)
       .enter()
       .append("path")
       .attr("d", function (d: any) {
-        return line(d.values);
+        return lineGenerator(d.values);
       })
+      .attr("class", "lines")
       .attr("stroke", function (d: any) {
         return allGroupColors[d.name];
       })
@@ -142,9 +149,9 @@ const PlatformTrend: React.FC = () => {
       .style("fill", "none");
   }
 
-  function scatterPlotChartDrawPoints(chartData: any) {
+  function scatterPlotChartDrawPoints() {
     svg
-      .selectAll("myDots")
+      .selectAll("dots")
       .data(chartData)
       .enter()
       .append("g")
@@ -154,7 +161,7 @@ const PlatformTrend: React.FC = () => {
       .attr("class", function (d: any) {
         return d.name;
       })
-      .selectAll("myPoints")
+      .selectAll("points")
       .data(function (d: any) {
         return d.values;
       })
@@ -170,13 +177,41 @@ const PlatformTrend: React.FC = () => {
       .attr("stroke", "black");
   }
 
-  function drawScatterPlotChart(chartData: any, chartId: string) {
-    scatterPlotChartInit(chartData, chartId);
+  function updateChart(event: any) {
+    var newX = event.transform.rescaleX(x);
+    xAxis.call(d3Axis.axisBottom(newX));
+
+    svg.selectAll("circle").attr("cx", function (d: any) {
+      return newX(d.time);
+    });
+
+    lineGenerator = d3Shape
+      .line()
+      .x(function (d: any) {
+        return newX(+d.time);
+      })
+      .y(function (d: any) {
+        return y(+d.value);
+      });
+    svg.selectAll("path[class='lines']").remove();
+    scatterPlotChartDrawLines();
+  }
+
+  function drawScatterPlotChart(chartId: string) {
+    scatterPlotChartInit(chartId);
     if (allGroup.length > 0) {
-      scatterPlotChartDrawXAxis(chartData);
-      scatterPlotChartDrawYAxis(chartData);
-      scatterPlotChartDrawLines(chartData);
-      scatterPlotChartDrawPoints(chartData);
+      scatterPlotChartDrawXAxis();
+      scatterPlotChartDrawYAxis();
+      lineGenerator = d3Shape
+        .line()
+        .x(function (d: any) {
+          return x(+d.time);
+        })
+        .y(function (d: any) {
+          return y(+d.value);
+        });
+      scatterPlotChartDrawLines();
+      scatterPlotChartDrawPoints();
     }
   }
 
@@ -187,7 +222,8 @@ const PlatformTrend: React.FC = () => {
     utilities.postCall("platform-trend", JSON.stringify(data)).then((res) => {
       if (res.status) {
         setPlatform(res.data.name);
-        drawScatterPlotChart(res.data.fields, "platformChart");
+        chartData = res.data.fields;
+        drawScatterPlotChart("platformChart");
       }
       setShowLoader(false);
     });
@@ -198,9 +234,7 @@ const PlatformTrend: React.FC = () => {
       <Loader showLoader={showLoader} />
       <IonSlide>
         <IonContent className="page-container platform-trend">
-          <h1 className="form-title mt1 mb1">
-            {platform} Trend for Last 20 Reviews
-          </h1>
+          <h1 className="form-title mt1 mb1">{platform} Trend</h1>
           <IonRow>
             <IonCol className="chartContainer">
               <div id="platformChart" className="platform-chart"></div>
