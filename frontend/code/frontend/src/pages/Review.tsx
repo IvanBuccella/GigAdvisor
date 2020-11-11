@@ -34,6 +34,7 @@ const Review: React.FC = () => {
   const [text, setText] = useState("");
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
+  const [region, setRegion] = useState("");
   const fieldIds = ["1"];
   const fieldValues = ["0"];
   const [platform, setPlatform] = useState({
@@ -92,12 +93,13 @@ const Review: React.FC = () => {
       text: text,
       latitude: latitude,
       longitude: longitude,
+      region: region,
       fieldIds: fieldIds,
       fieldValues: fieldValues,
     });
     utilities.patchCall("review", data).then((res) => {
+      setShowLoader(false);
       if (res.status) {
-        setShowLoader(false);
         setReviewInsertSuccess(true);
 
         setTimeout(function () {
@@ -118,6 +120,32 @@ const Review: React.FC = () => {
       });
       setLatitude(position.coords.latitude);
       setLongitude(position.coords.longitude);
+
+      fetch(
+        "https://maps.googleapis.com/maps/api/geocode/json?address=" +
+          position.coords.latitude +
+          "," +
+          position.coords.longitude +
+          "&key=AIzaSyBr2H4TW5HFHhlNDQYdpjD0uAmsTTtGm2k"
+      )
+        .then((response) => response.json())
+        .then((responseJson) => {
+          let foundRegion = "";
+          if (responseJson.status == "OK") {
+            for (let i = 0; i < Object.keys(responseJson.results).length; i++) {
+              if (
+                responseJson.results[i].types.includes(
+                  "administrative_area_level_1"
+                )
+              ) {
+                foundRegion = responseJson.results[
+                  i
+                ].address_components[0].short_name.toLowerCase();
+              }
+            }
+          }
+          setRegion(foundRegion);
+        });
     } catch (e) {
       setReviewInsertAlert(true);
     }
