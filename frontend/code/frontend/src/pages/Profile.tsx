@@ -62,7 +62,6 @@ const Home: React.FC = () => {
         setBirthDate(res.data.birth_date);
         setQualification(res.data.qualification);
         setAddress(res.data.address);
-        setShowLoader(false);
       } else {
         utilities.pageRedirect("login");
       }
