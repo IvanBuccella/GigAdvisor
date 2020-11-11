@@ -620,8 +620,8 @@ class PlatformTrend(APIView):
                                 value["number"]
                             )
                         if regionReviewsValue > 0:
-                            regionReviewsAvg = round(
-                                regionReviewsValue / regionReviewsNumber, 2
+                            regionReviewsAvg = decimal_format(
+                                regionReviewsValue / regionReviewsNumber
                             )
                         regions.append(
                             {
