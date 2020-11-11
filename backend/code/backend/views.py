@@ -289,9 +289,7 @@ class ReviewCreate(APIView):
             and request.data["latitude"] is not ""
             and "longitude" in request.data
             and request.data["longitude"] is not ""
-            and "region" in request.data
-            and request.data["region"] is not ""
-            and "platform" in request.data
+            and "region" in request.data            
             and is_integer(request.data["platform"])
             and int(request.data["platform"]) > 0
             and "fieldIds" in request.data
