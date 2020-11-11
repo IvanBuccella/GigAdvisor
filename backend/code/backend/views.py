@@ -289,7 +289,7 @@ class ReviewCreate(APIView):
             and request.data["latitude"] is not ""
             and "longitude" in request.data
             and request.data["longitude"] is not ""
-            and "region" in request.data            
+            and "region" in request.data
             and is_integer(request.data["platform"])
             and int(request.data["platform"]) > 0
             and "fieldIds" in request.data
@@ -593,6 +593,42 @@ class PlatformTrend(APIView):
             querysetPlatform = Platform.objects.filter(slug=request.data["slug"])
             platformSerializer = PlatformSerializer(querysetPlatform, many=True)
             for platform in platformSerializer.data:
+                # Values per region
+                regions = []
+                reviewsRegions = (
+                    Review.objects.filter(platform=platform["id"])
+                    .values("region")
+                    .distinct()
+                )
+                for region in reviewsRegions:
+                    if region["region"] is not "":
+                        values = (
+                            ReviewField.objects.filter(
+                                review__in=Review.objects.filter(
+                                    region=region["region"]
+                                ),
+                            )
+                            .values("review")
+                            .annotate(sum=Sum("value"), number=Count("value"))
+                        )
+                        regionReviewsValue = 0
+                        regionReviewsNumber = 0
+                        regionReviewsAvg = 0
+                        for value in values:
+                            regionReviewsValue = regionReviewsValue + int(value["sum"])
+                            regionReviewsNumber = regionReviewsNumber + int(
+                                value["number"]
+                            )
+                        if regionReviewsValue > 0:
+                            regionReviewsAvg = regionReviewsValue / regionReviewsNumber
+                        regions.append(
+                            {
+                                "name": region["region"],
+                                "avg": regionReviewsAvg,
+                            }
+                        )
+
+                # Values per Field
                 querysetField = Field.objects.all()
                 fieldSerializer = FieldSerializer(querysetField, many=True)
                 fields = []
@@ -619,6 +655,7 @@ class PlatformTrend(APIView):
                 dataToReturn = {
                     "name": platform["name"],
                     "fields": fields,
+                    "regions": regions,
                 }
 
         return json_response(dataToReturn)
