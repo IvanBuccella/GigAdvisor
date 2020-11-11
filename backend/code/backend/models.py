@@ -70,6 +70,7 @@ class Review(models.Model):
     date = models.DateTimeField("date published", auto_now=True)
     latitude = models.FloatField(null=True, blank=False, default=0)
     longitude = models.FloatField(null=True, blank=False, default=0)
+    region = models.CharField(null=False, max_length=50, blank=True)
     platform = models.ForeignKey(Platform, on_delete=models.CASCADE)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
 

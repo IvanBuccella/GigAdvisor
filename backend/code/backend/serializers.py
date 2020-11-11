@@ -120,6 +120,7 @@ class ReviewSerializer(serializers.ModelSerializer):
             "date",
             "latitude",
             "longitude",
+            "region",
             "platform",
             "profile",
         )
