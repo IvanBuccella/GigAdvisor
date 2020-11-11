@@ -3,6 +3,19 @@
     path.lines {
       cursor: pointer;
     }
+    path.region {
+      cursor: pointer;
+    }
+    text.regionChart {
+      fill: var(--color-grey);
+      font-weight: normal;
+      font-size: 1em;
+    }
+    text.onRegionAvg {
+      font-weight: normal;
+      font-size: 0.5em;
+      cursor: pointer;
+    }
     .legend-container {
       width: 100%;
       display: flex;

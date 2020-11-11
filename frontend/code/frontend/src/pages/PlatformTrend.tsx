@@ -17,6 +17,8 @@ import * as d3Scale from "d3-scale";
 import * as d3Shape from "d3-shape";
 import * as d3Axis from "d3-axis";
 import * as d3Zoom from "d3-zoom";
+import * as d3Geo from "d3-geo";
+import * as d3Fetch from "d3-fetch";
 import Loader from "../components/Loader";
 
 const utilities = new Utils();
@@ -25,8 +27,11 @@ let xAxis: any;
 let y: any;
 let zoom: any;
 let svg: any;
+let svgMap: any;
+let svgMapProjection: any;
 let g: any;
-let chartData: any;
+let chartDataFields: any;
+let chartDataRegions: any;
 let lineGenerator: any;
 let allGroup: any;
 let allGroupColors: any;
@@ -34,6 +39,10 @@ let allGroupColors: any;
 let scatterPlotChartWidth: number;
 let scatterPlotChartHeight: number;
 let scatterPlotChartMargin = { top: 20, right: 20, bottom: 20, left: 40 };
+
+let mapChartWidth: number;
+let mapChartHeight: number;
+let mapChartMargin = { top: 20, right: 20, bottom: 20, left: 40 };
 
 const PlatformTrend: React.FC = () => {
   const [showLoader, setShowLoader] = useState(true);
@@ -93,14 +102,15 @@ const PlatformTrend: React.FC = () => {
       chart.appendChild(document.createElement("br"));
       let div = document.createElement("div");
       div.className = "legend-container";
-      for (let i = 0; i < Object.keys(chartData).length; i++) {
-        if (chartData[i]["values"].length > 0) {
-          allGroup.push(chartData[i]["name"]);
-          allGroupColors[chartData[i]["name"]] = chartData[i]["color"];
+      for (let i = 0; i < Object.keys(chartDataFields).length; i++) {
+        if (chartDataFields[i]["values"].length > 0) {
+          allGroup.push(chartDataFields[i]["name"]);
+          allGroupColors[chartDataFields[i]["name"]] =
+            chartDataFields[i]["color"];
         }
         var element = document.createElement("p");
-        element.style.color = chartData[i]["color"];
-        element.textContent = chartData[i]["name"];
+        element.style.color = chartDataFields[i]["color"];
+        element.textContent = chartDataFields[i]["name"];
         div.appendChild(element);
       }
       chart.appendChild(div);
@@ -141,7 +151,7 @@ const PlatformTrend: React.FC = () => {
   function scatterPlotChartDrawLines() {
     svg
       .selectAll("lines")
-      .data(chartData)
+      .data(chartDataFields)
       .enter()
       .append("path")
       .attr("d", function (d: any) {
@@ -157,14 +167,12 @@ const PlatformTrend: React.FC = () => {
       .style("stroke-width", 3)
       .style("fill", "none")
       .on("mouseover", function (element: any) {
-        console.log(element);
         element.target.style.filter =
           "drop-shadow(0px 0px 5px " +
           allGroupColors[element.target.getAttribute("name")] +
           ")";
       })
       .on("mouseleave", function (element: any) {
-        console.log(element);
         element.target.style.filter = "none";
       });
   }
@@ -172,7 +180,7 @@ const PlatformTrend: React.FC = () => {
   function scatterPlotChartDrawPoints() {
     svg
       .selectAll("dots")
-      .data(chartData)
+      .data(chartDataFields)
       .enter()
       .append("g")
       .style("fill", function (d: any) {
@@ -235,6 +243,146 @@ const PlatformTrend: React.FC = () => {
     }
   }
 
+  function drawMapChart(chartId: string) {
+    let width = window.innerWidth;
+    if (!utilities.isMobile()) {
+      width = width * 0.75;
+    }
+    mapChartWidth = width - mapChartMargin.left - mapChartMargin.right;
+    mapChartHeight =
+      window.innerHeight - 300 - mapChartMargin.top - mapChartMargin.bottom;
+
+    svgMap = d3
+      .select("#" + chartId)
+      .append("svg")
+      .attr("width", mapChartWidth)
+      .attr("height", mapChartHeight)
+      .append("g");
+
+    svgMapProjection = d3Geo
+      .geoMercator()
+      .center([12, 42])
+      .scale(2024)
+      .translate([mapChartWidth / 2, mapChartHeight / 2]);
+
+    let pathGenerator = d3Geo.geoPath().projection(svgMapProjection);
+    let regions = require("../partials/regions.geojson");
+    d3Fetch.json(regions).then(function (data: any) {
+      data.features = data.features.filter(function (d: any) {
+        var item = chartDataRegions.filter((item: any) =>
+          item.name.toLowerCase().includes(d.properties.reg_name)
+        );
+        d.properties.color = "var(--color-grey)";
+        d.properties.avg = 0;
+        if (item.length > 0) {
+          d.properties.avg = item[0].avg;
+          if (item[0].avg > 2) {
+            d.properties.color = "var(--color-green)";
+          } else {
+            d.properties.color = "var(--color-red)";
+          }
+        }
+        return true;
+      });
+
+      function setModal(name: any, avg: any, color: any) {
+        svgMap.selectAll("text.regionName").text(name);
+        if (avg > 0) {
+          svgMap
+            .selectAll("text.regionAvg")
+            .attr("fill", color)
+            .text("Average: " + avg);
+        } else {
+          svgMap.selectAll("text.regionAvg").text("");
+        }
+      }
+      svgMap
+        .selectAll("path")
+        .data(data.features)
+        .enter()
+        .append("path")
+        .attr("class", "region")
+        .attr("fill", function (d: any) {
+          return d.properties.color;
+        })
+        .attr("d", function (d: any) {
+          return pathGenerator(d);
+        })
+        .attr("name", function (d: any) {
+          return d.properties.reg_name;
+        })
+        .attr("avg", function (d: any) {
+          return d.properties.avg;
+        })
+        .attr("color", function (d: any) {
+          return d.properties.color;
+        })
+        .style("stroke", "none")
+        .on("mouseover", function (d: any) {
+          let avg = d.target.getAttribute("avg");
+          let name = d.target.getAttribute("name").toUpperCase();
+          let color = d.target.getAttribute("color");
+          setModal(name, avg, color);
+        })
+        .on("mouseleave", function () {
+          setModal("", "", "");
+        });
+
+      svgMap
+        .selectAll("text")
+        .data(data.features)
+        .enter()
+        .append("text")
+        .attr("class", "onRegionAvg")
+        .attr("x", function (d: any) {
+          return pathGenerator.centroid(d)[0] - 5;
+        })
+        .attr("y", function (d: any) {
+          return pathGenerator.centroid(d)[1] + 5;
+        })
+        .attr("name", function (d: any) {
+          return d.properties.reg_name;
+        })
+        .attr("avg", function (d: any) {
+          return d.properties.avg;
+        })
+        .attr("color", function (d: any) {
+          return d.properties.color;
+        })
+        .text(function (d: any) {
+          if (d.properties.avg > 0) {
+            return d.properties.avg;
+          }
+          return "";
+        })
+        .on("mouseover", function (d: any) {
+          let avg = d.target.getAttribute("avg");
+          let name = d.target.getAttribute("name").toUpperCase();
+          let color = d.target.getAttribute("color");
+          setModal(name, avg, color);
+        })
+        .on("mouseleave", function () {
+          setModal("", "", "");
+        });
+
+      svgMap
+        .append("text")
+        .attr("class", "regionName")
+        .attr("x", 10)
+        .attr("y", 50)
+        .attr("fill", "var(--color-grey)")
+        .text("");
+
+      svgMap
+        .append("text")
+        .attr("class", "regionAvg")
+        .attr("x", 10)
+        .attr("y", 70)
+        .attr("fill", "var(--color-grey)")
+        .text("");
+    });
+  }
+
   useEffect(() => {
     let data = {
       slug: utilities.getLastItem(window.location.pathname),
@@ -242,8 +390,10 @@ const PlatformTrend: React.FC = () => {
     utilities.postCall("platform-trend", JSON.stringify(data)).then((res) => {
       if (res.status) {
         setPlatform(res.data.name);
-        chartData = res.data.fields;
+        chartDataFields = res.data.fields;
         drawScatterPlotChart("platformChart");
+        chartDataRegions = res.data.regions;
+        drawMapChart("mapChart");
       }
       setShowLoader(false);
     });
@@ -257,7 +407,10 @@ const PlatformTrend: React.FC = () => {
           <h1 className="form-title mt1 mb1">{platform} Trend</h1>
           <IonRow>
             <IonCol className="chartContainer">
+              <h3 className="form-title mt0 mb0 black">Per Field</h3>
               <div id="platformChart" className="platform-chart"></div>
+              <h3 className="form-title mt3 mb0 black">Per Italian Region</h3>
+              <div id="mapChart" className="platform-chart"></div>
             </IonCol>
           </IonRow>
         </IonContent>
