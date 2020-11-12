@@ -245,12 +245,14 @@ const PlatformTrend: React.FC = () => {
 
   function drawMapChart(chartId: string) {
     let width = window.innerWidth;
+    mapChartHeight =
+      window.innerHeight - 200 - mapChartMargin.top - mapChartMargin.bottom;
     if (!utilities.isMobile()) {
       width = width * 0.75;
+      mapChartHeight =
+        window.innerHeight - 100 - mapChartMargin.top - mapChartMargin.bottom;
     }
     mapChartWidth = width - mapChartMargin.left - mapChartMargin.right;
-    mapChartHeight =
-      window.innerHeight - 300 - mapChartMargin.top - mapChartMargin.bottom;
 
     svgMap = d3
       .select("#" + chartId)
@@ -417,6 +419,7 @@ const PlatformTrend: React.FC = () => {
               <div id="platformChart" className="platform-chart"></div>
               <h3 className="form-title mt3 mb0 black">Per Italian Region</h3>
               <div id="mapChart" className="platform-chart"></div>
+              Legend for mapChart here
             </IonCol>
           </IonRow>
         </IonContent>
