@@ -397,7 +397,7 @@ const PlatformTrend: React.FC = () => {
       if (res.status) {
         setPlatform(res.data.name);
         chartDataFields = res.data.fields;
-        //drawScatterPlotChart("platformChart");
+        drawScatterPlotChart("platformChart");
         chartDataRegions = res.data.regions;
         drawMapChart("mapChart");
       }
