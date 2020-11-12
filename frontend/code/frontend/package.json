@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "GigAdvisor",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
@@ -81,5 +81,5 @@
   "devDependencies": {
     "@capacitor/cli": "2.2.0"
   },
-  "description": "An Ionic project"
+  "description": "This is a prototype of an experimental cross-platform application under development for pure research purposes. Data presented in following pages are fictitious."
 }

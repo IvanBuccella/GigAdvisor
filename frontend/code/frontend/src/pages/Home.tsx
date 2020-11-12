@@ -113,9 +113,9 @@ const Home: React.FC = () => {
         <IonModal isOpen={showNotice} cssClass="modal important-notice-modal">
           <h3 className="title">Important Notice!</h3>
           <IonText className="text">
-            This is a prototype of an experimental web-application under
-            development for pure research purposes. Data presented in following
-            pages are fictitious.
+            This is a prototype of an experimental cross-platform application
+            under development for pure research purposes. Data presented in
+            following pages are fictitious.
           </IonText>
           <IonButton
             onClick={() => setShowNotice(false)}
