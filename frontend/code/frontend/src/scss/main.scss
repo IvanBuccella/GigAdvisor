@@ -24,6 +24,17 @@
 @import "pages/PlatformMap";
 @import "pages/PlatformTrend";
 @import "pages/ApiEndpoints";
+
+@font-face {
+  font-family: "Avenir Next";
+  src: url("/assets/fonts/AvenirNextLTPro-Regular.otf");
+}
+
+* {
+  font-family: "Avenir Next";
+  --ion-default-font: "Avenir Next";
+}
+
 h1,
 h2,
 h3,
@@ -55,8 +66,6 @@ ion-textarea {
   }
 }
 .page-container {
-  --ion-default-font: "Lato", "Roboto", "Helvetica Neue", sans-serif;
-  font-family: "Lato", "Roboto", "Helvetica Neue", sans-serif;
   @media only screen and (min-width: 767px) {
     max-width: 75%;
   }
