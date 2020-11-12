@@ -259,11 +259,17 @@ const PlatformTrend: React.FC = () => {
       .attr("height", mapChartHeight)
       .append("g");
 
-    svgMapProjection = d3Geo
-      .geoMercator()
-      .center([12, 42])
-      .scale(2024)
-      .translate([mapChartWidth / 2, mapChartHeight / 2]);
+    width = window.outerWidth;
+
+    if (width <= 500) {
+      svgMapProjection = d3Geo.geoMercator().center([27, 40]).scale(1200);
+    } else if (width >= 800 && width <= 1200) {
+      svgMapProjection = d3Geo.geoMercator().center([19, 40]).scale(1200);
+    } else if (width > 1200 && width <= 1500) {
+      svgMapProjection = d3Geo.geoMercator().center([10, 40]).scale(1200);
+    } else {
+      svgMapProjection = d3Geo.geoMercator().center([7, 43]).scale(2050);
+    }
 
     let pathGenerator = d3Geo.geoPath().projection(svgMapProjection);
     let regions = require("../partials/regions.geojson");
@@ -369,7 +375,7 @@ const PlatformTrend: React.FC = () => {
         .append("text")
         .attr("class", "regionName")
         .attr("x", 10)
-        .attr("y", 50)
+        .attr("y", mapChartHeight - 70)
         .attr("fill", "var(--color-grey)")
         .text("");
 
@@ -377,7 +383,7 @@ const PlatformTrend: React.FC = () => {
         .append("text")
         .attr("class", "regionAvg")
         .attr("x", 10)
-        .attr("y", 70)
+        .attr("y", mapChartHeight - 50)
         .attr("fill", "var(--color-grey)")
         .text("");
     });
@@ -391,7 +397,7 @@ const PlatformTrend: React.FC = () => {
       if (res.status) {
         setPlatform(res.data.name);
         chartDataFields = res.data.fields;
-        drawScatterPlotChart("platformChart");
+        //drawScatterPlotChart("platformChart");
         chartDataRegions = res.data.regions;
         drawMapChart("mapChart");
       }
