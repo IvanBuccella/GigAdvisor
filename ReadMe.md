@@ -8,7 +8,7 @@ The Android application is available online at:
 
 The iOS application is available online at:
 
-## Web-App Setup
+## Web-App Setup for Local Environment
 
 ### First Step
 
@@ -20,7 +20,7 @@ $ git clone https://github.com/IvanBuccella/GigAdvisorAIO
 
 ### Second Step
 
-Deploy local environment with Docker:
+Deploy local environment with Docker (since next time, the "--build" flag is unnecessary):
 
 ```sh
 $ docker-compose up --build
