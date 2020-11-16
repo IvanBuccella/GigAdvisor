@@ -2,7 +2,7 @@
 
 For executing this application and its own environment you will need Docker. Install it from here: https://www.docker.com
 
-The web-application is available online at:
+The web-application is available online at: gigadvisor.buccella.me
 
 The Android application is available online at:
 
