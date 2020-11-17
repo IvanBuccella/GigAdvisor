@@ -25,7 +25,10 @@ SECRET_KEY = "jna1ebak*^xy1@l&vd=*)gl#xqmzq#vj5ui^zcb5smu-wt6_k-"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["backend.gigadvisor.buccella.me"]
+ALLOWED_HOSTS = [
+    "gigadvisor-backend.herokuapp.com",
+    "backend.gigadvisor.buccella.me",
+]
 
 # CORS CONFIGURATION
 CORS_ALLOW_CREDENTIALS = True
@@ -137,7 +140,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "backend", "site_static")]
 STATIC_ROOT = os.path.join(BASE_DIR, "backend", "static")
 MEDIA_ROOT = os.path.join(BASE_DIR, "backend", "media")
 STATIC_URL = "/static/"
