@@ -30,6 +30,8 @@ export class Utils {
         "platform-map",
         "api-endpoints",
         "platform-trend",
+        "pubblications",
+        "team",
       ];
     } else if (pageName == "home") {
       pages = ["", "home"];

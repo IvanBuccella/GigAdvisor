@@ -102,6 +102,30 @@ const Modules: React.FC = () => {
               </IonButton>
             </div>
           </IonSlide>
+          <IonSlide className="pubblications">
+            <div className="text-center">
+              <img src="/assets/pages/modules/pubblications.png" />
+              <h1 className="text-center bold">Pubblications</h1>
+              <h5 className="text-center lighter black">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </h5>
+              <IonButton type="submit" className="button" href="/pubblications">
+                <IonIcon icon={enterOutline} size="medium" className="white" />
+              </IonButton>
+            </div>
+          </IonSlide>
+          <IonSlide className="team">
+            <div className="text-center">
+              <img src="/assets/pages/modules/team.png" />
+              <h1 className="text-center bold">Team</h1>
+              <h5 className="text-center lighter black">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </h5>
+              <IonButton type="submit" className="button" href="/team">
+                <IonIcon icon={enterOutline} size="medium" className="white" />
+              </IonButton>
+            </div>
+          </IonSlide>
         </IonSlides>
       </IonContent>
     </IonSlide>
