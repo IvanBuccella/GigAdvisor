@@ -50,8 +50,8 @@
 }
 
 .blue {
-  color: var(--color-blue);
-  --color: var(--color-blue);
+  color: var(--color-blue) !important;
+  --color: var(--color-blue) !important;
 }
 .background-blue {
   background-color: var(--color-blue);
@@ -59,22 +59,32 @@
   --border-color: var(--color-blue) !important;
 }
 .orange {
-  color: var(--color-orange);
+  color: var(--color-orange) !important;
+  --color: var(--color-orange) !important;
 }
 .purple {
-  color: var(--color-purple);
+  color: var(--color-purple) !important;
+  --color: var(--color-purple) !important;
 }
 .red {
-  color: var(--color-red);
+  color: var(--color-red) !important;
+  --color: var(--color-red) !important;
 }
 .green {
-  color: var(--color-green);
+  color: var(--color-green) !important;
+  --color: var(--color-green) !important;
 }
 .black {
-  color: var(--color-black);
+  color: var(--color-black) !important;
+  --color: var(--color-black) !important;
 }
 .grey {
-  color: var(--color-grey);
+  color: var(--color-grey) !important;
+  --color: var(--color-grey) !important;
+}
+.white {
+  color: var(--color-white) !important;
+  --color: var(--color-white) !important;
 }
 
 .text-left {

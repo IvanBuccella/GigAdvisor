@@ -11,6 +11,8 @@ http://ionicframework.com/docs/theming/ */
   --color-red: #dc483e;
   --color-green: #57f542;
   --color-grey: #6c757d;
+  --color-header: #293341;
+  --color-footer: #293341;
 
   --padding-left: 16px;
   --font-size: 16px;

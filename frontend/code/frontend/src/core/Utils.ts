@@ -10,6 +10,49 @@ export class Utils {
     return true;
   }
 
+  isActiveMenuItem(pageName: string) {
+    let pageSlug = "";
+    pageSlug = window.location.pathname.split("/")[1];
+    let pages: String[] = [];
+
+    if (pageName == "modules") {
+      pages = [
+        "modules",
+        "platforms",
+        "platform",
+        "review",
+        "ratings",
+        "connect-with-others",
+        "topic",
+        "topic-create",
+        "platforms-map",
+        "platform-map",
+        "api-endpoints",
+        "platform-trend",
+      ];
+    } else if (pageName == "home") {
+      pages = [
+        "",
+        "home",
+        "know-your-rights",
+        "about",
+        "privacy-policy",
+        "profile",
+      ];
+      if (pages.includes(pageSlug)) {
+        return "blue";
+      }
+    } else if (pageName == "user") {
+      pages = ["login", "logout", "signup", "profile"];
+    }
+
+    if (pages.includes(pageSlug)) {
+      return "blue";
+    }
+
+    return "";
+  }
+
   getLastItem(path: string) {
     return path.substring(path.lastIndexOf("/") + 1);
   }

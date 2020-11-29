@@ -1,10 +1,24 @@
 .header {
   .header-toolbar {
-    --background: var(--color-black);
+    --background: var(--color-header);
     .header-col {
       text-align: center;
+      &.login {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: center;
+        .icon {
+          color: var(--color-white);
+          --color: var(--color-white);
+        }
+      }
       img {
-        max-height: 75px;
+        max-height: 50px;
       }
     }
   }
