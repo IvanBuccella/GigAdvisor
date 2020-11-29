@@ -22,6 +22,7 @@ export class Utils {
         "platform",
         "review",
         "ratings",
+        "know-your-rights",
         "connect-with-others",
         "topic",
         "topic-create",

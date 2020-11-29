@@ -1,12 +1,65 @@
 .page-container.modules {
-  .module {
-    font-weight: bold;
+  ion-slides {
+    height: 100%;
+    img {
+      height: 100px;
+    }
+    .button {
+      @include blue-button;
+    }
+  }
 
-    .icon {
-      display: block;
-      &:host(.icon-large) {
-        font-size: 100px !important;
-      }
+  .know-your-rights {
+    h1 {
+      color: #12b0cc;
+    }
+    .button {
+      --background: #12b0cc;
+    }
+  }
+
+  .rate-your-gig {
+    h1 {
+      color: #ff7404;
+    }
+    .button {
+      --background: #ff7404;
+    }
+  }
+
+  .connect-with-others {
+    h1 {
+      color: #c027c0;
+    }
+    .button {
+      --background: #c027c0;
+    }
+  }
+
+  .platforms-ratings {
+    h1 {
+      color: #95cb03;
+    }
+    .button {
+      --background: #95cb03;
+    }
+  }
+
+  .platforms-map {
+    h1 {
+      color: #95cb03;
+    }
+    .button {
+      --background: #95cb03;
+    }
+  }
+
+  .api-endpoints {
+    h1 {
+      color: #063982;
+    }
+    .button {
+      --background: #063982;
     }
   }
 }
