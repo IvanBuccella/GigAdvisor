@@ -31,17 +31,7 @@ export class Utils {
         "platform-trend",
       ];
     } else if (pageName == "home") {
-      pages = [
-        "",
-        "home",
-        "know-your-rights",
-        "about",
-        "privacy-policy",
-        "profile",
-      ];
-      if (pages.includes(pageSlug)) {
-        return "blue";
-      }
+      pages = ["", "home"];
     } else if (pageName == "user") {
       pages = ["login", "logout", "signup", "profile"];
     }
