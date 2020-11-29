@@ -33,7 +33,9 @@ export class Utils {
     } else if (pageName == "home") {
       pages = ["", "home"];
     } else if (pageName == "user") {
-      pages = ["login", "logout", "signup", "profile"];
+      pages = ["login", "signup", "profile"];
+    } else if (pageName == "logout") {
+      pages = ["logout"];
     }
 
     if (pages.includes(pageSlug)) {

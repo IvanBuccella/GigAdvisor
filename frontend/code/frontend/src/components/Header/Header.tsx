@@ -9,10 +9,34 @@ import {
   IonIcon,
 } from "@ionic/react";
 import { Utils } from "../../core/Utils";
-import { personCircleOutline } from "ionicons/icons";
+import { logOutOutline, personCircleOutline } from "ionicons/icons";
 
 const Header: React.FC = () => {
   const utilities = new Utils();
+
+  function UserIcon() {
+    if (utilities.isAuthenticatedUser()) {
+      return (
+        <IonRouterLink href="/logout">
+          <IonIcon
+            icon={logOutOutline}
+            className={"icon " + utilities.isActiveMenuItem("logout")}
+            size="large"
+          />
+        </IonRouterLink>
+      );
+    } else {
+      return (
+        <IonRouterLink href="/profile">
+          <IonIcon
+            icon={personCircleOutline}
+            className={"icon " + utilities.isActiveMenuItem("user")}
+            size="large"
+          />
+        </IonRouterLink>
+      );
+    }
+  }
 
   return (
     <IonHeader className="header">
@@ -29,13 +53,7 @@ const Header: React.FC = () => {
               </IonRouterLink>
             </IonCol>
             <IonCol className="header-col login" size="2">
-              <IonRouterLink href="/profile">
-                <IonIcon
-                  icon={personCircleOutline}
-                  className={"icon " + utilities.isActiveMenuItem("user")}
-                  size="large"
-                />
-              </IonRouterLink>
+              <UserIcon />
             </IonCol>
           </IonRow>
         </IonGrid>
