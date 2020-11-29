@@ -5,11 +5,11 @@ http://ionicframework.com/docs/theming/ */
 :root {
   --color-white: #ffffff;
   --color-black: #181818;
-  --color-blue: #05b7d7;
-  --color-orange: #f2726f;
-  --color-purple: #5d62b5;
-  --color-red: #dc483e;
-  --color-green: #57f542;
+  --color-blue: #00b0f0;
+  --color-orange: #ff7402;
+  --color-purple: #72528a;
+  --color-red: #c00000;
+  --color-green: #6f823b;
   --color-grey: #6c757d;
   --color-header: #293341;
   --color-footer: #293341;

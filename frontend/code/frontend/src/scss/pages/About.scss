@@ -1,2 +1,22 @@
 .page-container.about {
+  ion-slides {
+    .swiper-wrapper {
+      ion-slide {
+        display: flex;
+        flex-flow: column;
+        align-items: flex-start;
+        h1,
+        h5,
+        p {
+          width: 100%;
+        }
+        .image-container {
+          width: 100%;
+        }
+      }
+    }
+    .swiper-pagination {
+      bottom: -25px;
+    }
+  }
 }
