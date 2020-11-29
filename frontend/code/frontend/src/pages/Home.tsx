@@ -6,104 +6,40 @@ import {
   IonModal,
   IonButton,
   IonText,
-  IonCard,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
   IonIcon,
   IonRow,
   IonCol,
   IonLabel,
   IonRadio,
   IonRadioGroup,
+  IonRouterLink,
 } from "@ionic/react";
-import {
-  helpOutline,
-  languageOutline,
-  receiptOutline,
-  logInOutline,
-  personCircleOutline,
-  logOutOutline,
-  personAddOutline,
-} from "ionicons/icons";
+import { logInOutline, helpCircleOutline } from "ionicons/icons";
 
 const utilities = new Utils();
 
-function ReservedAreaCards() {
-  if (utilities.isAuthenticatedUser()) {
+function LoginCta() {
+  if (!utilities.isAuthenticatedUser()) {
     return (
-      <IonRow>
-        <IonCol>
-          <IonCard href="/profile">
-            <IonCardHeader>
-              <IonCardSubtitle>
-                <IonIcon
-                  icon={personCircleOutline}
-                  size="large"
-                  className="icon blue"
-                />
-              </IonCardSubtitle>
-              <IonCardTitle>
-                <h3>Profile</h3>
-              </IonCardTitle>
-            </IonCardHeader>
-          </IonCard>
-        </IonCol>
-        <IonCol>
-          <IonCard href="/logout">
-            <IonCardHeader>
-              <IonCardSubtitle>
-                <IonIcon
-                  icon={logOutOutline}
-                  size="large"
-                  className="icon blue"
-                />
-              </IonCardSubtitle>
-              <IonCardTitle>
-                <h3>Logout</h3>
-              </IonCardTitle>
-            </IonCardHeader>
-          </IonCard>
-        </IonCol>
-      </IonRow>
+      <IonCol>
+        <IonRouterLink href="/login">
+          <IonRow>
+            <IonCol>
+              <IonIcon icon={logInOutline} className="blue" size="large" />
+            </IonCol>
+          </IonRow>
+          <IonRow>
+            <IonCol className="blue">Login</IonCol>
+          </IonRow>
+        </IonRouterLink>
+      </IonCol>
     );
   }
-  return (
-    <IonRow>
-      <IonCol>
-        <IonCard href="/login">
-          <IonCardHeader>
-            <IonCardSubtitle>
-              <IonIcon icon={logInOutline} size="large" className="icon blue" />
-            </IonCardSubtitle>
-            <IonCardTitle>
-              <h3>Login</h3>
-            </IonCardTitle>
-          </IonCardHeader>
-        </IonCard>
-      </IonCol>
-      <IonCol>
-        <IonCard href="/signup">
-          <IonCardHeader>
-            <IonCardSubtitle>
-              <IonIcon
-                icon={personAddOutline}
-                size="large"
-                className="icon blue"
-              />
-            </IonCardSubtitle>
-            <IonCardTitle>
-              <h3>Sign Up</h3>
-            </IonCardTitle>
-          </IonCardHeader>
-        </IonCard>
-      </IonCol>
-    </IonRow>
-  );
+  return <></>;
 }
 
 const Home: React.FC = () => {
-  const [showNotice, setShowNotice] = useState(true);
+  const [showNotice, setShowNotice] = useState(false);
   const [showLanguageModal, setShowLanguageModal] = useState(false);
   const [languageSelected, setLanguageSelected] = useState<string>("english");
 
@@ -124,7 +60,6 @@ const Home: React.FC = () => {
             I GOT IT
           </IonButton>
         </IonModal>
-
         <IonModal isOpen={showLanguageModal} cssClass="modal language-modal">
           <h3 className="title">Choose your language</h3>
           <IonText className="text">
@@ -144,60 +79,35 @@ const Home: React.FC = () => {
           </IonButton>
         </IonModal>
 
-        <ReservedAreaCards />
-        <IonRow>
-          <IonCol>
-            <IonCard href="/know-your-rights">
-              <IonCardHeader>
-                <IonCardSubtitle>
-                  <IonIcon
-                    icon={receiptOutline}
-                    size="large"
-                    className="icon blue"
-                  />
-                </IonCardSubtitle>
-                <IonCardTitle>
-                  <h3>Know your rights</h3>
-                </IonCardTitle>
-              </IonCardHeader>
-            </IonCard>
-          </IonCol>
-          <IonCol>
-            <IonCard
-              href="javascript: void;"
-              onClick={(e) => setShowLanguageModal(true)}
-            >
-              <IonCardHeader>
-                <IonCardSubtitle>
-                  <IonIcon
-                    icon={languageOutline}
-                    size="large"
-                    className="icon blue"
-                  />
-                </IonCardSubtitle>
-                <IonCardTitle>
-                  <h3>Language</h3>
-                </IonCardTitle>
-              </IonCardHeader>
-            </IonCard>
-          </IonCol>
-          <IonCol>
-            <IonCard href="/about">
-              <IonCardHeader>
-                <IonCardSubtitle>
-                  <IonIcon
-                    icon={helpOutline}
-                    size="large"
-                    className="icon blue"
-                  />
-                </IonCardSubtitle>
-                <IonCardTitle>
-                  <h3>About</h3>
-                </IonCardTitle>
-              </IonCardHeader>
-            </IonCard>
-          </IonCol>
-        </IonRow>
+        <div className="content">
+          <IonRow className="logo">
+            <IonCol className="mobile">
+              <img src="/assets/pages/home/logo-square.png" />
+            </IonCol>
+            <IonCol className="desktop">
+              <img src="/assets/pages/home/logo-rect.png" />
+            </IonCol>
+          </IonRow>
+          <IonRow className="ctas">
+            <IonCol>
+              <IonRouterLink href="/about">
+                <IonRow>
+                  <IonCol>
+                    <IonIcon
+                      icon={helpCircleOutline}
+                      className="blue"
+                      size="large"
+                    />
+                  </IonCol>
+                </IonRow>
+                <IonRow>
+                  <IonCol className="blue">About</IonCol>
+                </IonRow>
+              </IonRouterLink>
+            </IonCol>
+            <LoginCta />
+          </IonRow>
+        </div>
       </IonContent>
     </IonSlide>
   );
