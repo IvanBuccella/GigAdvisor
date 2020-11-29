@@ -1,11 +1,18 @@
 .footer {
   .footer-toolbar {
     --background: var(--color-footer);
+    --min-height: 0 !important;
+    --max-height: 45px !important;
+    min-height: 0 !important;
+    max-height: 45px !important;
     .footer-container {
       .footer-row {
+        padding: 0;
         .footer-menu-container {
           --background: transparent;
           --border-color: transparent;
+          --min-height: 0 !important;
+          --max-height: 50px !important;
           .footer-buttons {
             justify-content: center;
             width: 100%;

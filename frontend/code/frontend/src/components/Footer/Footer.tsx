@@ -25,7 +25,7 @@ const Footer: React.FC = () => {
                   <IonIcon
                     icon={homeOutline}
                     className={"" + utilities.isActiveMenuItem("home")}
-                    size="large"
+                    size="medium"
                   />
                   <span className={"" + utilities.isActiveMenuItem("home")}>
                     Home
@@ -36,7 +36,7 @@ const Footer: React.FC = () => {
                   <IonIcon
                     icon={cogOutline}
                     className={"" + utilities.isActiveMenuItem("modules")}
-                    size="large"
+                    size="medium"
                   />
                   <span className={"" + utilities.isActiveMenuItem("modules")}>
                     Modules

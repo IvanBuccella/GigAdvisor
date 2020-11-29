@@ -1,24 +1,35 @@
 .header {
   .header-toolbar {
     --background: var(--color-header);
-    .header-col {
-      text-align: center;
-      &.login {
-        position: absolute;
-        top: 0;
-        right: 0;
-        height: 100%;
-        display: flex;
-        flex-flow: column;
-        align-items: center;
-        justify-content: center;
-        .icon {
-          color: var(--color-white);
-          --color: var(--color-white);
+    --min-height: 0 !important;
+    --max-height: 45px !important;
+    min-height: 0 !important;
+    max-height: 45px !important;
+    .header-container {
+      padding: 0;
+      .header-row {
+        padding: 0;
+        .header-col {
+          text-align: center;
+          padding: 0;
+          &.login {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            justify-content: center;
+            .icon {
+              color: var(--color-white);
+              --color: var(--color-white);
+            }
+          }
+          img {
+            max-height: 45px;
+          }
         }
-      }
-      img {
-        max-height: 50px;
       }
     }
   }
