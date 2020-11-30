@@ -5,7 +5,7 @@ import { IonSlide, IonContent, IonText, IonSlides } from "@ionic/react";
 const utilities = new Utils();
 const About: React.FC = () => {
   const slideOpts = {
-    initialSlide: 1,
+    initialSlide: 0,
   };
 
   return (
