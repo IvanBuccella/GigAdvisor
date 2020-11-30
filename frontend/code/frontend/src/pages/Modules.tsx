@@ -105,7 +105,9 @@ const Modules: React.FC = () => {
           <IonSlide className="pubblications">
             <div className="text-center">
               <img src="/assets/pages/modules/pubblications.png" />
-              <h1 className="text-center bold">Pubblications</h1>
+              <h1 className="text-center bold">
+                Pubblications, Links and News
+              </h1>
               <h5 className="text-center lighter black">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               </h5>

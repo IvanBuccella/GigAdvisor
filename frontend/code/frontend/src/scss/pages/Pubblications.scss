@@ -1,2 +1,19 @@
 .page-container.pubblications {
+  ion-slides {
+    .pubblication {
+      flex-flow: column;
+      padding: 2em 0 2em 0;
+    }
+  }
+  .link {
+    .left {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  .news {
+    flex-flow: column;
+    padding: 2em 0 2em 0;
+  }
 }
