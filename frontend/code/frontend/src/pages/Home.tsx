@@ -39,7 +39,7 @@ function LoginCta() {
 }
 
 const Home: React.FC = () => {
-  const [showNotice, setShowNotice] = useState(false);
+  const [showNotice, setShowNotice] = useState(true);
   const [showLanguageModal, setShowLanguageModal] = useState(false);
   const [languageSelected, setLanguageSelected] = useState<string>("english");
 
