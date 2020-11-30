@@ -1,11 +1,14 @@
 .page-container.modules {
   ion-slides {
     height: 100%;
-    img {
-      height: 100px;
-    }
-    .button {
-      @include blue-button;
+    ion-slide {
+      padding: 2em 0 2em 0;
+      img {
+        height: 100px;
+      }
+      .button {
+        @include blue-button;
+      }
     }
   }
 
