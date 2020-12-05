@@ -56,24 +56,25 @@ const About: React.FC = () => {
             </h5>
             <p className="text-left text-center-mobile mt0 mb0">
               GigAdvisor allows crowd workers to connect and discuss their
-              evaluation of the experiences they had with the labour platforms
+              evaluation of the experiences they had with the labour platforms.
             </p>
             <br />
             <h5 className="text-left text-center-mobile pl0 bold green">
               citizens & public authorities
             </h5>
             <p className="text-left text-center-mobile mt0 mb0">
-              GigAdvisor allows citizens and public authorities to be kept
-              informed about the behavior of digital labor platforms
+              GigAdvisor allows citizens and public authorities can be better
+              kept informed about the behavior of digital labor platforms.
             </p>
             <br />
             <h5 className="text-left text-center-mobile pl0 bold red">
               activists
             </h5>
             <p className="text-left text-center-mobile mt0 mb0">
-              GigAdvisor is a tool for activist and NGOs interested in workers’
-              rights to exploit the power of data and computational social
-              science
+              GigAdvisor is a tool for activist and NGOs engaged in the fight
+              for workers’ rights protection can exploit the power of data and
+              computational social science to carry out their critical role in a
+              better-informed way.
             </p>
             <br />
             <h5 className="text-left text-center-mobile pl0 bold red">
@@ -81,9 +82,8 @@ const About: React.FC = () => {
             </h5>
 
             <p className="text-left text-center-mobile mt0 mb0">
-              GigAdvisor gathers data to feed data-driven labour studies
-              bringing together computational social science and critical data
-              studies perspective
+              GigAdvisor allows scholars from law and critical data studies can
+              root in data-driven analysis in computational social science
             </p>
           </IonSlide>
           <IonSlide>
