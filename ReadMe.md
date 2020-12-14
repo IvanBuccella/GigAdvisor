@@ -20,13 +20,24 @@ $ git clone https://github.com/IvanBuccella/GigAdvisor
 
 ### Second Step
 
+Edit .env file with your personal settings.
+
+Edit env.config.json file with your personal back-end API Endpoints on front-end.
+
+Edit Google Geocoding API key in Review.tsx file on front-end.
+
+Edit Google Maps API key in PlatformMap.tsx file on front-end.
+
+
+### Third Step
+
 Deploy local environment with Docker (since next time, the "--build" flag is unnecessary):
 
 ```sh
 $ docker-compose up --build
 ```
 
-### Third Step
+### Fourth Step
 
 Run on your browser
 
