@@ -25,10 +25,7 @@ SECRET_KEY = "jna1ebak*^xy1@l&vd=*)gl#xqmzq#vj5ui^zcb5smu-wt6_k-"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    "gigadvisor-backend.herokuapp.com",
-    "backend.gigadvisor.buccella.me",
-]
+ALLOWED_HOSTS = [os.getenv("BACKEND_URL")]
 
 # CORS CONFIGURATION
 CORS_ALLOW_CREDENTIALS = True
