@@ -419,7 +419,6 @@ const PlatformTrend: React.FC = () => {
               <div id="platformChart" className="platform-chart"></div>
               <h3 className="form-title mt3 mb0 black">Per Italian Region</h3>
               <div id="mapChart" className="platform-chart"></div>
-              Legend for mapChart here
             </IonCol>
           </IonRow>
         </IonContent>
