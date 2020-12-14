@@ -117,7 +117,7 @@ const PlatformMap: React.FC = () => {
             Reviews' Map for {platform.name}
           </h1>
           <IonRow className="platform-container">
-            <LoadScript googleMapsApiKey="AIzaSyAa9Ex4TeHbDb5ZWYA3fKN_n5iki_Np_jA">
+            <LoadScript googleMapsApiKey="YOUR_API_KEY_HERE">
               <GoogleMap
                 mapContainerStyle={{
                   width: "100%",

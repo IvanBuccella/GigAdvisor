@@ -126,7 +126,7 @@ const Review: React.FC = () => {
           position.coords.latitude +
           "," +
           position.coords.longitude +
-          "&key=AIzaSyBr2H4TW5HFHhlNDQYdpjD0uAmsTTtGm2k"
+          "&key=YOUR_API_KEY_HERE"
       )
         .then((response) => response.json())
         .then((responseJson) => {
