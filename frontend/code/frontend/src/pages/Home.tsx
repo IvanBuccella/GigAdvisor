@@ -14,7 +14,11 @@ import {
   IonRadioGroup,
   IonRouterLink,
 } from "@ionic/react";
-import { logInOutline, helpCircleOutline } from "ionicons/icons";
+import {
+  logInOutline,
+  helpCircleOutline,
+  personCircleOutline,
+} from "ionicons/icons";
 
 const utilities = new Utils();
 
@@ -30,6 +34,25 @@ function LoginCta() {
           </IonRow>
           <IonRow>
             <IonCol className="blue">Login</IonCol>
+          </IonRow>
+        </IonRouterLink>
+      </IonCol>
+    );
+  } else {
+    return (
+      <IonCol>
+        <IonRouterLink href="/profile">
+          <IonRow>
+            <IonCol>
+              <IonIcon
+                icon={personCircleOutline}
+                className="blue"
+                size="large"
+              />
+            </IonCol>
+          </IonRow>
+          <IonRow>
+            <IonCol className="blue">Profile</IonCol>
           </IonRow>
         </IonRouterLink>
       </IonCol>
